@@ -52,7 +52,7 @@ All of your personal settings live in the `config` tab of the database Sheet. Ea
 
 | Column | Meaning |
 |--------|---------|
-| `category` | Grouping (e.g. "Applicant Identity", "LLM - Résumé Drafter") |
+| `category` | Grouping (e.g. "Applicant Identity", "LLM - Resume Drafter") |
 | `parameter` | The setting's name (this is the key the software reads) |
 | `value` | **What you set** |
 | `description` | What it does |
@@ -121,13 +121,13 @@ Every agent has three config keys: which provider, which model, and a max-token 
 
 | Agent | Provider key | Model key | Max-tokens key |
 |-------|-------------|-----------|----------------|
-| 1 — Résumé Builder | `provider_resume_drafter` | `model_resume_drafter` | `max_tokens_resume_drafter` |
+| 1 — Resume Builder | `provider_resume_drafter` | `model_resume_drafter` | `max_tokens_resume_drafter` |
 | 2 — Cover Letter | `provider_cover_letter_drafter` | `model_cover_letter_drafter` | `max_tokens_cover_letter_drafter` |
-| 3 — Résumé Verifier | `provider_resume_verifier` | `model_resume_verifier` | `max_tokens_resume_verifier` |
+| 3 — Resume Verifier | `provider_resume_verifier` | `model_resume_verifier` | `max_tokens_resume_verifier` |
 | 4 — Cover Letter Verifier | `provider_cover_letter_verifier` | `model_cover_letter_verifier` | `max_tokens_cover_letter_verifier` |
 | 5 — Critic | `provider_critic` | `model_critic` | `max_tokens_critic` |
 | 6 — Refiner | `provider_refiner` | `model_refiner` | `max_tokens_refiner` |
-| 7 — Résumé Scorer | `provider_resume_scorer` | `model_resume_scorer` | `max_tokens_resume_scorer` |
+| 7 — Resume Scorer | `provider_resume_scorer` | `model_resume_scorer` | `max_tokens_resume_scorer` |
 | 8 — Discovery Scorer | `provider_discovery_scorer` | `model_discovery_scorer` | `max_tokens_discovery_scorer` |
 | 10 — Job Ranker | `provider_discovery_ranker` | `model_discovery_ranker` | `max_tokens_discovery_ranker` |
 

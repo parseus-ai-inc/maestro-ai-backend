@@ -10,14 +10,14 @@ This page explains what the dossier is, how to structure it, and the principles 
 
 ## What it is — and why it matters
 
-Think of the dossier as your **"everything" resume**: a complete, honest record of your career that's far longer than any single resume would be. For each job application, the Résumé Builder reads the job description, then *selects and emphasizes* the relevant parts of your dossier — it never adds anything that isn't there.
+Think of the dossier as your **"everything" resume**: a complete, honest record of your career that's far longer than any single resume would be. For each job application, the Resume Builder reads the job description, then *selects and emphasizes* the relevant parts of your dossier — it never adds anything that isn't there.
 
 ```mermaid
 flowchart TD
     MD[("Your Master Dossier<br/>everything you've done")]
-    MD -->|Agent 1 reads it| R1["Résumé for Product role<br/>emphasizes product wins"]
-    MD -->|Agent 1 reads it| R2["Résumé for AI/ML role<br/>emphasizes ML & infra"]
-    MD -->|Agent 1 reads it| R3["Résumé for Robotics role<br/>emphasizes robotics work"]
+    MD -->|Agent 1 reads it| R1["Resume for Product role<br/>emphasizes product wins"]
+    MD -->|Agent 1 reads it| R2["Resume for AI/ML role<br/>emphasizes ML & infra"]
+    MD -->|Agent 1 reads it| R3["Resume for Robotics role<br/>emphasizes robotics work"]
 ```
 
 *Same source of truth → different emphasis per job. Nothing invented.*

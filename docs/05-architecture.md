@@ -37,15 +37,15 @@ All agents are n8n sub-workflows invoked via Execute Workflow nodes. They share 
 
 | # | Agent | Stage | Role |
 |---|-------|-------|------|
-| 1 | Résumé Builder | application | Draft resume from master_doc + JD |
+| 1 | Resume Builder | application | Draft resume from master_doc + JD |
 | 2 | Cover Letter Builder | application | Draft cover letter |
-| 3 | Résumé Verifier | application | Anti-hallucination check on resume |
+| 3 | Resume Verifier | application | Anti-hallucination check on resume |
 | 4 | Cover Letter Verifier | application | Anti-hallucination check on cover letter |
 | 5 | Critic | application | Recruiter-style critique of the resume |
-| 6 | Résumé Refiner | application | Rewrite resume to address critique (gated by `enable_refinement`) |
-| 7 | Résumé Scorer | application | 0–100 fit score with dimensional breakdown |
+| 6 | Resume Refiner | application | Rewrite resume to address critique (gated by `enable_refinement`) |
+| 7 | Resume Scorer | application | 0–100 fit score with dimensional breakdown |
 | 8 | Discovery Scorer | discovery | Dual-axis fit scoring of discovered jobs |
-| 9 | Résumé Fine-Refiner | refinement | Apply user refinement instructions on later passes |
+| 9 | Resume Fine-Refiner | refinement | Apply user refinement instructions on later passes |
 | 10 | Job Ranker | discovery | Cheap first-pass ranking to keep the funnel open |
 
 Agents 5, 6, and 7 are intentionally **decoupled from company/title/url** — they work purely from the JD, the master document, and upstream artifacts. That uniformity lets discovery-sourced and user-submitted jobs flow through the same pipeline.
@@ -56,7 +56,7 @@ Agents 5, 6, and 7 are intentionally **decoupled from company/title/url** — th
 
 The build fans out per job, then runs two branches in parallel — the resume branch (builder, with a Verifier fact-checking claims and a Critic flagging weaknesses) and the cover-letter branch (gated). Both merge before scoring.
 
-![Application build pipeline: each job fans out to a Résumé Builder (checked in parallel by a Verifier and a Critic) and a gated Cover Letter branch; the branches merge, a Résumé Scorer rates final fit, and the result is recorded to the database.](assets/diagrams/build-pipeline.svg)
+![Application build pipeline: each job fans out to a Resume Builder (checked in parallel by a Verifier and a Critic) and a gated Cover Letter branch; the branches merge, a Resume Scorer rates final fit, and the result is recorded to the database.](assets/diagrams/build-pipeline.svg)
 
 The exact node-level sequence (with the Data Loader, Merge Init, and per-recorder delegation) is:
 
@@ -66,12 +66,12 @@ flowchart TD
     RF --> DL["Data Loader + Prompt Loader"]
     DL --> MI["Merge Init"]
     MI --> FAN["Fan Out Plans (per job)"]
-    FAN --> A1["Agent 1 — Résumé Builder"]
+    FAN --> A1["Agent 1 — Resume Builder"]
     A1 --> A5["Agent 5 — Critic"]
     A5 --> A6["Agent 6 — Refiner<br/>(gated by enable_refinement)"]
-    A6 --> A3["Agent 3 — Résumé Verifier"]
+    A6 --> A3["Agent 3 — Resume Verifier"]
     A3 --> A2["Agent 2 — Cover Letter Builder<br/>→ Agent 4 — Verifier<br/>(gated by enable_cover_letter)"]
-    A2 --> A7["Agent 7 — Résumé Scorer"]
+    A2 --> A7["Agent 7 — Resume Scorer"]
     A7 --> MB["Merge Branches → Log Job Result"]
     MB --> AR["Application Recorder<br/>→ Resume Recorder → Model Usage Recorder"]
 ```

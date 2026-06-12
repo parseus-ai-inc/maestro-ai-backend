@@ -1,14 +1,10 @@
 # Maestro AI
 
-**Everyone's using AI the wrong way to apply for jobs — that's exactly why it feels overwhelming and stops working.**
+**Finding jobs was never the hard part — building an application that gets read is, especially when the same AI writing your resume is the one screening it out.**
 
-Maestro is your AI application-building team, not another resume bot. An open-source system of specialized agents that discover and score jobs, draft and fact-check tailored applications, and track every one — while you stay in control of every decision.
+AI should help you apply for jobs — not apply for you, and not flatten you into the same resume everyone else is sending. Maestro is the open-source system built for that: a team of specialized agents that learns your real history once, then tailors and fact-checks every resume and cover letter in your voice, on models you choose, and tracks every application, version, and penny spent in one place. Bring your own roles or let it discover them — either way, you stay in control of every decision.
 
 A product of [Parseus AI](https://parseus.ai).
-
----
-
-Maestro AI automatically discovers jobs that match you, scores them for fit, drafts tailored resumes and cover letters, lets you review and refine everything from a clean dashboard, and tracks every application end to end.
 
 ## What problem it solves
 
@@ -16,7 +12,7 @@ Applying for jobs is repetitive and slow, so most people reach for one of two sh
 
 **Using a GenAI provider — or its agents — by hand.** Pasting your resume into an LLM like ChatGPT, Claude, or Gemini works for a single job, but it puts all the structure on you, every time. Even with their newer agent features, the same problems remain: you re-supply your background for every posting; you're the only one fact-checking, so invented skills and numbers slip through; nothing keeps a structured record of where you applied or what it cost; and the model's hidden memory quietly blends in context you can't see or edit, so each resume drifts. It's one model, one default behavior — and the output converges on what everyone else's LLM produces.
 
-**Using existing job tools.** The point tools each solve a slice and leave the rest. Volume auto-appliers blast out generic, templated resumes (and risk your accounts). Trackers and autofill extensions organize applications but don't build or improve anything. Résumé optimizers tune keywords one resume at a time, with no discovery, no fact-checking, and no cover letters. None of them score jobs for fit, check their own work, or let you control which model and prompt does what.
+**Using existing job tools.** The point tools each solve a slice and leave the rest. Volume auto-appliers blast out generic, templated resumes (and risk your accounts). Trackers and autofill extensions organize applications but don't build or improve anything. Resume optimizers tune keywords one resume at a time, with no discovery, no fact-checking, and no cover letters. None of them score jobs for fit, check their own work, or let you control which model and prompt does what.
 
 **What both miss.** Neither path gives you a system that is *systematic* (a real pipeline, not one-off prompts), *self-checking* (something other than you catching fabrications), *accountable* (every application and its cost tracked in one place), *controllable* (your models, your prompts, your data), and *human-decided* (it builds the case; you make the call).
 

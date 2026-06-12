@@ -40,15 +40,15 @@ prompts tab
 
 | `agent_id` | Agent | What its prompt controls |
 |-----------|-------|--------------------------|
-| `agent_1` | Résumé Builder | How resumes are drafted and structured |
+| `agent_1` | Resume Builder | How resumes are drafted and structured |
 | `agent_2` | Cover Letter Builder | Cover letter style and content |
-| `agent_3` | Résumé Verifier | How strictly claims are fact-checked |
+| `agent_3` | Resume Verifier | How strictly claims are fact-checked |
 | `agent_4` | Cover Letter Verifier | Fact-checking for cover letters |
 | `agent_5` | Critic | What counts as a weakness worth fixing |
-| `agent_6` | Résumé Polisher | How the first refinement applies critique |
-| `agent_7` | Résumé Scorer | How fit scores are assigned |
+| `agent_6` | Resume Polisher | How the first refinement applies critique |
+| `agent_7` | Resume Scorer | How fit scores are assigned |
 | `agent_8` | Discovery Scorer | How discovered jobs are scored (two axes) |
-| `agent_9` | Résumé Fine-Refiner | How later refinements apply your instructions |
+| `agent_9` | Resume Fine-Refiner | How later refinements apply your instructions |
 | `agent_10` | Job Ranker | How the fast first-pass ranking works |
 
 ---
@@ -100,7 +100,7 @@ Three principles make it effective:
 
 3. **Separation of powers.** No single agent both writes and judges its own work. The Builder drafts, the Critic critiques, the Refiner fixes, the Verifier fact-checks, the Scorer rates. Each prompt has one job and does it well — which is easier to get right, easier to debug, and harder to fool.
 
-### A real example: the Résumé Builder (Agent 1)
+### A real example: the Resume Builder (Agent 1)
 
 Here's how the skeleton looks filled in (excerpted from the shipped default):
 

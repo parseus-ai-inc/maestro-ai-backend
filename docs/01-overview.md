@@ -40,15 +40,15 @@ flowchart TD
 
 | Agent | Job |
 |-------|-----|
-| **1 — Résumé Builder** | Drafts a tailored resume from your master profile + the job description |
+| **1 — Resume Builder** | Drafts a tailored resume from your master profile + the job description |
 | **2 — Cover Letter Builder** | Drafts a matching cover letter |
-| **3 — Résumé Verifier** | Fact-checks the resume against your profile (no invented claims) |
+| **3 — Resume Verifier** | Fact-checks the resume against your profile (no invented claims) |
 | **4 — Cover Letter Verifier** | Fact-checks the cover letter |
 | **5 — Critic** | Critiques the resume like a recruiter would |
-| **6 — Résumé Refiner** | Rewrites the resume to address the critique |
-| **7 — Résumé Scorer** | Scores the final resume's fit (0–100) |
+| **6 — Resume Refiner** | Rewrites the resume to address the critique |
+| **7 — Resume Scorer** | Scores the final resume's fit (0–100) |
 | **8 — Discovery Scorer** | Scores newly discovered jobs for fit |
-| **9 — Résumé Fine-Refiner** | Applies your manual refinement instructions on later passes |
+| **9 — Resume Fine-Refiner** | Applies your manual refinement instructions on later passes |
 | **10 — Job Ranker** | A fast first-pass ranker that keeps the discovery funnel open |
 
 These agents don't talk to AI providers directly. They all route through one shared module, **Call LLM**, which supports **Anthropic Claude, OpenAI, and Google Gemini** and handles errors, retries, and cost tracking in one place.

@@ -16,7 +16,7 @@ Maestro is free and open-source. You pay only the AI providers for tokens used. 
 No — Anthropic is the recommended default, but OpenAI and Google Gemini are fully supported. You can even mix providers per agent in the `config` tab.
 
 **Can it invent things on my resume?**
-The design actively prevents it. The Résumé Builder works only from your master document, and a dedicated Verifier agent fact-checks every resume against your profile to catch unsupported claims. You also review everything before using it.
+The design actively prevents it. The Resume Builder works only from your master document, and a dedicated Verifier agent fact-checks every resume against your profile to catch unsupported claims. You also review everything before using it.
 
 **Where is my data stored?**
 In your own Google account — a Google Sheet (the database) and a Google Drive folder (files). Maestro doesn't send your data anywhere except to the AI provider(s) you configure, for the specific calls that generate content. The system's access is scoped to only the Sheet and folder you explicitly share with its service account — not your whole Drive. If you'd still rather not connect your personal account at all, create a free dedicated (burner) Google account just for Maestro and use it throughout setup; everything works identically.
