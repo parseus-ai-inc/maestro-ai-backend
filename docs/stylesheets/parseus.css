@@ -1,0 +1,109 @@
+/* Parseus AI brand colors for MkDocs Material */
+:root {
+  --md-primary-fg-color:        #2E5BC9;  /* Persian blue */
+  --md-primary-fg-color--light: #5478D6;
+  --md-primary-fg-color--dark:  #244AA3;
+  --md-accent-fg-color:         #A16207;  /* Maestro amber */
+}
+
+[data-md-color-scheme="slate"] {
+  --md-primary-fg-color:        #5478D6;
+  --md-accent-fg-color:         #C98A2B;
+}
+
+/* Brand mark (Π) before the site title */
+.md-header__title .md-header__topic:first-child .md-ellipsis::before {
+  content: "\03A0";
+  font-family: Georgia, "Times New Roman", serif;
+  margin-right: 0.4rem;
+  font-weight: 500;
+}
+
+/* ---- Slightly smaller, denser body text ---- */
+:root {
+  font-size: 122%;   /* Material's base; lower = smaller everything. Default ~125% */
+}
+.md-typeset {
+  font-size: 0.72rem;   /* body copy (default 0.8rem) */
+}
+.md-typeset h1 { font-size: 1.6rem; }
+.md-typeset h2 { font-size: 1.25rem; }
+.md-typeset h3 { font-size: 1rem; }
+
+/* ---- Content width: keep comfortable margins, don't touch screen edges ---- */
+.md-grid {
+  max-width: 70rem;          /* comfortable reading width (default is 61rem) */
+}
+
+/* ---- Widen the left sidebar so the nested TOC has room ---- */
+@media screen and (min-width: 76.25em) {
+  .md-sidebar--primary {
+    width: 13.5rem;
+  }
+}
+
+/* ---- Integrated TOC: clean nested menu ---- */
+.md-nav__item .md-nav .md-nav__item .md-nav__link {
+  font-size: 0.62rem;
+  line-height: 1.3;
+  padding-top: 0.12rem;
+  padding-bottom: 0.12rem;
+  color: var(--md-default-fg-color--light);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
+}
+
+.md-nav__item .md-nav .md-nav {
+  margin-left: 0.5rem;
+  padding-left: 0.4rem;
+  border-left: 1px solid var(--md-default-fg-color--lightest);
+}
+
+.md-nav__link--active,
+.md-nav__link--passed {
+  color: var(--md-primary-fg-color) !important;
+}
+
+/* ---- Hide the duplicate page-title that toc.integrate repeats ---- */
+/* toc.integrate nests the page's TOC under the active nav item and
+   repeats the page title as a label. Hide that nested label only. */
+.md-nav--primary .md-nav__item--active .md-nav--secondary > label.md-nav__title,
+.md-nav--primary .md-nav__item--active > .md-nav__link[for] {
+  display: none;
+}
+
+/* ---- Polish ASCII mockups / sketches that stay as code blocks ---- */
+/* Center them, soften the background, add breathing room */
+.md-typeset pre > code {
+  border-radius: var(--md-border-radius, 4px);
+}
+.md-typeset pre {
+  margin: 1.2em 0;
+}
+/* Mermaid diagrams: center and add space */
+.md-typeset .mermaid {
+  text-align: center;
+  margin: 1.5em 0;
+}
+
+/* ---- Brand the admonition callouts (example/note/tip/warning) ---- */
+/* "example" → Persian blue accent instead of default purple */
+.md-typeset .admonition.example,
+.md-typeset details.example {
+  border-color: #2E5BC9;
+}
+.md-typeset .example > .admonition-title,
+.md-typeset .example > summary {
+  background-color: rgba(46, 91, 201, 0.1);
+}
+.md-typeset .example > .admonition-title::before,
+.md-typeset .example > summary::before {
+  background-color: #2E5BC9;
+}
+/* tighten admonition tables */
+.md-typeset .admonition table {
+  margin: 0.4em 0;
+  font-size: 0.92em;
+}

@@ -44,12 +44,13 @@ Your data is safe across restarts — it lives in your Google Sheet and a named 
 
 A typical cycle has four stages: **Discover → Review → Build → Track**.
 
-```
-   Discover            Review              Build               Track
-  ──────────         ──────────         ──────────          ──────────
-  find & score  →    pick the jobs  →   generate résumé →   record where
-  open jobs          worth pursuing     + cover letter      you applied
-                                        + critique/refine
+```mermaid
+flowchart LR
+    A["<b>Discover</b><br/>find & score<br/>open jobs"]
+    B["<b>Review</b><br/>pick the jobs<br/>worth pursuing"]
+    C["<b>Build</b><br/>generate résumé<br/>+ cover letter<br/>+ critique/refine"]
+    D["<b>Track</b><br/>record where<br/>you applied"]
+    A --> B --> C --> D
 ```
 
 ### 1. Discover jobs

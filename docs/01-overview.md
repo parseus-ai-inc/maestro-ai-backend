@@ -22,28 +22,16 @@ It does five things:
 
 Maestro is made of two cooperating systems that share a single database.
 
-```
-                        ┌──────────────────────────────┐
-                        │   Google Sheets (database)    │
-                        │   + Google Drive (files)      │
-                        └──────────────┬───────────────┘
-                                       │ both read & write
-                ┌──────────────────────┴──────────────────────┐
-                │                                              │
-   ┌────────────▼─────────────┐                  ┌─────────────▼────────────┐
-   │   Backend pipeline        │                  │   Maestro dashboard       │
-   │   (n8n + AI agents)       │   webhooks       │   (Next.js web app)       │
-   │                           │ ◄──────────────  │                           │
-   │  • discovers jobs         │   "build these"  │  • review jobs            │
-   │  • scores them            │   "run discovery"│  • trigger builds         │
-   │  • drafts résumés         │ ──────────────►  │  • read & refine résumés  │
-   │  • critiques & refines    │   results land   │  • track applications     │
-   └───────────────────────────┘   in the sheet   └───────────────────────────┘
-                ▲
-                │ fires on a schedule you set
-   ┌────────────┴─────────────┐
-   │   Scheduler (Node worker) │
-   └───────────────────────────┘
+```mermaid
+flowchart TD
+    DB[("Google Sheets database<br/>+ Google Drive files")]
+    BE["Backend pipeline<br/>(n8n + AI agents)"]
+    DASH["Maestro dashboard<br/>(Next.js web app)"]
+    SCHED["Scheduler<br/>(Node worker)"]
+    DB <--> BE
+    DB <--> DASH
+    BE <-->|webhooks| DASH
+    SCHED -->|fires on a schedule| BE
 ```
 
 ### Backend pipeline (n8n)

@@ -193,10 +193,11 @@ Maestro has two halves with two different config files. The **backend** (n8n in 
 | `GOOGLE_SHEETS_CLIENT_EMAIL` | Service account email | — |
 | `GOOGLE_SHEETS_PRIVATE_KEY` | Service account private key (one line, with literal `\n`) | unescaped at runtime |
 | `GOOGLE_SHEETS_DATABASE_ID` | Same Sheet ID as the backend | — |
+| `GOOGLE_OAUTH_CLIENT_ID` | OAuth client ID for Drive uploads (Step 3) | — |
+| `GOOGLE_OAUTH_CLIENT_SECRET` | OAuth client secret | server-side only |
+| `GOOGLE_OAUTH_REFRESH_TOKEN` | OAuth refresh token from the Playground | server-side only |
 | `N8N_WEBHOOK_BASE_URL` | Base URL the dashboard/scheduler call to trigger the pipeline | `http://localhost:5678/webhook` |
 | `MAESTRO_WEBHOOK_SECRET` | Shared secret sent as the `X-Maestro-Secret` header on every webhook call | **server-side only — never prefix with `NEXT_PUBLIC_`** |
-| `GOOGLE_PROMPTS_FOLDER_ID` | Drive folder used by the `/prompts` page | optional; blank to disable |
-| `GOOGLE_RESUMES_PARENT_ID` | Parent Drive folder for "Save to Drive" résumés | optional; falls back to Drive root if unset |
 
 > ⚠️ **Use the production webhook path.** `N8N_WEBHOOK_BASE_URL` must end in `/webhook`, **not** `/webhook-test`. The `-test` path only works while you have the n8n editor open with the workflow in "listen" mode.
 

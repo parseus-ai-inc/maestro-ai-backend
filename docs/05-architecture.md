@@ -8,22 +8,16 @@ This page is for developers who want to understand, modify, or contribute to Mae
 
 ## High-level shape
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                     Google Sheets (database)                       │
-│   config · jobs · resumes · agent_outputs · model_usage · run_state │
-│   pricing · watchlist_companies · prompts · master_doc · ...        │
-└───────────────┬──────────────────────────────────┬───────────────┘
-                │ read/write                        │ read/write
-   ┌────────────▼────────────┐         ┌────────────▼─────────────┐
-   │   n8n backend           │ webhook │   Maestro dashboard       │
-   │   (3 entry workflows +  │◄───────►│   (Next.js 16, port 4400) │
-   │    sub-workflows)       │         │                           │
-   └────────────▲────────────┘         └───────────────────────────┘
-                │ POST /webhook/run-discovery
-   ┌────────────┴────────────┐
-   │  Scheduler (Node worker) │  reads job_search_cron from config
-   └──────────────────────────┘
+```mermaid
+flowchart TD
+    DB[("Google Sheets database<br/>config · jobs · resumes · agent_outputs<br/>model_usage · run_state · prompts · master_doc · …")]
+    BE["n8n backend<br/>(3 entry workflows + sub-workflows)"]
+    DASH["Maestro dashboard<br/>(Next.js 16, port 4400)"]
+    SCHED["Scheduler (Node worker)<br/>reads job_search_cron from config"]
+    DB <-->|read/write| BE
+    DB <-->|read/write| DASH
+    BE <-->|webhook| DASH
+    SCHED -->|POST /webhook/run-discovery| BE
 ```
 
 The dashboard frontend code lives in a **separate repository** and is not part of the backend repo. The backend repo holds the n8n workflow exports, the database template, and the scheduler.
@@ -37,6 +31,7 @@ Three workflows are entry points. Each has both a manual trigger (for testing in
 | **Application Orchestrator** | `/webhook/build-application` | dashboard build/submit routes | `{ "job_ids": ["job_xxx", ...] }` — the entire payload | `202 { ok, accepted, run_id, job_count, job_ids }` |
 | **Job Discovery** | `/webhook/run-discovery` | **scheduler worker only** | `{ "source": "cron" }` | `202` with `run_id` (`disc_…`) in body |
 | **Application Refinement** | `/webhook/refine-resume` | dashboard `/api/refine` | refine payload (see below) | `202 { ok, accepted, run_id }`; dashboard polls `resumes` |
+| **Cover Letter Generation & Refinement** | `/webhook/generate-cover-letter` | dashboard `/api/cover-letters` | generate/refine payload | `202` with `run_id` (`cl_…`) in body |
 
 > 📌 **Discovery is not triggered by the Next.js app in-process.** The dashboard has no internal timer for it — discovery is fired exclusively by the standalone **scheduler** container (a manual "run now" still routes through that path, not an app-side timer). This is intentional: a request/response server has no reliable persistent timer.
 
@@ -69,36 +64,49 @@ Agents 5, 6, and 7 are intentionally **decoupled from company/title/url** — th
 
 ### Application pipeline
 
-```
-Webhook/Trigger → Root Folder → [Data Loader, Prompt Loader] → Merge Init → Fan Out Plans (per job)
-  → Agent 1 (Résumé Builder)
-  → Agent 5 (Critic)
-  → Agent 6 (Refiner — gated by enable_refinement) → Resolve Résumé
-  → Agent 3 (Résumé Verifier)
-  → Agent 2 (Cover Letter Builder) → Agent 4 (Cover Letter Verifier)   [gated by enable_cover_letter]
-  → Agent 7 (Résumé Scorer)
-  → Merge Branches → Log Job Result
-  → Application Recorder → (delegates to Resume Recorder) → Model Usage Recorder
+```mermaid
+flowchart TD
+    W["Webhook / Trigger"] --> RF["Root Folder"]
+    RF --> DL["Data Loader + Prompt Loader"]
+    DL --> MI["Merge Init"]
+    MI --> FAN["Fan Out Plans (per job)"]
+    FAN --> A1["Agent 1 — Résumé Builder"]
+    A1 --> A5["Agent 5 — Critic"]
+    A5 --> A6["Agent 6 — Refiner<br/>(gated by enable_refinement)"]
+    A6 --> A3["Agent 3 — Résumé Verifier"]
+    A3 --> A2["Agent 2 — Cover Letter Builder<br/>→ Agent 4 — Verifier<br/>(gated by enable_cover_letter)"]
+    A2 --> A7["Agent 7 — Résumé Scorer"]
+    A7 --> MB["Merge Branches → Log Job Result"]
+    MB --> AR["Application Recorder<br/>→ Resume Recorder → Model Usage Recorder"]
 ```
 
 ### Discovery pipeline
 
-```
-Webhook/Trigger → Root Folder → [Data Loader (discovery mode), Prompt Loader] → Merge Init
-  → Job Fetcher → Job Post Processing (hard filter + dedup)
-  → Agent 10 (Job Ranker)
-  → Agent 8 (Discovery Scorer)
-  → Log Job Result → Job Discovery Recorder → Model Usage Recorder
+```mermaid
+flowchart TD
+    W["Webhook / Trigger"] --> RF["Root Folder"]
+    RF --> DL["Data Loader (discovery mode)<br/>+ Prompt Loader"]
+    DL --> MI["Merge Init"]
+    MI --> JF["Job Fetcher"]
+    JF --> JP["Job Post Processing<br/>(hard filter + dedup)"]
+    JP --> A10["Agent 10 — Job Ranker"]
+    A10 --> A8["Agent 8 — Discovery Scorer"]
+    A8 --> LOG["Log Job Result"]
+    LOG --> JDR["Job Discovery Recorder"]
+    JDR --> MUR["Model Usage Recorder"]
 ```
 
 ### Refinement pipeline
 
-```
-Webhook → Set Inputs (mode derived: polish vs refine)
-  → Routing IF
-      ├─ polish  → Agent 6 (Refiner)        [reads ORIGINAL critic + verifier]
-      └─ refine  → Agent 9 (Fine-Refiner)   [reads PARENT version's verifier]
-  → Verifier Gate (optional) → Resume Recorder
+```mermaid
+flowchart TD
+    W["Webhook"] --> SI["Set Inputs<br/>(mode derived: polish vs refine)"]
+    SI --> R{"Routing IF"}
+    R -->|polish| A6["Agent 6 — Refiner<br/>reads ORIGINAL critic + verifier"]
+    R -->|refine| A9["Agent 9 — Fine-Refiner<br/>reads PARENT version's verifier"]
+    A6 --> VG["Verifier Gate (optional)"]
+    A9 --> VG
+    VG --> RR["Resume Recorder"]
 ```
 
 The **mode is derived, not chosen**: if a job has exactly one résumé version, the next refinement is a *polish* (re-works v1 using the original critique). If it already has refinements, it's a *refine* (builds on the immediate parent).
@@ -109,12 +117,16 @@ The **mode is derived, not chosen**: if a job has exactly one résumé version, 
 
 Every agent calls **Call LLM** rather than hitting a provider directly. It normalizes three providers behind one interface:
 
-```
-Set Inputs → Switch on Provider
-   ├─ anthropic → Build Anthropic Request → HTTP → Normalize / Build Error Response
-   ├─ openai    → Build OpenAI Request    → HTTP → Normalize / Build Error Response
-   ├─ gemini    → Build Gemini Request    → HTTP → Normalize / Build Error Response
-   └─ (other)   → Unsupported Provider Error
+```mermaid
+flowchart TD
+    SI["Set Inputs"] --> SW{"Switch on<br/>provider"}
+    SW -->|anthropic| AN["Build Anthropic Request → HTTP"]
+    SW -->|openai| OA["Build OpenAI Request → HTTP"]
+    SW -->|gemini| GE["Build Gemini Request → HTTP"]
+    SW -->|other| ERR["Unsupported Provider Error"]
+    AN --> NM["Normalize / Build Error Response"]
+    OA --> NM
+    GE --> NM
 ```
 
 All three return one standard envelope:

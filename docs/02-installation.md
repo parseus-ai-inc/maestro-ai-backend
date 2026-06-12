@@ -114,41 +114,54 @@ This is the fiddliest part. Take it slowly; you only do it once. Full screenshot
 4. Create a **service account**: **APIs & Services → Credentials → Create Credentials → Service account**. Name it `maestro-pipeline`. Skip the optional permission steps.
 5. Create a **key** for it: click the new service account → **Keys → Add Key → Create new key → JSON**. A `.json` file downloads. **Keep this file safe — it's a password.**
 
-   ```
-   📷 Creating the JSON key:
-   Service account: maestro-pipeline
-   ┌────────────────────────────────────────────────────┐
-   │  DETAILS   PERMISSIONS   [ KEYS ]   METRICS   LOGS  │
-   ├────────────────────────────────────────────────────┤
-   │  Keys                                                │
-   │  ┌──────────────────────────────────────────────┐  │
-   │  │  [ ADD KEY ▼ ]                                 │  │
-   │  │     ├─ Create new key   ←── click this         │  │
-   │  │     └─ Upload existing key                     │  │
-   │  └──────────────────────────────────────────────┘  │
-   │     Key type:   (•) JSON     ( ) P12                 │ ← choose JSON
-   │                              [ Cancel ]  [ Create ]  │
-   └────────────────────────────────────────────────────┘
-            ↓ a .json file downloads to your computer
-   ```
+!!! example "Creating the JSON key"
+    On the service account's **Keys** tab, click **Add key → Create new key**, choose **JSON**, and click **Create**. A `.json` file downloads to your computer.
 
 6. Open that JSON file in a text editor. You'll need two values from it later:
    - `client_email` (looks like `maestro-pipeline@yourproject.iam.gserviceaccount.com`)
    - `private_key` (a long block starting with `-----BEGIN PRIVATE KEY-----`)
 
-   ```
-   📷 What the JSON file looks like inside:
-   {
-     "type": "service_account",
-     "project_id": "maestro-xxxxxx",
-     "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvg...\n-----END PRIVATE KEY-----\n",  ← GOOGLE_SHEETS_PRIVATE_KEY
-     "client_email": "maestro-pipeline@maestro-xxxxxx.iam.gserviceaccount.com",            ← GOOGLE_SHEETS_CLIENT_EMAIL
-     "client_id": "1234567890",
-     ...
-   }
-   ```
+!!! note "What the JSON file contains"
+    Two fields from this file go into your config:
+
+    | JSON field | Used as |
+    |------------|---------|
+    | `client_email` | `GOOGLE_SHEETS_CLIENT_EMAIL` |
+    | `private_key` | `GOOGLE_SHEETS_PRIVATE_KEY` |
+
+    The `private_key` is a long block beginning `-----BEGIN PRIVATE KEY-----`. Keep the whole thing, including the `\n` characters.
 
 > ⚠️ **One service account for both halves.** The dashboard and the pipeline **must use the same service account.** If they differ, saving résumés to Drive will fail with a "403" error.
+
+### Set up OAuth for Drive uploads
+
+The service account handles Sheets and reading Drive — but on a regular (consumer) Gmail account it **cannot upload files to Drive**. So saving résumés and cover letters to Drive uses a different mechanism: OAuth, acting as *you*. This is a one-time setup, and skipping it is the most common reason "Save to Drive" fails.
+
+7. **Configure the OAuth consent screen.** In **APIs & Services → OAuth consent screen**, choose **External**, and fill in an app name and your email. You can leave the optional fields blank.
+
+8. **⚠️ Add yourself as a test user.** Still on the consent screen, find the **Test users** section, click **Add users**, and add the Google account you'll use with Maestro.
+
+    !!! warning "This step is required"
+        Without adding yourself as a test user, Google blocks the connection with **"Access blocked: this app isn't verified."** If you hit that error later, it's almost always because this step was skipped.
+
+9. **Create an OAuth client ID.** In **APIs & Services → Credentials → Create Credentials → OAuth client ID**, choose **Web application**. Under **Authorized redirect URIs**, add:
+
+    ```
+    https://developers.google.com/oauthplayground
+    ```
+
+    Save, then copy the **Client ID** and **Client secret** it shows you.
+
+10. **Get a refresh token.** Go to the [OAuth 2.0 Playground](https://developers.google.com/oauthplayground):
+
+    1. Click the **gear icon** (top-right) → check **Use your own OAuth credentials** → paste your Client ID and Client secret.
+    2. In the left panel, find **Drive API v3** and select the scope `https://www.googleapis.com/auth/drive`.
+    3. Click **Authorize APIs**, sign in with your test-user account, and allow access.
+    4. Click **Exchange authorization code for tokens**, then copy the **Refresh token**.
+
+You now have three OAuth values — Client ID, Client secret, and refresh token — which go into the dashboard's `.env.local` in [Step 6](#step-6--configure-environment-variables).
+
+> 💡 **Why a refresh token?** It lets the dashboard keep acting as you on Drive without you logging in each time. Treat it like a password — it's in `.env.local`, which is never committed.
 
 ---
 
@@ -164,28 +177,13 @@ Maestro ships with a ready-made database template (`Database.xlsx` in the backen
    ```
    **Copy that ID** — you'll need it as `GOOGLE_SHEETS_DATABASE_ID`.
 
-   ```
-   📷 Where to find the ID in the URL:
-
-   https://docs.google.com/spreadsheets/d/ 1AbC2dEfGhIjK3LmNoP4qRsTuVwXyZ /edit#gid=0
-   └──────────────── ignore ─────────────┘ └───── COPY THIS PART ──────┘ └─ ignore ─┘
-   ```
+!!! tip "Where the ID is in the URL"
+    In `https://docs.google.com/spreadsheets/d/`**`SHEET_ID`**`/edit`, copy only the long **`SHEET_ID`** segment between `/d/` and `/edit`.
 
 4. **Share the sheet with your service account.** Click **Share** (top-right), paste the service account's `client_email` from Step 3, give it **Editor** access, and send. (No email actually goes anywhere — it just grants the robot access.)
 
-   ```
-   📷 The Share dialog:
-   ┌───────────────────────────────────────────────────┐
-   │  Share "Maestro Database"                      [✕] │
-   ├───────────────────────────────────────────────────┤
-   │  ┌─────────────────────────────────────────────┐  │
-   │  │ maestro-pipeline@yourproject.iam.gservice…  │  │ ← paste client_email
-   │  └─────────────────────────────────────────────┘  │
-   │                                    [ Editor  ▼ ]   │ ← must be Editor
-   │                                                     │
-   │                              [ Cancel ]  [ Send ]   │
-   └───────────────────────────────────────────────────┘
-   ```
+!!! example "The Share dialog"
+    Open **Share** on your `Maestro Database` sheet, paste the service account's `client_email`, set its role to **Editor**, and send. The service account must have Editor access or the pipeline can't write to the sheet.
 
 Then fill in the `config` tab with your details — your name, target roles, and which AI models to use. The [Configuration guide](03-configuration.md#the-config-tab) explains every setting.
 
@@ -269,6 +267,12 @@ GOOGLE_SHEETS_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\nMIIE...\n-----END PRIVAT
 # Same sheet ID as the backend
 GOOGLE_SHEETS_DATABASE_ID=your-sheet-id-here
 
+# OAuth credentials for Drive uploads (from Step 3 — the OAuth Playground flow).
+# These let the dashboard save résumés/cover letters to Drive as you.
+GOOGLE_OAUTH_CLIENT_ID=your-client-id.apps.googleusercontent.com
+GOOGLE_OAUTH_CLIENT_SECRET=your-client-secret
+GOOGLE_OAUTH_REFRESH_TOKEN=your-refresh-token
+
 # Where the dashboard/scheduler send "run this" requests to the backend.
 # Must end in /webhook (NOT /webhook-test). Default below works for local Docker.
 N8N_WEBHOOK_BASE_URL=http://localhost:5678/webhook
@@ -277,10 +281,6 @@ N8N_WEBHOOK_BASE_URL=http://localhost:5678/webhook
 # webhook call. Use the SAME value here and in n8n's webhook Header Auth (Step 9).
 # Without it, triggering and the scheduler will not fire.
 MAESTRO_WEBHOOK_SECRET=choose-a-long-random-string
-
-# Optional Drive folders. Leave blank to use defaults.
-GOOGLE_PROMPTS_FOLDER_ID=
-GOOGLE_RESUMES_PARENT_ID=
 ```
 
 > 💡 **About the private key's `\n`:** the key in your JSON file contains literal `\n` characters marking line breaks. Paste it exactly as it appears in the JSON, wrapped in double quotes. Don't reformat it. (The software unescapes the `\n` at runtime.)
@@ -326,18 +326,9 @@ For **each** `.json` file in the backend's workflow folder:
 3. Select the `.json` file.
 4. Click **Save**, then **toggle the workflow to Active / Published** (top-right switch).
 
-```
-📷 The Import menu and the Active toggle:
-┌──────────────────────────────────────────────────────────────┐
-│  n8n   Workflows                          [ Add workflow  ▼ ] │
-│                                              ├─ Import from File │ ← (3a) import each .json
-│                                              └─ Import from URL   │
-├──────────────────────────────────────────────────────────────┤
-│  Agent 1 - Resume Builder        [ Inactive ⚪──── ] Save        │
-│                                            ▲                     │
-│                            toggle to  [ Active ────⚫ ]          │ ← (3b) MUST be Active/Published
-└──────────────────────────────────────────────────────────────┘
-```
+!!! example "Import menu and the Active toggle"
+    - **Import:** in n8n, click **Add workflow → Import from File** and select each `.json`.
+    - **Activate:** after importing, toggle each workflow to **Active** (top-right). Every workflow must be Active/Published, or sub-workflow calls fail.
 
 > 📌 **Sub-workflows must be Published, not just Saved**, or the workflows that call them will fail.
 
@@ -357,7 +348,7 @@ The rest (Agents 1–10, Call LLM, the recorders, the source connectors) are sub
 
 ## Step 9 — Connect n8n credentials
 
-n8n needs to know your Google service account and your AI provider key. You add these as **credentials** inside n8n.
+n8n needs to know your Google service account and your AI provider key. You add these as **credentials** inside n8n. You'll also enter your database ID into one workflow that can't read it automatically.
 
 ### Google service account (for Sheets & Drive)
 
@@ -375,44 +366,45 @@ The agents call the providers through HTTP nodes inside the **Call LLM** workflo
 2. For Anthropic: header name `x-api-key`, value = your `sk-ant-...` key.
 3. Save and select it in Call LLM's Anthropic HTTP node. (Repeat with the appropriate header for OpenAI/Gemini if you use them — see the [Configuration guide](03-configuration.md#ai-provider-credentials).)
 
-```
-📷 The Header Auth credential (Anthropic example):
-┌────────────────────────────────────────────────┐
-│  Header Auth                                     │
-├────────────────────────────────────────────────┤
-│  Name:   ┌──────────────────────────────────┐  │
-│          │ x-api-key                        │  │ ← exactly this header name
-│          └──────────────────────────────────┘  │
-│  Value:  ┌──────────────────────────────────┐  │
-│          │ sk-ant-•••••••••••••••••••••••••• │  │ ← your Anthropic key
-│          └──────────────────────────────────┘  │
-│                                       [ Save ]   │
-└────────────────────────────────────────────────┘
-  OpenAI → header "Authorization", value "Bearer sk-..."
-  Gemini → header "x-goog-api-key", value <your key>
-```
+!!! example "Header Auth credential — Anthropic"
+    | Field | Value |
+    |-------|-------|
+    | **Name** | `x-api-key` (exactly this header name) |
+    | **Value** | your `sk-ant-…` key |
+
+    For other providers: OpenAI uses header `Authorization` with value `Bearer sk-…`; Gemini uses `x-goog-api-key` with your key.
 
 ### Webhook secret (protects the trigger webhooks)
 
-The three entry workflows (Application Orchestrator, Job Discovery, Application Refinement) are protected by a shared secret so only your dashboard and scheduler can fire them. This must match the `MAESTRO_WEBHOOK_SECRET` you set in `.env.local` ([Step 6](#step-6--configure-environment-variables)).
+The four entry workflows (Application Orchestrator, Job Discovery, Application Refinement, Cover Letter Generation & Refinement) are protected by a shared secret so only your dashboard and scheduler can fire them. This must match the `MAESTRO_WEBHOOK_SECRET` you set in `.env.local` ([Step 6](#step-6--configure-environment-variables)).
 
 1. **Credentials → Add Credential → Header Auth.**
 2. Header name: `X-Maestro-Secret`
 3. Value: **the exact same string** you used for `MAESTRO_WEBHOOK_SECRET`.
-4. Save, then open each of the three entry workflows' **Webhook** node and select this credential for authentication.
+4. Save, then open each of the four entry workflows' **Webhook** node and select this credential for authentication.
 
-```
-📷 The webhook-secret Header Auth:
-┌────────────────────────────────────────────────┐
-│  Header Auth                                     │
-├────────────────────────────────────────────────┤
-│  Name:   X-Maestro-Secret                        │ ← exactly this
-│  Value:  <same as MAESTRO_WEBHOOK_SECRET>        │ ← must match .env.local
-│                                       [ Save ]   │
-└────────────────────────────────────────────────┘
-```
+!!! example "Webhook-secret Header Auth"
+    | Field | Value |
+    |-------|-------|
+    | **Name** | `X-Maestro-Secret` (exactly this) |
+    | **Value** | the same string as `MAESTRO_WEBHOOK_SECRET` in `.env.local` |
 
 > ⚠️ If this secret doesn't match on both sides, the dashboard's trigger buttons return **503** and the scheduler silently skips every run. A mismatch here is the most common reason "nothing happens when I click Build."
+
+### Database ID in the Run Error Handler
+
+One workflow needs your database ID entered by hand. The **Run Error Handler** records pipeline errors back to the database, but because it runs in an isolated context it can't read the ID the usual way — so it's set directly inside the workflow with a placeholder you must replace.
+
+1. In n8n, open the **Run Error Handler** workflow.
+2. Find the **Error Handler Config** node (a Set node near the start).
+3. It holds a field `database_id` with the placeholder value `YOUR_GOOGLE_SHEETS_DATABASE_ID`.
+4. Replace that placeholder with your actual database Sheet ID — the same value you used for `GOOGLE_SHEETS_DATABASE_ID` in [Step 6](#step-6--configure-environment-variables).
+5. Save the workflow.
+
+!!! example "The database_id field — Error Handler Config"
+    In the **Error Handler Config** (Set) node, replace the `database_id` placeholder `YOUR_GOOGLE_SHEETS_DATABASE_ID` with your real database Sheet ID, then **Save**.
+
+> ⚠️ If you skip this, the pipeline still runs, but when a workflow errors, the failure won't be recorded to your database — so the dashboard's failure indicators won't light up and you'll have to debug from n8n's execution log instead.
 
 ---
 

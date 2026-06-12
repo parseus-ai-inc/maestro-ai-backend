@@ -12,23 +12,15 @@ This page explains what the dossier is, how to structure it, and the principles 
 
 Think of the dossier as your **"everything" résumé**: a complete, honest record of your career that's far longer than any single résumé would be. For each job application, the Résumé Builder reads the job description, then *selects and emphasizes* the relevant parts of your dossier — it never adds anything that isn't there.
 
+```mermaid
+flowchart TD
+    MD[("Your Master Dossier<br/>everything you've done")]
+    MD -->|Agent 1 reads it| R1["Résumé for Product role<br/>emphasizes product wins"]
+    MD -->|Agent 1 reads it| R2["Résumé for AI/ML role<br/>emphasizes ML & infra"]
+    MD -->|Agent 1 reads it| R3["Résumé for Robotics role<br/>emphasizes robotics work"]
 ```
-                    ┌─────────────────────────────┐
-                    │   Your Master Dossier         │
-                    │   (everything you've done)    │
-                    └──────────────┬────────────────┘
-                                   │ Agent 1 reads it
-            ┌──────────────────────┼──────────────────────┐
-            │                      │                      │
-   ┌────────▼────────┐   ┌─────────▼────────┐   ┌─────────▼────────┐
-   │ Résumé for       │   │ Résumé for        │   │ Résumé for        │
-   │ Product role     │   │ AI/ML role        │   │ Robotics role     │
-   │ (emphasizes      │   │ (emphasizes       │   │ (emphasizes       │
-   │  product wins)   │   │  ML & infra)      │   │  robotics work)   │
-   └──────────────────┘   └───────────────────┘   └───────────────────┘
 
-   Same source of truth → different emphasis per job. Nothing invented.
-```
+*Same source of truth → different emphasis per job. Nothing invented.*
 
 **The golden rule:** if a fact, metric, or credential isn't in your dossier, it can't appear on any résumé. So the dossier should be **comprehensive** (everything relevant you've ever done) and **truthful** (every claim something you'd stand behind in an interview).
 

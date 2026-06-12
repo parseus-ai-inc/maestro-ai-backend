@@ -48,14 +48,8 @@ For **each** file:
 3. Select the `.json` file from the `workflows/` subfolder.
 4. The workflow opens. Click **Save** (top-right).
 
-```
-📷 Import from File:
-┌──────────────────────────────────────────────────────────────┐
-│  n8n   Overview                          [ Create workflow ▾ ] │
-│                                            ├─ Import from File… │ ← click
-│                                            └─ Import from URL…   │
-└──────────────────────────────────────────────────────────────┘
-```
+!!! example "Import from File"
+    In n8n, click **Create workflow ▾ → Import from File…** and select the `.json` file.
 
 Repeat until all 31 are imported. After this, your workflow list shows all 31 by name (Agent 1 – Resume Builder, Application Orchestrator, Call LLM, and so on).
 
@@ -67,12 +61,8 @@ Importing and saving is **not** enough. n8n only lets one workflow call another 
 
 For each of the 31 workflows, open it and toggle it **Active** using the switch in the top-right.
 
-```
-📷 The Active toggle (top-right of each workflow):
-   [ Inactive ⚪──── ]   →   [ Active ────⚫ ]
-                                    ▲
-                          must be ON for all 31
-```
+!!! warning "Activate every workflow"
+    After importing, toggle each workflow from **Inactive** to **Active** (top-right). All 31 must be Active — sub-workflows that aren't published are invisible to their callers.
 
 > 📌 **All 31 must be Active**, not just the entry workflows. The agents, sources, recorders, and shared helpers are all called as sub-workflows, and a sub-workflow that isn't published is invisible to its caller.
 
@@ -89,13 +79,8 @@ The exported workflows reference a Google service-account credential by an inter
 3. Click the node, open its **Credential** dropdown, and select your Google credential.
 4. Save.
 
-```
-📷 A node with a missing credential:
-┌─────────────────────────────────────┐
-│  Google Sheets                       │
-│  Credential:  ⚠ [ Select credential ▾ ] │ ← pick your Google SA
-└─────────────────────────────────────┘
-```
+!!! example "A node with a missing credential"
+    A node showing a ⚠ on its **Credential** dropdown (e.g. a Google Sheets node) needs you to re-select your credential. Open the node and pick your Google service account.
 
 > 💡 You don't have to touch every node by hand. n8n shares a credential across all nodes that use it — once you select your Google credential on one Sheets node, re-open the others and they'll usually offer it as the default. Work through any that still show a warning.
 
@@ -118,7 +103,7 @@ See [Configuration → AI provider credentials](03-configuration.md#ai-provider-
 
 ## Step 5 — Set the webhook secret on the entry workflows
 
-The three trigger workflows are protected by a shared secret so only your dashboard and scheduler can fire them. Each entry workflow's **Webhook** node needs a Header Auth credential whose value matches the `MAESTRO_WEBHOOK_SECRET` in your dashboard's `.env.local`.
+The four trigger workflows are protected by a shared secret so only your dashboard and scheduler can fire them. Each entry workflow's **Webhook** node needs a Header Auth credential whose value matches the `MAESTRO_WEBHOOK_SECRET` in your dashboard's `.env.local`.
 
 1. **Credentials → Add Credential → Header Auth.**
 2. Header name: `X-Maestro-Secret`; value: the same string you set for `MAESTRO_WEBHOOK_SECRET`.
@@ -126,7 +111,7 @@ The three trigger workflows are protected by a shared secret so only your dashbo
    - **Job Discovery** (`/webhook/run-discovery`)
    - **Application Orchestrator** (`/webhook/build-application`)
    - **Application Refinement** (`/webhook/refine-resume`)
-   - **Cover Letter Generation & Refinement** (if it exposes a webhook)
+   - **Cover Letter Generation & Refinement** (`/webhook/generate-cover-letter`)
 
 > ⚠️ If this secret doesn't match what the dashboard/scheduler send, triggering returns **503** and the scheduler silently skips. This is the most common "nothing happens when I click Build" cause.
 
@@ -137,7 +122,7 @@ The three trigger workflows are protected by a shared secret so only your dashbo
 A few workflows carry a placeholder where a Google Sheet/Drive ID belongs. The most important is the **Run Error Handler**, which holds the database ID in a Set node (it can't read it from the run, by design).
 
 1. Open **Run Error Handler**.
-2. Find the **Set** node holding `database_id` (value shows `YOUR_GOOGLE_SHEETS_DATABASE_ID`).
+2. Find the **Error Handler Config** node (a Set node) holding `database_id` (value shows `YOUR_GOOGLE_SHEETS_DATABASE_ID`).
 3. Replace it with your actual database Sheet ID (the long string from your Sheet's URL).
 4. Save.
 
