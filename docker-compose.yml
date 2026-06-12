@@ -1,0 +1,50 @@
+# Maestro AI — backend infrastructure
+# Runs the n8n workflow engine that powers the Maestro pipeline.
+#
+# The dashboard and the discovery scheduler live in the FRONTEND repo
+# (they share application code), and talk to this n8n over webhooks.
+#
+# Quick start:
+#   1. Copy .env.example to .env and fill in the values.
+#   2. docker compose -p agentic-recruiter up -d
+#   3. Open http://localhost:5678 and import the workflows from ./workflows
+#
+# NOTE: the project name is pinned to "agentic-recruiter" so the named
+# data volume persists across restarts. Always pass -p agentic-recruiter,
+# or set COMPOSE_PROJECT_NAME=agentic-recruiter in your .env.
+
+services:
+  n8n:
+    image: docker.n8n.io/n8nio/n8n:latest
+    container_name: maestro-n8n
+    restart: unless-stopped
+    ports:
+      - "5678:5678"
+    environment:
+      # --- Basic auth: CHANGE THESE before first start --------------
+      N8N_BASIC_AUTH_ACTIVE: "true"
+      N8N_BASIC_AUTH_USER: "${N8N_BASIC_AUTH_USER:-admin}"
+      N8N_BASIC_AUTH_PASSWORD: "${N8N_BASIC_AUTH_PASSWORD:?set N8N_BASIC_AUTH_PASSWORD in .env}"
+      # -------------------------------------------------------------
+      N8N_HOST: localhost
+      N8N_PORT: 5678
+      N8N_PROTOCOL: http
+      WEBHOOK_URL: http://localhost:5678/
+      # Google Drive folder where the pipeline creates per-job folders.
+      ROOT_FOLDER_ID: "${ROOT_FOLDER_ID:?set ROOT_FOLDER_ID in .env}"
+      # Allow workflow nodes to read these env vars at runtime.
+      N8N_BLOCK_ENV_ACCESS_IN_NODE: "false"
+      GENERIC_TIMEZONE: "${GENERIC_TIMEZONE:-America/Los_Angeles}"
+      TZ: "${GENERIC_TIMEZONE:-America/Los_Angeles}"
+      N8N_RUNNERS_ENABLED: "true"
+      N8N_DIAGNOSTICS_ENABLED: "false"
+      N8N_HIRING_BANNER_ENABLED: "false"
+      N8N_SECURE_COOKIE: "false"
+    volumes:
+      - n8n_data:/home/node/.n8n
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+volumes:
+  n8n_data:
+    name: agentic_n8n_data

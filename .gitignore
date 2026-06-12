@@ -1,0 +1,21 @@
+# Secrets — NEVER commit these
+.env
+.env.local
+*.env
+service-account*.json
+*-credentials.json
+google-credentials*.json
+
+# n8n raw exports (scratch)
+maestro-export/
+workflows-clean/
+
+# OS / editor noise
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Node
+node_modules/
+npm-debug.log*
