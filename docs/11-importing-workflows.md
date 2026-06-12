@@ -1,10 +1,10 @@
 # 11. Importing the Workflows into n8n
 
-[← Master Career Dossier](10-master-dossier.md) · [Back to README →](../README.md)
+[← Master Career Dossier](10-master-dossier.md) · [Home →](index.md)
 
 ---
 
-This guide walks you through importing Maestro's 31 workflows into your own n8n instance. It assumes you've already started n8n (see [Installation, Step 7](02-installation.md#step-7--start-the-backend-n8n)) and can open it at **http://localhost:5678**.
+This guide walks you through importing Maestro's 31 workflows into your own n8n instance. It assumes you've already started n8n (see [Installation, Step 7](02-installation.md#step-7-start-the-backend-n8n)) and can open it at **http://localhost:5678**.
 
 > ⏱️ **Time:** 20–30 minutes. Most of it is the import clicks; the wiring at the end is quick.
 
@@ -74,7 +74,7 @@ A fast way to verify: in the workflow list, every row should show a green **Acti
 
 The exported workflows reference a Google service-account credential by an internal ID that won't exist in *your* n8n. After import, the Google Sheets and Google Drive nodes will show the credential as missing or unset. You fix this once, then re-select it where needed.
 
-1. First create the credential if you haven't: **Credentials → Add Credential → Google Service Account API**, and paste your service account's `client_email` and `private_key`. (See [Installation Step 9](02-installation.md#step-9--connect-n8n-credentials).)
+1. First create the credential if you haven't: **Credentials → Add Credential → Google Service Account API**, and paste your service account's `client_email` and `private_key`. (See [Installation Step 9](02-installation.md#step-9-connect-n8n-credentials).)
 2. Open any workflow that has a Google Sheets or Drive node showing a red "credential" warning.
 3. Click the node, open its **Credential** dropdown, and select your Google credential.
 4. Save.
@@ -163,4 +163,4 @@ Once all eight are checked, the pipeline is live and the dashboard can drive it.
 
 ---
 
-[← Master Career Dossier](10-master-dossier.md) · [Back to README →](../README.md)
+[← Master Career Dossier](10-master-dossier.md) · [Home →](index.md)

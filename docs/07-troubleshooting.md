@@ -10,7 +10,7 @@ Common problems and how to fix them. Issues are grouped by where they show up.
 
 ### `docker` or `node` "command not found"
 
-The program isn't installed or isn't on your PATH. Re-run the [prerequisite installs](02-installation.md#step-1--install-prerequisite-software), then **close and reopen your terminal** so it picks up the new commands.
+The program isn't installed or isn't on your PATH. Re-run the [prerequisite installs](02-installation.md#step-1-install-prerequisite-software), then **close and reopen your terminal** so it picks up the new commands.
 
 ### Docker says it can't connect / "daemon not running"
 

@@ -12,18 +12,18 @@ This guide takes you from a fresh computer to a running Maestro AI system. It's 
 
 ## What you'll set up, in order
 
-1. [Install the prerequisite software](#step-1--install-prerequisite-software) (Docker, Node.js, Git)
-2. [Get the Maestro code](#step-2--get-the-maestro-code) (clone both repositories)
-3. [Set up your Google account](#step-3--set-up-your-google-cloud-project) (project, APIs, service account)
-4. [Create your database](#step-4--create-the-database-spreadsheet) (copy the Google Sheet)
-5. [Get your AI provider key](#step-5--get-an-ai-provider-api-key) (Anthropic recommended)
-6. [Configure environment files](#step-6--configure-environment-variables) (passwords and keys)
-7. [Start the backend](#step-7--start-the-backend-n8n) (n8n in Docker)
-8. [Import the workflows](#step-8--import-the-n8n-workflows)
-9. [Connect n8n to Google and your AI provider](#step-9--connect-n8n-credentials)
-10. [Start the dashboard](#step-10--start-the-maestro-dashboard)
-11. [Start the scheduler](#step-11--start-the-scheduler-optional)
-12. [Verify everything works](#step-12--verify-the-installation)
+1. [Install the prerequisite software](#step-1-install-prerequisite-software) (Docker, Node.js, Git)
+2. [Get the Maestro code](#step-2-get-the-maestro-code) (clone both repositories)
+3. [Set up your Google account](#step-3-set-up-your-google-cloud-project) (project, APIs, service account)
+4. [Create your database](#step-4-create-the-database-spreadsheet) (copy the Google Sheet)
+5. [Get your AI provider key](#step-5-get-an-ai-provider-api-key) (Anthropic recommended)
+6. [Configure environment files](#step-6-configure-environment-variables) (passwords and keys)
+7. [Start the backend](#step-7-start-the-backend-n8n) (n8n in Docker)
+8. [Import the workflows](#step-8-import-the-n8n-workflows)
+9. [Connect n8n to Google and your AI provider](#step-9-connect-n8n-credentials)
+10. [Start the dashboard](#step-10-start-the-maestro-dashboard)
+11. [Start the scheduler](#step-11-start-the-scheduler-optional)
+12. [Verify everything works](#step-12-verify-the-installation)
 
 ---
 
@@ -159,7 +159,7 @@ The service account handles Sheets and reading Drive — but on a regular (consu
     3. Click **Authorize APIs**, sign in with your test-user account, and allow access.
     4. Click **Exchange authorization code for tokens**, then copy the **Refresh token**.
 
-You now have three OAuth values — Client ID, Client secret, and refresh token — which go into the dashboard's `.env.local` in [Step 6](#step-6--configure-environment-variables).
+You now have three OAuth values — Client ID, Client secret, and refresh token — which go into the dashboard's `.env.local` in [Step 6](#step-6-configure-environment-variables).
 
 > 💡 **Why a refresh token?** It lets the dashboard keep acting as you on Drive without you logging in each time. Treat it like a password — it's in `.env.local`, which is never committed.
 
@@ -285,7 +285,7 @@ MAESTRO_WEBHOOK_SECRET=choose-a-long-random-string
 
 > 💡 **About the private key's `\n`:** the key in your JSON file contains literal `\n` characters marking line breaks. Paste it exactly as it appears in the JSON, wrapped in double quotes. Don't reformat it. (The software unescapes the `\n` at runtime.)
 
-> 🔑 **Pick your `MAESTRO_WEBHOOK_SECRET` now and remember it.** You'll enter the exact same value into n8n in [Step 9](#step-9--connect-n8n-credentials). Any long random string works — it's a shared password between the dashboard/scheduler and the pipeline.
+> 🔑 **Pick your `MAESTRO_WEBHOOK_SECRET` now and remember it.** You'll enter the exact same value into n8n in [Step 9](#step-9-connect-n8n-credentials). Any long random string works — it's a shared password between the dashboard/scheduler and the pipeline.
 
 > ℹ️ **Don't put a space after the `=`.** Write `KEY=value`, not `KEY= value` — a leading space becomes part of the value.
 
@@ -376,7 +376,7 @@ The agents call the providers through HTTP nodes inside the **Call LLM** workflo
 
 ### Webhook secret (protects the trigger webhooks)
 
-The four entry workflows (Application Orchestrator, Job Discovery, Application Refinement, Cover Letter Generation & Refinement) are protected by a shared secret so only your dashboard and scheduler can fire them. This must match the `MAESTRO_WEBHOOK_SECRET` you set in `.env.local` ([Step 6](#step-6--configure-environment-variables)).
+The four entry workflows (Application Orchestrator, Job Discovery, Application Refinement, Cover Letter Generation & Refinement) are protected by a shared secret so only your dashboard and scheduler can fire them. This must match the `MAESTRO_WEBHOOK_SECRET` you set in `.env.local` ([Step 6](#step-6-configure-environment-variables)).
 
 1. **Credentials → Add Credential → Header Auth.**
 2. Header name: `X-Maestro-Secret`
@@ -398,7 +398,7 @@ One workflow needs your database ID entered by hand. The **Run Error Handler** r
 1. In n8n, open the **Run Error Handler** workflow.
 2. Find the **Error Handler Config** node (a Set node near the start).
 3. It holds a field `database_id` with the placeholder value `YOUR_GOOGLE_SHEETS_DATABASE_ID`.
-4. Replace that placeholder with your actual database Sheet ID — the same value you used for `GOOGLE_SHEETS_DATABASE_ID` in [Step 6](#step-6--configure-environment-variables).
+4. Replace that placeholder with your actual database Sheet ID — the same value you used for `GOOGLE_SHEETS_DATABASE_ID` in [Step 6](#step-6-configure-environment-variables).
 5. Save the workflow.
 
 !!! example "The database_id field — Error Handler Config"

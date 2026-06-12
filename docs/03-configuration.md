@@ -8,7 +8,7 @@ This page covers everything you configure: your Google Cloud project, the databa
 
 ## Google Cloud setup
 
-This expands on Step 3 of the [Installation Guide](02-installation.md#step-3--set-up-your-google-cloud-project). Maestro reads and writes Google Sheets and stores files in Google Drive on your behalf, using a **service account** — a non-human Google identity with its own key.
+This expands on Step 3 of the [Installation Guide](02-installation.md#step-3-set-up-your-google-cloud-project). Maestro reads and writes Google Sheets and stores files in Google Drive on your behalf, using a **service account** — a non-human Google identity with its own key.
 
 ### Create the project and enable APIs
 
@@ -96,7 +96,7 @@ These drive **target fit** scoring and discovery.
 | `background_titles` | `VP Product, Head of AI` |
 | `profile_summary` | A short paragraph describing your career identity |
 
-> 📌 **Keep target and background separate.** `target_*` describes the role you *want*; `profile_summary` / `background_titles` describe what you *have*. Mixing them collapses the two fit scores into one. (This was a real bug the project fixed — see [Architecture](05-architecture.md#two-scoring-axes).)
+> 📌 **Keep target and background separate.** `target_*` describes the role you *want*; `profile_summary` / `background_titles` describe what you *have*. Mixing them collapses the two fit scores into one. (This was a real bug the project fixed — see [Architecture](05-architecture.md#the-two-scoring-axes).)
 
 ### The master document
 

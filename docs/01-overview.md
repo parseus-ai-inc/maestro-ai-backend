@@ -1,6 +1,6 @@
 # 1. Overview
 
-[← Back to README](../README.md) · [Next: Installation →](02-installation.md)
+[← Home](index.md) · [Next: Installation →](02-installation.md)
 
 ---
 
@@ -101,4 +101,4 @@ Nothing is sent anywhere on your behalf. Maestro prepares; you act.
 
 ---
 
-[← Back to README](../README.md) · [Next: Installation →](02-installation.md)
+[← Home](index.md) · [Next: Installation →](02-installation.md)
