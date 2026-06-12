@@ -1,10 +1,10 @@
 # Maestro AI
 
+<p class="brand-byline"><em><strong>A product of <a href="https://parseus.ai/">Parseus AI</a></strong></em></p>
+
 **Finding jobs was never the hard part — building an application that gets read is, especially when the same AI writing your resume is the one screening it out.**
 
 AI should help you apply for jobs — not apply for you, and not flatten you into the same resume everyone else is sending. Maestro is the open-source system built for that: a team of specialized agents that learns your real history once, then tailors and fact-checks every resume and cover letter in your voice, on models you choose, and tracks every application, version, and penny spent in one place. Bring your own roles or let it discover them — either way, you stay in control of every decision.
-
-A product of [Parseus AI](https://parseus.ai).
 
 ## What problem it solves
 
