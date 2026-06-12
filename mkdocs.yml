@@ -59,11 +59,13 @@ markdown_extensions:
   - tables
   - attr_list
   - md_in_html
+  - footnotes
   - toc:
       permalink: true
 
 nav:
   - Home: index.md
+  - Why Maestro?: why-maestro.md
   - Getting started:
       - Overview: 01-overview.md
       - Installation: 02-installation.md

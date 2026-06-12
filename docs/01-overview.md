@@ -18,6 +18,27 @@ It does five things:
 4. **Lets you review and refine** everything through a web dashboard.
 5. **Tracks** every application's status, from "not applied" through "offer" or "rejected."
 
+## How you experience it
+
+From your side, Maestro is a loop where the automation does the heavy lifting and you make every real decision. Blue steps are yours; teal steps run automatically; amber is where you hand it a job to work on.
+
+```mermaid
+flowchart TD
+    GOALS["You set your goals<br/>roles, preferences, master profile"]:::yours
+    GOALS --> DISC["Auto-discovers jobs<br/>scans boards, scores fit for you"]:::auto
+    GOALS --> PASTE["You paste a job too<br/>any URL or description, your pick"]:::input
+    DISC --> REVIEW["You review &amp; decide<br/>build, dismiss, or skip — your call"]:::yours
+    PASTE --> REVIEW
+    REVIEW --> BUILD["Auto-builds your application<br/>tailored résumé + cover letter"]:::auto
+    REVIEW --> CHECK["Self-checks the quality<br/>critiques, verifies, scores fit"]:::auto
+    BUILD --> REFINE["You refine to taste<br/>polish, re-run, or edit yourself"]:::yours
+    CHECK --> REFINE
+    REFINE --> TRACK["You track every application<br/>status, costs, analytics — one dashboard"]:::yours
+    classDef yours fill:#E6F1FB,stroke:#378ADD,color:#185FA5
+    classDef auto fill:#E1F5EE,stroke:#1D9E75,color:#0F6E56
+    classDef input fill:#FAEEDA,stroke:#BA7517,color:#854F0B
+```
+
 ## The two halves
 
 Maestro is made of two cooperating systems that share a single database.

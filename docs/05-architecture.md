@@ -10,14 +10,23 @@ This page is for developers who want to understand, modify, or contribute to Mae
 
 ```mermaid
 flowchart TD
-    DB[("Google Sheets database<br/>config · jobs · resumes · agent_outputs<br/>model_usage · run_state · prompts · master_doc · …")]
-    BE["n8n backend<br/>(3 entry workflows + sub-workflows)"]
-    DASH["Maestro dashboard<br/>(Next.js 16, port 4400)"]
-    SCHED["Scheduler (Node worker)<br/>reads job_search_cron from config"]
-    DB <-->|read/write| BE
-    DB <-->|read/write| DASH
-    BE <-->|webhook| DASH
-    SCHED -->|POST /webhook/run-discovery| BE
+    DASH["Maestro dashboard (Next.js)<br/>triggers runs via webhooks · reads results from the database"]:::dash
+    DASH --> DISC["Job Discovery<br/>fetch · score · rank jobs"]:::pipe
+    DASH --> ORCH["App Orchestrator<br/>build résumé + letter"]:::pipe
+    DASH --> REFINE["App Refinement<br/>polish · refine · re-score"]:::pipe
+    DISC --> LLM["Call LLM (shared)<br/>routes to Anthropic · OpenAI · Gemini"]:::router
+    ORCH --> LLM
+    REFINE --> LLM
+    LLM --> AGENTS["Specialized LLM agents · prompt-driven workers"]:::agents
+    AGENTS --> REC["Recorders<br/>usage · résumé · app · discovery · run"]:::rec
+    AGENTS --> DB[("Google Sheets database<br/>jobs · résumés · outputs · costs")]:::data
+    REC --> DB
+    classDef dash fill:#E6F1FB,stroke:#378ADD,color:#185FA5
+    classDef pipe fill:#E1F5EE,stroke:#1D9E75,color:#0F6E56
+    classDef router fill:#EEEDFE,stroke:#7F77DD,color:#3C3489
+    classDef agents fill:#FAECE7,stroke:#D85A30,color:#993C1D
+    classDef rec fill:#FAEEDA,stroke:#BA7517,color:#854F0B
+    classDef data fill:#F1EFE8,stroke:#B4B2A9,color:#5F5E5A
 ```
 
 The dashboard frontend code lives in a **separate repository** and is not part of the backend repo. The backend repo holds the n8n workflow exports, the database template, and the scheduler.
@@ -63,6 +72,29 @@ Agents 5, 6, and 7 are intentionally **decoupled from company/title/url** — th
 ## Pipeline topology
 
 ### Application pipeline
+
+The build fans out per job, then runs two branches in parallel — the résumé branch (builder, with a Verifier fact-checking claims and a Critic flagging weaknesses) and the cover-letter branch (gated). Both merge before scoring.
+
+```mermaid
+flowchart TD
+    FAN["Fan out per job"]:::neutral
+    FAN --> RB["Résumé Builder<br/>tailors résumé to the job"]:::agent
+    FAN --> CLG["Cover Letter Gate<br/>build letter or skip"]:::agent
+    RB --> VER["Verifier<br/>fact-checks claims"]:::check
+    RB --> CRIT["Critic<br/>flags weaknesses"]:::check
+    CLG --> CLB["Letter Builder<br/>+ Letter Verifier"]:::agent
+    VER --> MERGE["Merge branches"]:::neutral
+    CRIT --> MERGE
+    CLB --> MERGE
+    MERGE --> SCORE["Résumé Scorer<br/>rates final fit vs the job"]:::agent
+    SCORE --> REC["Record → database, return to dashboard"]:::rec
+    classDef neutral fill:#F1EFE8,stroke:#B4B2A9,color:#5F5E5A
+    classDef agent fill:#FAECE7,stroke:#D85A30,color:#993C1D
+    classDef check fill:#EEEDFE,stroke:#7F77DD,color:#3C3489
+    classDef rec fill:#FAEEDA,stroke:#BA7517,color:#854F0B
+```
+
+The exact node-level sequence (with the Data Loader, Merge Init, and per-recorder delegation) is:
 
 ```mermaid
 flowchart TD

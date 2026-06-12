@@ -10,7 +10,7 @@ Maestro AI automatically discovers jobs that match you, scores them for fit, dra
 
 ## New here?
 
-Start with the [Overview](01-overview.md) to understand how the pieces fit together, then follow the [Installation guide](02-installation.md) top to bottom.
+New here? See [**Why Maestro AI?**](why-maestro.md) for how it compares to the alternatives, then the [Overview](01-overview.md) for how the pieces fit together, and the [Installation guide](02-installation.md) to set it up.
 
 ## Find your way around
 
