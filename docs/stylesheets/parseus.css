@@ -81,15 +81,16 @@
 .md-typeset h3 { font-size: 1.05rem; }   /* was ~1.25rem */
 .md-typeset h4 { font-size: 0.92rem; }
 
-/* 7. Brand byline under the page title */
-.md-typeset .brand-byline {
-  font-size: 0.7rem;        /* ~10pt */
-  font-weight: 700;
+/* 7. Brand byline inline with the page title */
+.md-typeset h1 .brand-byline {
+  font-size: 0.7rem;        /* ~10pt — fixed, not relative to the H1 */
+  font-weight: 600;
   font-style: italic;
-  color: var(--md-default-fg-color--light);
-  margin-top: -0.6rem;      /* pull it snug under the H1 */
-  margin-bottom: 1.2rem;
+  color: var(--md-default-fg-color);   /* "A product of" stays default/black */
+  white-space: nowrap;
+  vertical-align: middle;
 }
-.md-typeset .brand-byline a {
-  color: var(--md-primary-fg-color);
+.md-typeset h1 .brand-byline a {
+  color: var(--md-primary-fg-color);   /* only "Parseus AI" is Persian blue */
+  text-decoration: none;
 }

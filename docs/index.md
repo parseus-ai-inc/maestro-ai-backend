@@ -1,6 +1,4 @@
-# Maestro AI
-
-<p class="brand-byline"><em><strong>A product of <a href="https://parseus.ai/">Parseus AI</a></strong></em></p>
+# Maestro AI<span class="brand-byline"> — <em>A product of <a href="https://parseus.ai/">Parseus AI</a></em></span>
 
 **Finding jobs was never the hard part — building an application that gets read is, especially when the same AI writing your resume is the one screening it out.**
 
