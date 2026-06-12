@@ -10,28 +10,31 @@ Maestro AI automatically discovers jobs that match you, scores them for fit, dra
 
 ## What problem it solves
 
-Applying for jobs is repetitive and slow — and the usual shortcuts make it worse. Paste your résumé into a chatbot for every posting and you redo the same work each time, with no memory of what you've applied to and no one checking the output for invented skills. Use a one-click auto-apply bot and you blast out generic, templated résumés that recruiters increasingly reject. Either way you get the same problems:
+Applying for jobs is repetitive and slow, so most people reach for one of two shortcuts. Both leave real gaps.
 
-- **Generic, templated output** that reads like every other applicant's.
-- **No fact-checking** — AI invents skills and numbers, and you're the only one catching them.
-- **No memory or tracking** — nothing carries a structured record of where you applied, at what cost.
-- **The tool decides, or you do everything by hand** — there's no middle ground that keeps you in control without drowning in manual work.
+**Using a GenAI provider — or its agents — by hand.** Pasting your résumé into an LLM like ChatGPT, Claude, or Gemini works for a single job, but it puts all the structure on you, every time. Even with their newer agent features, the same problems remain: you re-supply your background for every posting; you're the only one fact-checking, so invented skills and numbers slip through; nothing keeps a structured record of where you applied or what it cost; and the model's hidden memory quietly blends in context you can't see or edit, so each résumé drifts. It's one model, one default behavior — and the output converges on what everyone else's LLM produces.
 
-Maestro closes these gaps: it runs a real pipeline of specialized agents that draft, critique, and fact-check your application, builds everything from a master profile you curate, tracks every run, and leaves the apply decision to you.
+**Using existing job tools.** The point tools each solve a slice and leave the rest. Volume auto-appliers blast out generic, templated résumés (and risk your accounts). Trackers and autofill extensions organize applications but don't build or improve anything. Résumé optimizers tune keywords one résumé at a time, with no discovery, no fact-checking, and no cover letters. None of them score jobs for fit, check their own work, or let you control which model and prompt does what.
+
+**What both miss.** Neither path gives you a system that is *systematic* (a real pipeline, not one-off prompts), *self-checking* (something other than you catching fabrications), *accountable* (every application and its cost tracked in one place), *controllable* (your models, your prompts, your data), and *human-decided* (it builds the case; you make the call).
+
+Maestro closes those gaps: it runs a pipeline of specialized agents that discover and score jobs, draft, critique, and fact-check your application — all built from a master profile you curate, with every application and its cost tracked, and the apply decision always left to you.
 
 ## Why it matters now
 
-Generic AI résumés don't just underperform — they're now actively screened out, and there's a second, less obvious trap underneath.
+This isn't a hypothetical edge case — it's the defining frustration of the 2026 job market, and it's getting sharper.
 
-Recruiters report reviewing batches of résumés that feel interchangeable: identical summaries, the same action verbs, suspiciously clean formatting. When everyone uses the same tool with one fixed model and a locked prompt, output converges — and a résumé that reads too perfectly becomes a red flag. Vendor surveys put real numbers on it (a Resume Now survey of 925 HR workers found 62% reject AI résumés that lack personalization).
+Job seekers feel it as the **application black hole**: send a hundred tailored applications, hear nothing back. Recruiters feel the other side of it — they're buried in AI-generated résumés that all sound the same. *(Resume Now's survey of 925 HR workers found 90% report a surge in low-effort AI submissions.)* When everyone uses the same tool with one fixed model and a locked prompt, the output converges: identical summaries, the same action verbs, suspiciously clean formatting. A résumé that reads too perfectly has become a red flag — and the same survey found **62% of employers reject AI résumés that lack personalization.**
 
-The deeper trap is technical. A 2026 peer-reviewed study ([arXiv 2509.00462](https://arxiv.org/abs/2509.00462)) found that LLM résumé screeners prefer résumés written by *the same model* — a self-preference bias of 67–82% — and that candidates using the same model as the screener were **23–60% more likely to be shortlisted**, even when quality was equal. If every applicant's tool writes with one default model, sameness compounds.
+Then there's the trap almost no one sees. A 2026 peer-reviewed study ([arXiv 2509.00462](https://arxiv.org/abs/2509.00462)) found that the AI screeners *employers* use prefer résumés written by **the same model** — a self-preference bias of 67–82%. Candidates whose tool happened to use the screener's model were **23–60% more likely to be shortlisted**, even when quality was identical. That's the difference between a callback and silence — decided not by your experience, but by which model wrote your résumé.
 
-Maestro is built to break both: you vary the model per agent and tune each prompt to your own voice, so your résumé reads like *you* — not like a tool's default that recruiters and screeners have learned to discount.
+So applicants are caught between two opposing readers: a human recruiter who rejects anything that smells generic, and an AI screener that quietly rewards résumés matching its own model. One default model and one locked prompt lose to both.
 
-## How is the experience with Maestro AI?
+Maestro is built for exactly this moment: you vary the model per agent and tune each prompt to your own voice, so your résumé reads like *you* — distinct enough to pass the human, and not locked to a single model the screener may or may not favor.
 
-From your side, Maestro is a loop where the automation does the heavy lifting and you make every real decision. You set your goals once, it discovers and scores jobs (or you paste one in), you decide what's worth pursuing, it builds and self-checks the application, you refine to taste, and everything is tracked in one place.
+## How Maestro solves it
+
+Maestro is a loop where the automation does the heavy lifting and you make every real decision. You set your goals once, it discovers and scores jobs (or you paste one in), you decide what's worth pursuing, it builds and self-checks the application, you refine to taste, and everything is tracked in one place.
 
 ![How a job seeker experiences Maestro: you set goals, it discovers and scores jobs, you review and decide, it builds and self-checks, you refine, and you track every application.](assets/diagrams/user-journey.svg)
 

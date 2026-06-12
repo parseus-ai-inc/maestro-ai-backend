@@ -19,30 +19,25 @@
   font-weight: 500;
 }
 
-/* ---- Slightly smaller, denser body text ---- */
-:root {
-  font-size: 122%;   /* Material's base; lower = smaller everything. Default ~125% */
-}
-.md-typeset {
-  font-size: 0.72rem;   /* body copy (default 0.8rem) */
-}
-.md-typeset h1 { font-size: 1.6rem; }
-.md-typeset h2 { font-size: 1.25rem; }
-.md-typeset h3 { font-size: 1rem; }
+/* ============================================================
+   Integrated TOC styling — make the left-nav page sections
+   read as a clean nested menu.
+   Root fix (per Material docs): the left sidebar is too narrow
+   to host the TOC, so WIDEN it first, then style the nesting.
+   ============================================================ */
 
-/* ---- Content width: keep comfortable margins, don't touch screen edges ---- */
-.md-grid {
-  max-width: 70rem;          /* comfortable reading width (default is 61rem) */
-}
-
-/* ---- Widen the left sidebar so the nested TOC has room ---- */
+/* 1. Widen the primary (left) sidebar to make room for nested TOC */
 @media screen and (min-width: 76.25em) {
   .md-sidebar--primary {
-    width: 13.5rem;
+    width: 14rem;            /* default is ~12.1rem */
+  }
+  /* keep content area balanced */
+  .md-main__inner {
+    max-width: none;
   }
 }
 
-/* ---- Integrated TOC: clean nested menu ---- */
+/* 2. Nested page-section links (the integrated TOC items) */
 .md-nav__item .md-nav .md-nav__item .md-nav__link {
   font-size: 0.62rem;
   line-height: 1.3;
@@ -55,55 +50,33 @@
   display: block;
 }
 
+/* 3. Indent guide line on the nested block */
 .md-nav__item .md-nav .md-nav {
   margin-left: 0.5rem;
   padding-left: 0.4rem;
   border-left: 1px solid var(--md-default-fg-color--lightest);
 }
 
+/* 4. Active section in brand blue */
 .md-nav__link--active,
 .md-nav__link--passed {
   color: var(--md-primary-fg-color) !important;
 }
 
-/* ---- Hide the duplicate page-title that toc.integrate repeats ---- */
-/* toc.integrate nests the page's TOC under the active nav item and
-   repeats the page title as a label. Hide that nested label only. */
-.md-nav--primary .md-nav__item--active .md-nav--secondary > label.md-nav__title,
-.md-nav--primary .md-nav__item--active > .md-nav__link[for] {
-  display: none;
+/* 5. The active PAGE title (parent of the nested list) stays bold */
+.md-nav__item--active > .md-nav__link:not(.md-nav__link--active) {
+  font-weight: 600;
 }
 
-/* ---- Polish ASCII mockups / sketches that stay as code blocks ---- */
-/* Center them, soften the background, add breathing room */
-.md-typeset pre > code {
-  border-radius: var(--md-border-radius, 4px);
+/* 6. Branded headings — Persian blue, bold, slightly smaller */
+.md-typeset h1,
+.md-typeset h2,
+.md-typeset h3,
+.md-typeset h4 {
+  color: var(--md-primary-fg-color);
+  font-weight: 700;
 }
-.md-typeset pre {
-  margin: 1.2em 0;
-}
-/* Mermaid diagrams: center and add space */
-.md-typeset .mermaid {
-  text-align: center;
-  margin: 1.5em 0;
-}
-
-/* ---- Brand the admonition callouts (example/note/tip/warning) ---- */
-/* "example" → Persian blue accent instead of default purple */
-.md-typeset .admonition.example,
-.md-typeset details.example {
-  border-color: #2E5BC9;
-}
-.md-typeset .example > .admonition-title,
-.md-typeset .example > summary {
-  background-color: rgba(46, 91, 201, 0.1);
-}
-.md-typeset .example > .admonition-title::before,
-.md-typeset .example > summary::before {
-  background-color: #2E5BC9;
-}
-/* tighten admonition tables */
-.md-typeset .admonition table {
-  margin: 0.4em 0;
-  font-size: 0.92em;
-}
+.md-typeset h1 { font-size: 1.85rem; }   /* was ~2rem */
+.md-typeset h2 { font-size: 1.35rem; }   /* was ~1.5rem */
+.md-typeset h3 { font-size: 1.05rem; }   /* was ~1.25rem */
+.md-typeset h4 { font-size: 0.92rem; }
