@@ -1,11 +1,5 @@
-﻿{
-  "updatedAt": "2026-06-11T23:29:58.415Z",
-  "createdAt": "2026-05-24T04:42:57.564Z",
-  "id": "SZrE9mEpEpFLly8n",
+{
   "name": "Run State Recorder",
-  "description": null,
-  "active": true,
-  "isArchived": false,
   "nodes": [
     {
       "parameters": {},
@@ -16,7 +10,7 @@
         48
       ],
       "id": "291cc5c0-cda9-423a-9fb5-b4f1ce1008f8",
-      "name": "When clicking â€˜Execute workflowâ€™"
+      "name": "When clicking ‘Execute workflow’"
     },
     {
       "parameters": {
@@ -188,7 +182,7 @@
     },
     {
       "parameters": {
-        "jsCode": "// Set Inputs â€” Run State Recorder\nconst t = $input.first()?.json || {};\nconst str = (v) => (v === undefined || v === null) ? '' : String(v);\n// Strip a leading '=' that n8n can prepend to typed Workflow Inputs crossing the\n// Execute Workflow boundary. Without this, workflow='=discovery' â†’ state_key\n// '=discovery_current' â†’ Google Sheets writes '#NAME?' (broken formula).\nconst stripEq = (v) => { let s = str(v); while (s.charAt(0) === '=') s = s.slice(1); return s; };\n\nconst databaseId = stripEq(t.database_id);\nif (!databaseId) throw new Error('[Run State Set Inputs] database_id missing; the calling workflow must pass it');\nconst workflow = stripEq(t.workflow);\nif (!workflow) throw new Error('[Run State Set Inputs] workflow missing (e.g. \"discovery\")');\n\nconst creditEvent = t.credit_event === true || str(t.credit_event).toLowerCase() === 'true';\n\nreturn [{\n  json: {\n    database_id: databaseId,\n    workflow,\n    status: stripEq(t.status).toLowerCase(),\n    run_id: stripEq(t.run_id),\n    source: stripEq(t.source),\n    started_at: stripEq(t.started_at),\n    completed_at: stripEq(t.completed_at),\n    jobs_returned: stripEq(t.jobs_returned),\n    current_key: `${workflow}_current`,\n    last_key: `${workflow}_last`,\n    credit_event: creditEvent\n  }\n}];"
+        "jsCode": "// Set Inputs — Run State Recorder\nconst t = $input.first()?.json || {};\nconst str = (v) => (v === undefined || v === null) ? '' : String(v);\n// Strip a leading '=' that n8n can prepend to typed Workflow Inputs crossing the\n// Execute Workflow boundary. Without this, workflow='=discovery' → state_key\n// '=discovery_current' → Google Sheets writes '#NAME?' (broken formula).\nconst stripEq = (v) => { let s = str(v); while (s.charAt(0) === '=') s = s.slice(1); return s; };\n\nconst databaseId = stripEq(t.database_id);\nif (!databaseId) throw new Error('[Run State Set Inputs] database_id missing; the calling workflow must pass it');\nconst workflow = stripEq(t.workflow);\nif (!workflow) throw new Error('[Run State Set Inputs] workflow missing (e.g. \"discovery\")');\n\nconst creditEvent = t.credit_event === true || str(t.credit_event).toLowerCase() === 'true';\n\nreturn [{\n  json: {\n    database_id: databaseId,\n    workflow,\n    status: stripEq(t.status).toLowerCase(),\n    run_id: stripEq(t.run_id),\n    source: stripEq(t.source),\n    started_at: stripEq(t.started_at),\n    completed_at: stripEq(t.completed_at),\n    jobs_returned: stripEq(t.jobs_returned),\n    current_key: `${workflow}_current`,\n    last_key: `${workflow}_last`,\n    credit_event: creditEvent\n  }\n}];"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
@@ -201,7 +195,7 @@
     },
     {
       "parameters": {
-        "jsCode": "// Build Rows â€” Run State Recorder\n// running   â†’ write/refresh the current slot\n// completed â†’ promote the existing current row to the last slot (preserving its\n//             started_at / run_id / source), then clear the current slot.\n// error     â†’ same promotion as completed, but the last slot records status 'error'\n//             so failure-detection can distinguish a crash from a clean finish.\nconst inp = $('Set Inputs').first().json;\nconst existing = $('Read Current').first()?.json || {};\nconst dbId = inp.database_id;\nconst workflow = inp.workflow;\n\nif (inp.status === 'running') {\n  return [{\n    json: {\n      database_id: dbId,\n      state_key: inp.current_key,\n      workflow,\n      status: 'running',\n      run_id: inp.run_id,\n      source: inp.source,\n      started_at: inp.started_at,\n      completed_at: '',\n      jobs_returned: ''\n    }\n  }];\n}\n\n// completed | error: promote current â†’ last (preserving its identity), then clear current.\n// The last slot's status reflects the terminal outcome ('completed' or 'error').\nconst terminalStatus = inp.status === 'error' ? 'error' : 'completed';\nconst startedAt = existing.started_at || inp.started_at || '';\nconst runId     = existing.run_id     || inp.run_id     || '';\nconst source    = existing.source     || inp.source     || '';\n\nreturn [\n  {\n    json: {\n      database_id: dbId,\n      state_key: inp.last_key,\n      workflow,\n      status: terminalStatus,\n      run_id: runId,\n      source,\n      started_at: startedAt,\n      completed_at: inp.completed_at,\n      jobs_returned: inp.jobs_returned\n    }\n  },\n  {\n    json: {\n      database_id: dbId,\n      state_key: inp.current_key,\n      workflow,\n      status: 'idle',\n      run_id: '',\n      source: '',\n      started_at: '',\n      completed_at: '',\n      jobs_returned: ''\n    }\n  }\n];"
+        "jsCode": "// Build Rows — Run State Recorder\n// running   → write/refresh the current slot\n// completed → promote the existing current row to the last slot (preserving its\n//             started_at / run_id / source), then clear the current slot.\n// error     → same promotion as completed, but the last slot records status 'error'\n//             so failure-detection can distinguish a crash from a clean finish.\nconst inp = $('Set Inputs').first().json;\nconst existing = $('Read Current').first()?.json || {};\nconst dbId = inp.database_id;\nconst workflow = inp.workflow;\n\nif (inp.status === 'running') {\n  return [{\n    json: {\n      database_id: dbId,\n      state_key: inp.current_key,\n      workflow,\n      status: 'running',\n      run_id: inp.run_id,\n      source: inp.source,\n      started_at: inp.started_at,\n      completed_at: '',\n      jobs_returned: ''\n    }\n  }];\n}\n\n// completed | error: promote current → last (preserving its identity), then clear current.\n// The last slot's status reflects the terminal outcome ('completed' or 'error').\nconst terminalStatus = inp.status === 'error' ? 'error' : 'completed';\nconst startedAt = existing.started_at || inp.started_at || '';\nconst runId     = existing.run_id     || inp.run_id     || '';\nconst source    = existing.source     || inp.source     || '';\n\nreturn [\n  {\n    json: {\n      database_id: dbId,\n      state_key: inp.last_key,\n      workflow,\n      status: terminalStatus,\n      run_id: runId,\n      source,\n      started_at: startedAt,\n      completed_at: inp.completed_at,\n      jobs_returned: inp.jobs_returned\n    }\n  },\n  {\n    json: {\n      database_id: dbId,\n      state_key: inp.current_key,\n      workflow,\n      status: 'idle',\n      run_id: '',\n      source: '',\n      started_at: '',\n      completed_at: '',\n      jobs_returned: ''\n    }\n  }\n];"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
@@ -256,7 +250,9 @@
       }
     },
     {
-      "parameters": {},
+      "parameters": {
+        "numberInputs": 3
+      },
       "type": "n8n-nodes-base.merge",
       "typeVersion": 3.2,
       "position": [
@@ -311,7 +307,7 @@
     },
     {
       "parameters": {
-        "jsCode": "// Build Credit Row â€” Run State Recorder (credit_status branch)\n// Maintains a SINGLE global row in credit_status via read-modify-write so the\n// dashboard can answer \"is there an unresolved credit problem?\" with one read:\n// show warning iff last_credit_event_at > last_success_at.\n//\n// Fires only on TERMINAL events:\n//   - successful completion        â†’ refresh last_success_at (proves credit is back)\n//   - credit_event === true        â†’ refresh last_credit_event_at + workflow + run_id\n// A single completed-with-credit-failure run updates BOTH (jobs 1-3 saved = success,\n// job 4 ran out = credit event), which correctly leaves the warning ON because the\n// event timestamp will be >= the success timestamp.\n// Skips: running (not terminal) and plain error (a crash, not a credit issue).\n// Build Credit Row â€” Run State Recorder (credit_status branch)\n// Maintains a SINGLE global row in credit_status via read-modify-write so the\n// dashboard can answer \"is there an unresolved credit problem?\" with one read.\n// NOTE: the dashboard warning is now cleared ONLY by the user's confirm button,\n// which writes credit_resolved_at (show warning iff last_credit_event_at > credit_resolved_at).\n// last_success_at is still maintained here for diagnostics but is NO LONGER the kill-switch.\n//\n// Fires only on TERMINAL events:\n//   - successful completion        â†’ refresh last_success_at\n//   - credit_event === true        â†’ refresh last_credit_event_at + workflow + run_id\n// Skips: running (not terminal) and plain error (a crash, not a credit issue).\n\nconst inp = $('Set Inputs').first().json;\nconst existing = $('Read Credit Status').first()?.json || {};\n\nconst status = inp.status;\nconst isTerminalSuccess = (status !== 'running' && status !== 'error' && status !== '');\nconst isCreditEvent = inp.credit_event === true;\n\n// Nothing credit-relevant happened on this event â†’ write nothing.\nif (!isTerminalSuccess && !isCreditEvent) {\n  return [];\n}\n\nconst now = new Date().toISOString();\n\n// Preserve whichever timestamp this event does NOT touch.\nconst lastCreditEventAt = isCreditEvent ? now : (existing.last_credit_event_at || '');\nconst lastCreditWorkflow = isCreditEvent ? inp.workflow : (existing.last_credit_workflow || '');\nconst lastCreditRunId    = isCreditEvent ? inp.run_id   : (existing.last_credit_run_id || '');\nconst lastSuccessAt      = isTerminalSuccess ? now : (existing.last_success_at || '');\n\n// PRESERVE credit_resolved_at â€” written ONLY by the dashboard confirm button.\n// This node must never blank it, or the next credit/success event would silently\n// un-stick the user's \"I've topped up\" confirmation and re-show the warning.\nconst creditResolvedAt = existing.credit_resolved_at || '';\n\nreturn [{\n  json: {\n    id: 'global',\n    last_credit_event_at: lastCreditEventAt,\n    last_credit_workflow: lastCreditWorkflow,\n    last_credit_run_id: lastCreditRunId,\n    last_success_at: lastSuccessAt,\n    credit_resolved_at: creditResolvedAt\n  }\n}];"
+        "jsCode": "// Build Credit Row — Run State Recorder (credit_status branch)\n// Maintains a SINGLE global row in credit_status via read-modify-write so the\n// dashboard can answer \"is there an unresolved credit problem?\" with one read:\n// show warning iff last_credit_event_at > last_success_at.\n//\n// Fires only on TERMINAL events:\n//   - successful completion        → refresh last_success_at (proves credit is back)\n//   - credit_event === true        → refresh last_credit_event_at + workflow + run_id\n// A single completed-with-credit-failure run updates BOTH (jobs 1-3 saved = success,\n// job 4 ran out = credit event), which correctly leaves the warning ON because the\n// event timestamp will be >= the success timestamp.\n// Skips: running (not terminal) and plain error (a crash, not a credit issue).\n// Build Credit Row — Run State Recorder (credit_status branch)\n// Maintains a SINGLE global row in credit_status via read-modify-write so the\n// dashboard can answer \"is there an unresolved credit problem?\" with one read.\n// NOTE: the dashboard warning is now cleared ONLY by the user's confirm button,\n// which writes credit_resolved_at (show warning iff last_credit_event_at > credit_resolved_at).\n// last_success_at is still maintained here for diagnostics but is NO LONGER the kill-switch.\n//\n// Fires only on TERMINAL events:\n//   - successful completion        → refresh last_success_at\n//   - credit_event === true        → refresh last_credit_event_at + workflow + run_id\n// Skips: running (not terminal) and plain error (a crash, not a credit issue).\n\nconst inp = $('Set Inputs').first().json;\nconst existing = $('Read Credit Status').first()?.json || {};\n\nconst status = inp.status;\nconst isTerminalSuccess = (status !== 'running' && status !== 'error' && status !== '');\nconst isCreditEvent = inp.credit_event === true;\n\n// Nothing credit-relevant happened on this event → write nothing.\nif (!isTerminalSuccess && !isCreditEvent) {\n  return [];\n}\n\nconst now = new Date().toISOString();\n\n// Preserve whichever timestamp this event does NOT touch.\nconst lastCreditEventAt = isCreditEvent ? now : (existing.last_credit_event_at || '');\nconst lastCreditWorkflow = isCreditEvent ? inp.workflow : (existing.last_credit_workflow || '');\nconst lastCreditRunId    = isCreditEvent ? inp.run_id   : (existing.last_credit_run_id || '');\nconst lastSuccessAt      = isTerminalSuccess ? now : (existing.last_success_at || '');\n\n// PRESERVE credit_resolved_at — written ONLY by the dashboard confirm button.\n// This node must never blank it, or the next credit/success event would silently\n// un-stick the user's \"I've topped up\" confirmation and re-show the warning.\nconst creditResolvedAt = existing.credit_resolved_at || '';\n\nreturn [{\n  json: {\n    id: 'global',\n    last_credit_event_at: lastCreditEventAt,\n    last_credit_workflow: lastCreditWorkflow,\n    last_credit_run_id: lastCreditRunId,\n    last_success_at: lastSuccessAt,\n    credit_resolved_at: creditResolvedAt\n  }\n}];"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
@@ -416,8 +412,66 @@
           "name": "Google Service Account"
         }
       }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Build Credit Error Row — Run State Recorder\n// Appends a run_errors row when this terminal event carried a credit failure.\n// run_errors is the append-only failure ledger the analytics failure chart reads;\n// credit is a graceful soft-fail so the Error Trigger never fires for it — this is\n// the deliberate write that gives credit failures a durable, countable home.\n// Emits nothing unless credit_event is true (so non-credit runs add no row).\n\nconst inp = $('Set Inputs').first().json;\n\nif (inp.credit_event !== true) {\n  return [];\n}\n\n// Map the internal workflow key to the display name used in run_errors.workflow_name\n// (matches the Error Trigger's prefixMap convention).\nconst workflowDisplay = {\n  discovery: 'Job Discovery',\n  application: 'Application Orchestrator',\n  refinement: 'Application Refinement',\n  cover_letter: 'Cover Letter Generation & Refinement'\n}[inp.workflow] || inp.workflow;\n\nreturn [{\n  json: {\n    run_id: inp.run_id,\n    failed_at: new Date().toISOString(),\n    workflow_name: workflowDisplay,\n    workflow_id: '',\n    execution_id: '',\n    execution_url: '',\n    last_node: '',\n    error_name: 'insufficient_credit',\n    error_message: 'LLM credit exhausted during run (graceful soft-fail; see credit_status banner)',\n    error_stack: ''\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        32,
+        304
+      ],
+      "id": "9c808d2f-cde9-4df3-b24a-261ba4c881f6",
+      "name": "Build Credit Error Row"
+    },
+    {
+      "parameters": {
+        "authentication": "serviceAccount",
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "={{ $('Set Inputs').first().json.database_id }}",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "run_errors",
+          "mode": "name"
+        },
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "value": {},
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        448,
+        304
+      ],
+      "id": "d418c246-6231-47f2-a1f9-234890f9ef2c",
+      "name": "Record Credit Error",
+      "alwaysOutputData": false,
+      "retryOnFail": true,
+      "waitBetweenTries": 2000,
+      "credentials": {
+        "googleApi": {
+          "id": "pMz1vooaD0DQYUHW",
+          "name": "Google Service Account"
+        }
+      }
     }
   ],
+  "pinData": {},
   "connections": {
     "Trigger": {
       "main": [
@@ -441,7 +495,7 @@
         ]
       ]
     },
-    "When clicking â€˜Execute workflowâ€™": {
+    "When clicking ‘Execute workflow’": {
       "main": [
         [
           {
@@ -462,6 +516,11 @@
           },
           {
             "node": "Read Credit Status",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Build Credit Error Row",
             "type": "main",
             "index": 0
           }
@@ -522,43 +581,40 @@
           }
         ]
       ]
+    },
+    "Build Credit Error Row": {
+      "main": [
+        [
+          {
+            "node": "Record Credit Error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Record Credit Error": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 2
+          }
+        ]
+      ]
     }
   },
+  "active": true,
   "settings": {
     "executionOrder": "v1",
     "binaryMode": "separate"
   },
-  "staticData": null,
+  "versionId": "bdb09cba-126c-440e-beb7-7d0756ee9ac9",
   "meta": {
-    "templateCredsSetupCompleted": true
+    "templateCredsSetupCompleted": true,
+    "instanceId": "d819f81f25e576af23ba6dbf90c5d98d74dbfd9647e635669a68791df149b939"
   },
-  "pinData": {},
-  "versionId": "11fea632-7e4d-409f-99d0-3caa31b94cc8",
-  "activeVersionId": "11fea632-7e4d-409f-99d0-3caa31b94cc8",
-  "versionCounter": 206,
-  "triggerCount": 0,
-  "tags": [],
-  "shared": [
-    {
-      "updatedAt": "2026-05-24T04:42:57.567Z",
-      "createdAt": "2026-05-24T04:42:57.567Z",
-      "role": "workflow:owner",
-      "workflowId": "SZrE9mEpEpFLly8n",
-      "projectId": "kZS932EjZfpXmb7H",
-      "project": {
-        "updatedAt": "2026-05-06T02:54:00.051Z",
-        "createdAt": "2026-05-06T02:52:14.918Z",
-        "id": "kZS932EjZfpXmb7H",
-        "name": "Maestro AI",
-        "type": "personal",
-        "icon": null,
-        "description": null,
-        "creatorId": "e4ae7d04-ed18-4bb8-a6ad-b4b4dcae93ec"
-      }
-    }
-  ],
-  "versionMetadata": {
-    "name": "Version 11fea632",
-    "description": ""
-  }
+  "id": "SZrE9mEpEpFLly8n",
+  "tags": []
 }
