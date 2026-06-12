@@ -16,7 +16,7 @@ This expands on Step 3 of the [Installation Guide](02-installation.md#step-3-set
 2. Top bar → project dropdown → **New Project**. Name it `maestro`. Create and select it.
 3. Enable these APIs one at a time (search each by name in the top search bar, open it, click **Enable**):
    - **Google Sheets API** — read/write the database
-   - **Google Drive API** — store résumé/cover-letter files and folders
+   - **Google Drive API** — store resume/cover-letter files and folders
    - **Google Docs API** — apply formatting to converted documents
 
 ### Create the service account and key
@@ -63,7 +63,7 @@ You edit the **`value`** column. Below are the settings that matter most.
 
 ### Your identity
 
-These appear on your résumé header.
+These appear on your resume header.
 
 | Parameter | Example |
 |-----------|---------|
@@ -75,7 +75,7 @@ These appear on your résumé header.
 | `applicant_location` | `Seattle, WA` |
 | `applicant_linkedin_url` | `https://linkedin.com/in/jane-doe` |
 
-> 💡 Many people use a dedicated email for job applications. Set whatever address you want on the résumé here.
+> 💡 Many people use a dedicated email for job applications. Set whatever address you want on the resume here.
 
 ### What you're targeting
 
@@ -100,13 +100,13 @@ These drive **target fit** scoring and discovery.
 
 ### The master document
 
-Your full career history feeds every résumé draft. It lives in the `master_doc` tab as `key`/`value` rows (the dashboard's Master Doc page edits it). Think of it as your "everything" résumé — the agents pull only the relevant parts per job and are forbidden from inventing anything not in it.
+Your full career history feeds every resume draft. It lives in the `master_doc` tab as `key`/`value` rows (the dashboard's Master Doc page edits it). Think of it as your "everything" resume — the agents pull only the relevant parts per job and are forbidden from inventing anything not in it.
 
 ### Pipeline controls
 
 | Parameter | Values | Effect |
 |-----------|--------|--------|
-| `enable_refinement` | `TRUE` / `FALSE` | Whether Agent 6 refines the résumé after the critic |
+| `enable_refinement` | `TRUE` / `FALSE` | Whether Agent 6 refines the resume after the critic |
 | `enable_cover_letter` | `TRUE` / `FALSE` | Whether cover letters are generated |
 | `discovery_max_jobs_per_run` | a number | How many top jobs get fully scored per discovery run |
 | `discovery_rank_title_hard_floor` | a number (e.g. `25`) | Minimum rank score to survive the first-pass ranker |

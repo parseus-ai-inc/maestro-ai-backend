@@ -48,7 +48,7 @@ A typical cycle has four stages: **Discover → Review → Build → Track**.
 flowchart LR
     A["<b>Discover</b><br/>find & score<br/>open jobs"]
     B["<b>Review</b><br/>pick the jobs<br/>worth pursuing"]
-    C["<b>Build</b><br/>generate résumé<br/>+ cover letter<br/>+ critique/refine"]
+    C["<b>Build</b><br/>generate resume<br/>+ cover letter<br/>+ critique/refine"]
     D["<b>Track</b><br/>record where<br/>you applied"]
     A --> B --> C --> D
 ```
@@ -77,25 +77,25 @@ Decide which jobs are worth an application. You can **dismiss** ones you don't w
 
 Select one or more flagged jobs and click **Build**. The dashboard calls the **Application Orchestrator**, which for each job runs:
 
-1. **Agent 1** drafts a tailored résumé.
+1. **Agent 1** drafts a tailored resume.
 2. **Agent 5** critiques it like a recruiter.
 3. **Agent 6** refines it to address the critique (if `enable_refinement` is on).
 4. **Agent 3** verifies no facts were invented.
 5. **Agent 2** drafts a cover letter; **Agent 4** verifies it (if `enable_cover_letter` is on).
-6. **Agent 7** scores the final résumé's fit.
+6. **Agent 7** scores the final resume's fit.
 
-The results — the résumé, the critic's notes, the verifier's checks, and the score — are recorded to the `resumes` and `agent_outputs` tabs, and the files are saved to a per-job folder in Drive.
+The results — the resume, the critic's notes, the verifier's checks, and the score — are recorded to the `resumes` and `agent_outputs` tabs, and the files are saved to a per-job folder in Drive.
 
 This costs roughly **\$0.06–\$0.12** per job in API usage with the default models.
 
-### 4. Review and refine the résumé
+### 4. Review and refine the resume
 
-Open the application in the dashboard to read the generated résumé, the critic's feedback, and the verifier's findings. If you want changes, type **refinement instructions** and submit. This calls **Application Refinement**:
+Open the application in the dashboard to read the generated resume, the critic's feedback, and the verifier's findings. If you want changes, type **refinement instructions** and submit. This calls **Application Refinement**:
 
 - The **first** refinement is a "polish" — it re-works version 1 using the original critique and verification.
 - **Later** refinements ("refine") build on the previous version.
 
-Each refinement creates a new résumé version (`v2`, `v3`, …) so you never lose earlier drafts.
+Each refinement creates a new resume version (`v2`, `v3`, …) so you never lose earlier drafts.
 
 When you're happy, use **Save to Drive** to generate a clean `.docx` of that version into the job's folder.
 

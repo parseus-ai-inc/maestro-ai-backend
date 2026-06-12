@@ -4,13 +4,13 @@
 
 ---
 
-The **master career dossier** is the single most important thing you provide to Maestro. Every résumé and cover letter is built *entirely* from it — the agents are forbidden from inventing anything not present here. Get this right and everything downstream gets better.
+The **master career dossier** is the single most important thing you provide to Maestro. Every resume and cover letter is built *entirely* from it — the agents are forbidden from inventing anything not present here. Get this right and everything downstream gets better.
 
 This page explains what the dossier is, how to structure it, and the principles that make it work well.
 
 ## What it is — and why it matters
 
-Think of the dossier as your **"everything" résumé**: a complete, honest record of your career that's far longer than any single résumé would be. For each job application, the Résumé Builder reads the job description, then *selects and emphasizes* the relevant parts of your dossier — it never adds anything that isn't there.
+Think of the dossier as your **"everything" resume**: a complete, honest record of your career that's far longer than any single resume would be. For each job application, the Résumé Builder reads the job description, then *selects and emphasizes* the relevant parts of your dossier — it never adds anything that isn't there.
 
 ```mermaid
 flowchart TD
@@ -22,7 +22,7 @@ flowchart TD
 
 *Same source of truth → different emphasis per job. Nothing invented.*
 
-**The golden rule:** if a fact, metric, or credential isn't in your dossier, it can't appear on any résumé. So the dossier should be **comprehensive** (everything relevant you've ever done) and **truthful** (every claim something you'd stand behind in an interview).
+**The golden rule:** if a fact, metric, or credential isn't in your dossier, it can't appear on any resume. So the dossier should be **comprehensive** (everything relevant you've ever done) and **truthful** (every claim something you'd stand behind in an interview).
 
 ## Where it lives
 
@@ -108,7 +108,7 @@ AI/ML product strategy, robotics, computer vision, autonomous systems, team
 leadership, enterprise GTM, model infrastructure, cross-functional execution.
 ```
 
-Notice what makes this work: every bullet has **scope** (team size, deployment count) and a **quantified result** (`$18M ARR`, `41%`, `2.5M frames/day`). Those numbers are what the Builder pulls in to make a résumé concrete — and what the Verifier checks against.
+Notice what makes this work: every bullet has **scope** (team size, deployment count) and a **quantified result** (`$18M ARR`, `41%`, `2.5M frames/day`). Those numbers are what the Builder pulls in to make a resume concrete — and what the Verifier checks against.
 
 ---
 
@@ -123,7 +123,7 @@ One line: your name, an em-dash, and your professional identity or target level.
 
 ### The summary (the paragraph under the headline)
 
-Two or three sentences covering **years of experience, core domains, and signature impact**. The Builder uses this to write each résumé's professional summary, tailored to the role. Keep it factual — it's a description, not a sales pitch.
+Two or three sentences covering **years of experience, core domains, and signature impact**. The Builder uses this to write each resume's professional summary, tailored to the role. Keep it factual — it's a description, not a sales pitch.
 
 ### Experience (the heart of the dossier)
 
@@ -148,7 +148,7 @@ Degrees, fields, and institutions. Add certifications, postdocs, or fellowships 
 
 ### Skills
 
-A genuine, comma-separated list of skills, domains, and tools you've actually used. The Verifier will flag any skill on a résumé that isn't supported here — so this list defines what's "allowed" to appear.
+A genuine, comma-separated list of skills, domains, and tools you've actually used. The Verifier will flag any skill on a resume that isn't supported here — so this list defines what's "allowed" to appear.
 
 ---
 
@@ -156,7 +156,7 @@ A genuine, comma-separated list of skills, domains, and tools you've actually us
 
 ### 1. Comprehensiveness beats brevity
 
-A regular résumé is short because it's tailored to one role. The dossier is the *opposite* — it should be long and complete, a superset of every résumé Maestro could ever build. Missing accomplishments can never make it onto a résumé.
+A regular resume is short because it's tailored to one role. The dossier is the *opposite* — it should be long and complete, a superset of every resume Maestro could ever build. Missing accomplishments can never make it onto a resume.
 
 ### 2. Quantify everything you honestly can
 
@@ -166,19 +166,19 @@ Numbers are the raw material of strong bullets. `$18M ARR`, `22-person team`, `6
 
 Don't pad or inflate. It won't help and it actively hurts:
 
-- The **Verifier** (Agent 3) fact-checks every résumé against this dossier and flags anything unsupported.
+- The **Verifier** (Agent 3) fact-checks every resume against this dossier and flags anything unsupported.
 - The **Critic** (Agent 5) treats an impressive-but-unsupported claim as a *critical* problem to correct, not a strength.
-- Anything inflated here propagates to every résumé and becomes something you'd have to defend in an interview.
+- Anything inflated here propagates to every resume and becomes something you'd have to defend in an interview.
 
 Write only what you'd stand behind under questioning.
 
 ### 4. Cover all the directions you'd apply in
 
-If your background spans multiple lanes (say, product *and* engineering, or robotics *and* SaaS), make sure each lane is well-represented. The two-axis discovery scoring and the per-job résumé tailoring both rely on having genuine material to draw from for whatever role comes up.
+If your background spans multiple lanes (say, product *and* engineering, or robotics *and* SaaS), make sure each lane is well-represented. The two-axis discovery scoring and the per-job resume tailoring both rely on having genuine material to draw from for whatever role comes up.
 
 ### 5. Keep it current
 
-Add new roles and accomplishments as they happen. The `updated_at` field tracks freshness. A stale dossier means stale résumés.
+Add new roles and accomplishments as they happen. The `updated_at` field tracks freshness. A stale dossier means stale resumes.
 
 ---
 
@@ -189,16 +189,16 @@ The dossier and the `config` tab play different roles — keep them distinct:
 | | Dossier (`master_doc`) | Config (`config` tab) |
 |--|------------------------|----------------------|
 | **Describes** | What you've actually done (your background) | The roles you're *targeting* and your settings |
-| **Used for** | Building résumés; **background-fit** scoring | **Target-fit** scoring; identity header; model choices |
+| **Used for** | Building resumes; **background-fit** scoring | **Target-fit** scoring; identity header; model choices |
 | **Example** | "Drove $18M ARR at Acme Robotics" | `target_titles = Director of Product` |
 
 > 📌 Your `profile_summary` in `config` describes your career identity for **background-fit** scoring; your `target_titles` describe the role you **want** for **target-fit** scoring. The dossier is the deep evidence behind the background side. Keeping these separated is what lets an over-qualified candidate target a more junior role without every match getting stamped "no fit." See [Architecture → two scoring axes](05-architecture.md#the-two-scoring-axes).
 
 ---
 
-## Importing from an existing résumé
+## Importing from an existing resume
 
-The quickest way to start: take your most complete existing résumé or CV, paste it into the dossier, then **expand** it — add the accomplishments and metrics you trimmed to keep that résumé short, plus roles or projects relevant to other directions you'd apply in. The dossier should end up noticeably longer than any single résumé you've ever sent.
+The quickest way to start: take your most complete existing resume or CV, paste it into the dossier, then **expand** it — add the accomplishments and metrics you trimmed to keep that resume short, plus roles or projects relevant to other directions you'd apply in. The dossier should end up noticeably longer than any single resume you've ever sent.
 
 ---
 

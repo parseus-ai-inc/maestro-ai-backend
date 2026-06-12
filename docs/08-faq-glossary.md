@@ -15,8 +15,8 @@ Maestro is free and open-source. You pay only the AI providers for tokens used. 
 **Do I have to use Anthropic?**
 No — Anthropic is the recommended default, but OpenAI and Google Gemini are fully supported. You can even mix providers per agent in the `config` tab.
 
-**Can it invent things on my résumé?**
-The design actively prevents it. The Résumé Builder works only from your master document, and a dedicated Verifier agent fact-checks every résumé against your profile to catch unsupported claims. You also review everything before using it.
+**Can it invent things on my resume?**
+The design actively prevents it. The Résumé Builder works only from your master document, and a dedicated Verifier agent fact-checks every resume against your profile to catch unsupported claims. You also review everything before using it.
 
 **Where is my data stored?**
 In your own Google account — a Google Sheet (the database) and a Google Drive folder (files). Maestro doesn't send your data anywhere except to the AI provider(s) you configure, for the specific calls that generate content. The system's access is scoped to only the Sheet and folder you explicitly share with its service account — not your whole Drive. If you'd still rather not connect your personal account at all, create a free dedicated (burner) Google account just for Maestro and use it throughout setup; everything works identically.
@@ -46,9 +46,9 @@ Yes — the `prompts` tab holds each agent's system prompt. Set an `override_mar
 
 ## Glossary
 
-**Agent** — One of the ten specialist AI workers in the pipeline (résumé builder, critic, scorer, etc.). Each is an n8n sub-workflow with a focused job.
+**Agent** — One of the ten specialist AI workers in the pipeline (resume builder, critic, scorer, etc.). Each is an n8n sub-workflow with a focused job.
 
-**Application Orchestrator** — The entry workflow that builds a full application (résumé + cover letter + scoring) for selected jobs.
+**Application Orchestrator** — The entry workflow that builds a full application (resume + cover letter + scoring) for selected jobs.
 
 **Background fit** — A fit score answering "does this job match the candidate's actual experience?" Contrast with *target fit*.
 
@@ -68,9 +68,9 @@ Yes — the `prompts` tab holds each agent's system prompt. Set an `override_mar
 
 **n8n** — The open-source visual automation tool the backend pipeline is built in.
 
-**Master document** — Your complete career history (in the `master_doc` tab). Every résumé draft pulls from it; agents can't invent beyond it.
+**Master document** — Your complete career history (in the `master_doc` tab). Every resume draft pulls from it; agents can't invent beyond it.
 
-**Polish** — The first refinement of a résumé, re-working version 1 using the original critique and verification.
+**Polish** — The first refinement of a resume, re-working version 1 using the original critique and verification.
 
 **Refine** — A later refinement, building on the previous version.
 
@@ -78,7 +78,7 @@ Yes — the `prompts` tab holds each agent's system prompt. Set an `override_mar
 
 **application_run_id** — The key that joins related rows across the `jobs`, `resumes`, and `agent_outputs` tabs.
 
-**resume_id** — Identifies a specific résumé version, formatted `{job_id}_v{version}`.
+**resume_id** — Identifies a specific resume version, formatted `{job_id}_v{version}`.
 
 **Scheduler** — A small standalone Node worker (in its own container) that fires discovery on the cadence set in `config`.
 

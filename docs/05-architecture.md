@@ -37,12 +37,12 @@ All agents are n8n sub-workflows invoked via Execute Workflow nodes. They share 
 
 | # | Agent | Stage | Role |
 |---|-------|-------|------|
-| 1 | Résumé Builder | application | Draft résumé from master_doc + JD |
+| 1 | Résumé Builder | application | Draft resume from master_doc + JD |
 | 2 | Cover Letter Builder | application | Draft cover letter |
-| 3 | Résumé Verifier | application | Anti-hallucination check on résumé |
+| 3 | Résumé Verifier | application | Anti-hallucination check on resume |
 | 4 | Cover Letter Verifier | application | Anti-hallucination check on cover letter |
-| 5 | Critic | application | Recruiter-style critique of the résumé |
-| 6 | Résumé Refiner | application | Rewrite résumé to address critique (gated by `enable_refinement`) |
+| 5 | Critic | application | Recruiter-style critique of the resume |
+| 6 | Résumé Refiner | application | Rewrite resume to address critique (gated by `enable_refinement`) |
 | 7 | Résumé Scorer | application | 0–100 fit score with dimensional breakdown |
 | 8 | Discovery Scorer | discovery | Dual-axis fit scoring of discovered jobs |
 | 9 | Résumé Fine-Refiner | refinement | Apply user refinement instructions on later passes |
@@ -54,7 +54,7 @@ Agents 5, 6, and 7 are intentionally **decoupled from company/title/url** — th
 
 ### Application pipeline
 
-The build fans out per job, then runs two branches in parallel — the résumé branch (builder, with a Verifier fact-checking claims and a Critic flagging weaknesses) and the cover-letter branch (gated). Both merge before scoring.
+The build fans out per job, then runs two branches in parallel — the resume branch (builder, with a Verifier fact-checking claims and a Critic flagging weaknesses) and the cover-letter branch (gated). Both merge before scoring.
 
 ![Application build pipeline: each job fans out to a Résumé Builder (checked in parallel by a Verifier and a Critic) and a gated Cover Letter branch; the branches merge, a Résumé Scorer rates final fit, and the result is recorded to the database.](assets/diagrams/build-pipeline.svg)
 
@@ -105,7 +105,7 @@ flowchart TD
     VG --> RR["Resume Recorder"]
 ```
 
-The **mode is derived, not chosen**: if a job has exactly one résumé version, the next refinement is a *polish* (re-works v1 using the original critique). If it already has refinements, it's a *refine* (builds on the immediate parent).
+The **mode is derived, not chosen**: if a job has exactly one resume version, the next refinement is a *polish* (re-works v1 using the original critique). If it already has refinements, it's a *refine* (builds on the immediate parent).
 
 ## Shared modules
 
@@ -161,7 +161,7 @@ Five recorder sub-workflows persist results. **All of them take a passed `databa
 |----------|-----------|
 | Model Usage Recorder | `model_usage` |
 | Resume Recorder | `resumes` + `agent_outputs` |
-| Application Recorder | delegates résumé recording to Resume Recorder |
+| Application Recorder | delegates resume recording to Resume Recorder |
 | Job Discovery Recorder | `jobs` (discovery rows) |
 | Run State Recorder | `run_state` |
 
@@ -177,7 +177,7 @@ Three identifiers, each with a distinct job:
 |-----|--------|---------|
 | `application_run_id` | `app_<execution.id>` | **Cross-tab join key.** `jobs`, `resumes`, `agent_outputs` all key on it. |
 | `run_id` | `app_` / `disc_` / `refine_` + `execution.id` | Per-execution trace (rides along in logs/usage). |
-| `resume_id` | `{job_id}_v{version}` | Discriminates résumé versions (v1 original, v2+ refinements). |
+| `resume_id` | `{job_id}_v{version}` | Discriminates resume versions (v1 original, v2+ refinements). |
 
 > 📌 Don't rename `application_run_id` to `run_id`. They're different things — the first joins tabs, the second traces an execution.
 
@@ -240,7 +240,7 @@ Hard-won lessons. Ignore at your peril:
 ## Google Drive / Docs pitfalls
 
 - `@page` CSS margins are **ignored** on HTML→Google-Doc import; margins require an Apps Script post-process step.
-- HTML→Google-Doc conversion strips formatting — the dashboard's résumé export uses the `docx` npm library to emit real `.docx` instead.
+- HTML→Google-Doc conversion strips formatting — the dashboard's resume export uses the `docx` npm library to emit real `.docx` instead.
 - Apps Script needs explicit OAuth scopes in `appsscript.json`, a `testAuth` run before deploy, and a **"New version"** selection on redeploy (or it serves cached code).
 
 ---

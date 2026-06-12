@@ -14,8 +14,8 @@ Maestro's entire state lives in one Google Sheets file. This page documents ever
 |-----|---------------|
 | [`config`](#config) | All your settings |
 | [`jobs`](#jobs) | Every job: discovery scores, build status, tracking status |
-| [`agent_outputs`](#agent_outputs) | Raw critic/verifier/scorer JSON per résumé |
-| [`resumes`](#resumes) | Every résumé version generated |
+| [`agent_outputs`](#agent_outputs) | Raw critic/verifier/scorer JSON per resume |
+| [`resumes`](#resumes) | Every resume version generated |
 | [`model_usage`](#model_usage) | Per-call token + cost log |
 | [`run_state`](#run_state) | Discovery/application run lifecycle |
 | [`run_errors`](#run_errors) | Catastrophic failure log |
@@ -68,7 +68,7 @@ The central tab. Every discovered or submitted job, with its discovery scores, b
 
 ## `agent_outputs`
 
-The raw structured output behind each résumé — what the critic, verifier, and scorer actually produced. One row per résumé version.
+The raw structured output behind each resume — what the critic, verifier, and scorer actually produced. One row per resume version.
 
 | Column | Meaning |
 |--------|---------|
@@ -85,7 +85,7 @@ The raw structured output behind each résumé — what the critic, verifier, an
 
 ## `resumes`
 
-Every résumé version. Version 1 is the original build; 2+ are refinements. One row per version.
+Every resume version. Version 1 is the original build; 2+ are refinements. One row per version.
 
 | Column | Meaning |
 |--------|---------|
@@ -94,7 +94,7 @@ Every résumé version. Version 1 is the original build; 2+ are refinements. One
 | `version` | 1 = original, 2+ = refinement |
 | `parent_resume_id` | The version this was refined from |
 | `source` | `original` / `polish` / `refine` |
-| `resume_markdown` | The résumé content |
+| `resume_markdown` | The resume content |
 | `refinement_instructions` | Your instructions for this version |
 | `ran_verifier`, `ran_critic` | Whether each ran for this version |
 | `overall_score`, `recommendation`, `score_delta` | Fit score + change vs parent |
@@ -180,7 +180,7 @@ The agents' system prompts, editable without touching code.
 
 ## `master_doc`
 
-Your complete career history as `key`/`value` rows. Every résumé draft pulls from this; agents are forbidden from inventing anything not present here. Edited via the dashboard's Master Doc page.
+Your complete career history as `key`/`value` rows. Every resume draft pulls from this; agents are forbidden from inventing anything not present here. Edited via the dashboard's Master Doc page.
 
 | Column | Meaning |
 |--------|---------|

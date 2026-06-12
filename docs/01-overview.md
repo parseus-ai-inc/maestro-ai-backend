@@ -8,13 +8,13 @@ This page explains, in plain language, what Maestro AI does and how its parts wo
 
 ## What problem does it solve?
 
-Applying for jobs is repetitive and slow: find the posting, decide whether it's worth your time, rewrite your résumé for it, write a cover letter, and keep track of where you've applied. Maestro automates the tedious parts and leaves the decisions to you.
+Applying for jobs is repetitive and slow: find the posting, decide whether it's worth your time, rewrite your resume for it, write a cover letter, and keep track of where you've applied. Maestro automates the tedious parts and leaves the decisions to you.
 
 It does five things:
 
 1. **Discovers** open jobs from company career pages and job APIs.
 2. **Scores** each job for how well it fits you — twice, in fact: once against the role you're *targeting* and once against your actual *background*.
-3. **Builds** a tailored résumé and cover letter for the jobs you choose, using AI agents that draft, critique, refine, and fact-check the result.
+3. **Builds** a tailored resume and cover letter for the jobs you choose, using AI agents that draft, critique, refine, and fact-check the result.
 4. **Lets you review and refine** everything through a web dashboard.
 5. **Tracks** every application's status, from "not applied" through "offer" or "rejected."
 
@@ -40,13 +40,13 @@ flowchart TD
 
 | Agent | Job |
 |-------|-----|
-| **1 — Résumé Builder** | Drafts a tailored résumé from your master profile + the job description |
+| **1 — Résumé Builder** | Drafts a tailored resume from your master profile + the job description |
 | **2 — Cover Letter Builder** | Drafts a matching cover letter |
-| **3 — Résumé Verifier** | Fact-checks the résumé against your profile (no invented claims) |
+| **3 — Résumé Verifier** | Fact-checks the resume against your profile (no invented claims) |
 | **4 — Cover Letter Verifier** | Fact-checks the cover letter |
-| **5 — Critic** | Critiques the résumé like a recruiter would |
-| **6 — Résumé Refiner** | Rewrites the résumé to address the critique |
-| **7 — Résumé Scorer** | Scores the final résumé's fit (0–100) |
+| **5 — Critic** | Critiques the resume like a recruiter would |
+| **6 — Résumé Refiner** | Rewrites the resume to address the critique |
+| **7 — Résumé Scorer** | Scores the final resume's fit (0–100) |
 | **8 — Discovery Scorer** | Scores newly discovered jobs for fit |
 | **9 — Résumé Fine-Refiner** | Applies your manual refinement instructions on later passes |
 | **10 — Job Ranker** | A fast first-pass ranker that keeps the discovery funnel open |
@@ -59,8 +59,8 @@ The dashboard is the human side. It reads the same Google Sheet the pipeline wri
 
 - Browse discovered jobs and their fit scores
 - Select jobs and click **Build** to generate applications
-- Read the generated résumé, see the critic's notes and verifier's checks, and request refinements
-- Save a polished `.docx` résumé to Google Drive
+- Read the generated resume, see the critic's notes and verifier's checks, and request refinements
+- Save a polished `.docx` resume to Google Drive
 - Track every application's status
 
 ### The scheduler
@@ -73,8 +73,8 @@ Everything is coordinated through one Google Sheets file with many tabs (the ful
 
 - **`config`** — all your settings (your name, target roles, which AI models to use, how often to run discovery).
 - **`jobs`** — every job discovered or submitted, plus its scores and status.
-- **`resumes`** — every résumé version generated, including refinements.
-- **`agent_outputs`** — the raw critic/verifier/scorer output behind each résumé.
+- **`resumes`** — every resume version generated, including refinements.
+- **`agent_outputs`** — the raw critic/verifier/scorer output behind each resume.
 - **`model_usage`** — a per-call log of tokens and cost, so you always know what you're spending.
 
 The pipeline writes; the dashboard reads and writes back; nothing is hidden.
@@ -93,7 +93,7 @@ These can legitimately differ. If you're an experienced executive applying to a 
 | Maestro does automatically | You decide |
 |----------------------------|------------|
 | Find and score jobs | Which jobs to build applications for |
-| Draft, critique, refine, verify résumés | Whether a résumé is good enough to send |
+| Draft, critique, refine, verify resumes | Whether a resume is good enough to send |
 | Track cost and tokens | Which AI models and budget to use |
 | Generate `.docx` files | When and where to actually apply |
 

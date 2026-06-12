@@ -9,7 +9,7 @@ The honest version — claims about other tools are written the way their own ma
 | Capability | Chatbot + agents<br>(ChatGPT, Claude, Gemini) | Volume auto-apply<br>(LazyApply, Sonara) | Trackers / autofill<br>(Teal, Simplify, Huntr) | Resume optimizers<br>(Jobscan, Rezi) | Maestro AI |
 |---|---|---|---|---|---|
 | **Finds & scores jobs for fit** | Partial — web-search if asked, no persistent scoring | Yes, loose filters | No | No | **Yes — dual fit scoring (role + background)** |
-| **Tailors résumé per job** | Yes, but manual every time | Generic, templated | No | Manual, one at a time | **Yes — per-job, from your master profile** |
+| **Tailors resume per job** | Yes, but manual every time | Generic, templated | No | Manual, one at a time | **Yes — per-job, from your master profile** |
 | **Generates cover letter** | Yes, manual | Basic | No | No | **Yes — built + verified** |
 | **Fact-checks for hallucinations** | No — it's the source of them | No — "audit it yourself" | N/A | No | **Yes — a Verifier agent checks every claim** |
 | **Self-critiques quality** | Only if asked, same blind spots | No | No | No | **Yes — a Critic agent flags weaknesses** |
@@ -40,20 +40,20 @@ Per-agent control runs along two independent axes. You pick **which model** runs
 
 ## The sameness trap
 
-When everyone uses similar optimization tools, résumés converge: identical summary statements, the same action verbs, near-identical accomplishment structures, suspiciously clean formatting. Recruiters now report reviewing batches that feel interchangeable — and the sameness itself has become the tell. A résumé that reads too perfectly is a red flag.
+When everyone uses similar optimization tools, resumes converge: identical summary statements, the same action verbs, near-identical accomplishment structures, suspiciously clean formatting. Recruiters now report reviewing batches that feel interchangeable — and the sameness itself has become the tell. A resume that reads too perfectly is a red flag.
 
-This is no longer just unhelpful; it's actively penalized. Industry reporting in 2026 indicates a large majority of employers now screen for AI-generated résumé content, and a majority of those reject résumés that lack authentic, personal detail.[^stats]
+This is no longer just unhelpful; it's actively penalized. Industry reporting in 2026 indicates a large majority of employers now screen for AI-generated resume content, and a majority of those reject resumes that lack authentic, personal detail.[^stats]
 
 General tools run one model with one locked prompt, so everyone's output converges on the same shape — which is exactly what gets screened out.
 
 ![The sameness trap: general tools with one model and a locked prompt produce near-identical resumes that recruiters skip; Maestro's editable prompts and per-agent model choice produce output tuned to your voice that recruiters read.](assets/diagrams/sameness-trap.svg)
 
-Editable prompts plus per-agent model choice break that convergence — your résumé reads like *you*, not like a tool's default.
+Editable prompts plus per-agent model choice break that convergence — your resume reads like *you*, not like a tool's default.
 
 !!! note "The evidence"
-    A 2026 study in algorithmic hiring ([Xu, Li & Jiang, arXiv 2509.00462](https://arxiv.org/abs/2509.00462)) found that LLM résumé screeners prefer résumés written by *the same model* — a self-preference bias of **67–82%** across major commercial and open-source models — and that candidates using the same model as the screener were **23–60% more likely to be shortlisted**, even when résumé quality was held equal.[^favoritism]
+    A 2026 study in algorithmic hiring ([Xu, Li & Jiang, arXiv 2509.00462](https://arxiv.org/abs/2509.00462)) found that LLM resume screeners prefer resumes written by *the same model* — a self-preference bias of **67–82%** across major commercial and open-source models — and that candidates using the same model as the screener were **23–60% more likely to be shortlisted**, even when resume quality was held equal.[^favoritism]
 
-    Separately, vendor surveys report that recruiters increasingly reject *generic* AI output: a Resume Now survey of 925 HR workers found **62% reject AI résumés that lack personalization**,[^resumenow] and detection screening has risen toward ~77% of employers.[^detection]
+    Separately, vendor surveys report that recruiters increasingly reject *generic* AI output: a Resume Now survey of 925 HR workers found **62% reject AI resumes that lack personalization**,[^resumenow] and detection screening has risen toward ~77% of employers.[^detection]
 
     The takeaway isn't "avoid AI" — it's that **single-model, generic output loses twice**: once to recruiters screening for sameness, once to the model-lock-in effect. Maestro hedges both by letting you vary the model per agent and tune each prompt to your own voice.
 
@@ -63,7 +63,7 @@ Editable prompts plus per-agent model choice break that convergence — your ré
 
 There's a second, subtler version of the same problem. If a recruiter screens with one model and every applicant's tool wrote with that *same* model, the outputs cluster even more tightly — a single-model monoculture on both sides of the table. Letting you choose and vary the model per agent is a direct hedge: your material doesn't collapse toward whatever one model happens to favor.
 
-[^stats]: Figures (≈77% of employers screening for AI-generated content; ≈62% rejecting résumés that lack authentic personal detail) are reported by ResumeGeni, *How Employers Detect AI-Generated Resumes in 2026*, citing Resume Now's annual hiring report. Treat as industry reporting rather than peer-reviewed research.
+[^stats]: Figures (≈77% of employers screening for AI-generated content; ≈62% rejecting resumes that lack authentic personal detail) are reported by ResumeGeni, *How Employers Detect AI-Generated Resumes in 2026*, citing Resume Now's annual hiring report. Treat as industry reporting rather than peer-reviewed research.
 
 ## Memory you can't see vs. context you control
 

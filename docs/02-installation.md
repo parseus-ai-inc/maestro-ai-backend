@@ -131,11 +131,11 @@ This is the fiddliest part. Take it slowly; you only do it once. Full screenshot
 
     The `private_key` is a long block beginning `-----BEGIN PRIVATE KEY-----`. Keep the whole thing, including the `\n` characters.
 
-> ⚠️ **One service account for both halves.** The dashboard and the pipeline **must use the same service account.** If they differ, saving résumés to Drive will fail with a "403" error.
+> ⚠️ **One service account for both halves.** The dashboard and the pipeline **must use the same service account.** If they differ, saving resumes to Drive will fail with a "403" error.
 
 ### Set up OAuth for Drive uploads
 
-The service account handles Sheets and reading Drive — but on a regular (consumer) Gmail account it **cannot upload files to Drive**. So saving résumés and cover letters to Drive uses a different mechanism: OAuth, acting as *you*. This is a one-time setup, and skipping it is the most common reason "Save to Drive" fails.
+The service account handles Sheets and reading Drive — but on a regular (consumer) Gmail account it **cannot upload files to Drive**. So saving resumes and cover letters to Drive uses a different mechanism: OAuth, acting as *you*. This is a one-time setup, and skipping it is the most common reason "Save to Drive" fails.
 
 7. **Configure the OAuth consent screen.** In **APIs & Services → OAuth consent screen**, choose **External**, and fill in an app name and your email. You can leave the optional fields blank.
 
@@ -231,7 +231,7 @@ Open `maestro-ai-backend/.env` in a text editor and fill in:
 # The ID of your Google Sheet from Step 4
 GOOGLE_SHEETS_DATABASE_ID=your-sheet-id-here
 
-# The Google Drive folder ID where résumé folders are created.
+# The Google Drive folder ID where resume folders are created.
 # Create a folder in Drive, share it with the service account (Editor),
 # and copy the ID from its URL.
 ROOT_FOLDER_ID=your-drive-folder-id-here
@@ -268,7 +268,7 @@ GOOGLE_SHEETS_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\nMIIE...\n-----END PRIVAT
 GOOGLE_SHEETS_DATABASE_ID=your-sheet-id-here
 
 # OAuth credentials for Drive uploads (from Step 3 — the OAuth Playground flow).
-# These let the dashboard save résumés/cover letters to Drive as you.
+# These let the dashboard save resumes/cover letters to Drive as you.
 GOOGLE_OAUTH_CLIENT_ID=your-client-id.apps.googleusercontent.com
 GOOGLE_OAUTH_CLIENT_SECRET=your-client-secret
 GOOGLE_OAUTH_REFRESH_TOKEN=your-refresh-token
@@ -336,9 +336,9 @@ Import them in any order, but make sure **all** of them end up Published. The ke
 
 | Workflow | Triggered by | Purpose |
 |----------|-------------|---------|
-| **Application Orchestrator** | dashboard "Build" | Builds résumés + cover letters for selected jobs |
+| **Application Orchestrator** | dashboard "Build" | Builds resumes + cover letters for selected jobs |
 | **Job Discovery** | scheduler / dashboard | Finds and scores new jobs |
-| **Application Refinement** | dashboard "Refine" | Re-works a résumé with your instructions |
+| **Application Refinement** | dashboard "Refine" | Re-works a resume with your instructions |
 
 The rest (Agents 1–10, Call LLM, the recorders, the source connectors) are sub-workflows these three call.
 
@@ -451,7 +451,7 @@ Run this quick checklist:
 - [ ] **Dashboard** loads at http://localhost:4400.
 - [ ] In n8n, open **Job Discovery** and click **Execute Workflow** (manual run). It should complete without red error nodes. Check your Google Sheet's `jobs` tab — new rows should appear (depending on your watchlist).
 - [ ] In the dashboard's **Discovery** page, the new jobs appear with fit scores.
-- [ ] Select a job, click **Build**, and confirm the **Application Orchestrator** runs in n8n and a résumé lands in the `resumes` tab.
+- [ ] Select a job, click **Build**, and confirm the **Application Orchestrator** runs in n8n and a resume lands in the `resumes` tab.
 
 If all six pass, you're done. 🎉
 

@@ -6,7 +6,7 @@
 
 Every agent in Maestro is driven by a **system prompt** — a structured instruction set that tells the AI exactly what to do. These prompts live in the `prompts` tab of your database, and you can edit them without touching any code. This page explains the framework they follow, *why* it works, and how to customize them safely.
 
-> 💡 **You don't have to touch prompts to use Maestro.** The defaults are tuned and ship ready to run. Read this only when you want to change an agent's behavior — e.g. a different résumé style, stricter fact-checking, or a new tone.
+> 💡 **You don't have to touch prompts to use Maestro.** The defaults are tuned and ship ready to run. Read this only when you want to change an agent's behavior — e.g. a different resume style, stricter fact-checking, or a new tone.
 
 ## Where prompts live
 
@@ -40,7 +40,7 @@ prompts tab
 
 | `agent_id` | Agent | What its prompt controls |
 |-----------|-------|--------------------------|
-| `agent_1` | Résumé Builder | How résumés are drafted and structured |
+| `agent_1` | Résumé Builder | How resumes are drafted and structured |
 | `agent_2` | Cover Letter Builder | Cover letter style and content |
 | `agent_3` | Résumé Verifier | How strictly claims are fact-checked |
 | `agent_4` | Cover Letter Verifier | Fact-checking for cover letters |
@@ -159,8 +159,8 @@ Edit the section that owns your change. Keep the skeleton intact.
 
 | You want to… | Edit this section |
 |--------------|-------------------|
-| Change résumé tone or length | `TONE & VOICE` and/or `INSTRUCTIONS` |
-| Add/remove a résumé section | `INSTRUCTIONS` |
+| Change resume tone or length | `TONE & VOICE` and/or `INSTRUCTIONS` |
+| Add/remove a resume section | `INSTRUCTIONS` |
 | Make fact-checking stricter or looser | `SEVERITY GUIDANCE` and `CONSTRAINTS` in Agent 3 |
 | Change what the critic flags | `WHAT TO EVALUATE` and `SEVERITY GUIDANCE` in Agent 5 |
 | Adjust how fit scores are assigned | `SCORING GUIDANCE` in Agent 7 / Agent 8 |
