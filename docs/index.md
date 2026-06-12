@@ -27,7 +27,11 @@ Recruiters report reviewing batches of résumés that feel interchangeable: iden
 
 The deeper trap is technical. A 2026 peer-reviewed study ([arXiv 2509.00462](https://arxiv.org/abs/2509.00462)) found that LLM résumé screeners prefer résumés written by *the same model* — a self-preference bias of 67–82% — and that candidates using the same model as the screener were **23–60% more likely to be shortlisted**, even when quality was equal. If every applicant's tool writes with one default model, sameness compounds.
 
-Maestro is built to break both: you vary the model per agent and tune each prompt to your own voice, so your résumé reads like *you* — and the experience keeps you deciding at every step:
+Maestro is built to break both: you vary the model per agent and tune each prompt to your own voice, so your résumé reads like *you* — not like a tool's default that recruiters and screeners have learned to discount.
+
+## How is the experience with Maestro AI?
+
+From your side, Maestro is a loop where the automation does the heavy lifting and you make every real decision. You set your goals once, it discovers and scores jobs (or you paste one in), you decide what's worth pursuing, it builds and self-checks the application, you refine to taste, and everything is tracked in one place.
 
 ```mermaid
 flowchart TD
@@ -48,17 +52,19 @@ flowchart TD
 
 Blue steps are yours; teal steps run automatically; amber is where you hand it a job to work on.
 
-## How is the experience with Maestro AI?
+What makes that experience different from the alternatives comes down to a few ideas:
 
-In short: it does the heavy lifting, you make the calls. A few things set it apart from the alternatives — covered in full on the **[Why Maestro AI?](why-maestro.md)** page, summarized here:
+**It checks its own work.** Most tools hand you a draft and trust you to catch the problems. Maestro runs a Verifier agent that fact-checks every claim against your real history (so it can't invent a skill or a number), and a Critic agent that flags weak or generic writing — before you ever see the result. Checking isn't a step you have to remember; it's built into the pipeline.
 
-- **How Maestro compares** — versus chatbots, volume auto-appliers, trackers, and résumé optimizers, Maestro is the only option that finds *and* scores jobs, fact-checks with a Verifier agent, self-critiques with a Critic agent, runs unattended, keeps your data local, and leaves the apply decision to you.
-- **You choose which model runs each agent** — cheap models for high-volume scoring, premium models for building and refining. The dashboard shows what every choice cost.
-- **Two axes of control** — *which model* runs each agent, and *how it behaves* (an editable prompt tuned to your voice). The agents build the case; you make the final call.
-- **Memory you control** — instead of opaque chatbot memory that blends in context you can't see, Maestro builds from one master profile you curate, with nothing carrying over that you didn't choose.
-- **The bottom line** — systematic, self-checking, controllable, human-decided, and open source.
+**You pick the right model for each job, not one model for everything.** Scoring hundreds of jobs is cheap, low-stakes work; writing your résumé is expensive, high-stakes work. Maestro lets you assign a cheap fast model to the first and a premium model to the second, so you spend where it counts and the dashboard shows exactly what each run cost. No other tool in this space gives you that lever — most lock you into one model and one price.
 
-See the **[full comparison, diagrams, and evidence →](why-maestro.md)**
+**You control how each agent behaves.** Beyond *which* model runs a step, you can edit the actual prompt that drives it — tuning it to your background and voice, then resetting to the default whenever you want. That's the difference between output that sounds like a tool and output that sounds like you.
+
+**Your context is something you can see and control.** Chatbot "memory" quietly blends in things you can't inspect — old drafts, roles you skipped, a salary aside from three chats ago — and that hidden context leaks into every future résumé. Maestro is the opposite: it builds from one master profile you curate, plus the specific job at hand, and nothing else carries over. Same inputs produce the same output, every time, with no contamination you didn't choose.
+
+**You make the final call.** Maestro never applies for you. It discovers, drafts, critiques, verifies, and scores — it builds the case — but the decision to apply is always yours. And because it's open source and self-hosted, it runs on your machine with your own API keys; your résumé and history never sit on someone else's server.
+
+For the full side-by-side comparison, the per-agent model and control diagrams, and the research behind the sameness problem, see **[Why Maestro AI? →](why-maestro.md)**
 
 ## Find your way around
 
@@ -95,6 +101,6 @@ See the **[full comparison, diagrams, and evidence →](why-maestro.md)**
 - A computer running Windows, macOS, or Linux
 - [Docker Desktop](https://www.docker.com/products/docker-desktop/) and [Node.js 20](https://nodejs.org)
 - A Google account (a dedicated one is recommended)
-- At least one AI provider API key (Anthropic recommended)
+- At least one AI provider API key (Anthropic, OpenAI, or Gemini)
 
 First-time setup takes 45–90 minutes, most of it Google account configuration.

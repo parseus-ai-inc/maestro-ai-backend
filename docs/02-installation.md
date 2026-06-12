@@ -16,7 +16,7 @@ This guide takes you from a fresh computer to a running Maestro AI system. It's 
 2. [Get the Maestro code](#step-2-get-the-maestro-code) (clone both repositories)
 3. [Set up your Google account](#step-3-set-up-your-google-cloud-project) (project, APIs, service account)
 4. [Create your database](#step-4-create-the-database-spreadsheet) (copy the Google Sheet)
-5. [Get your AI provider key](#step-5-get-an-ai-provider-api-key) (Anthropic recommended)
+5. [Get your AI provider key](#step-5-get-an-ai-provider-api-key) (Anthropic, OpenAI, or Gemini)
 6. [Configure environment files](#step-6-configure-environment-variables) (passwords and keys)
 7. [Start the backend](#step-7-start-the-backend-n8n) (n8n in Docker)
 8. [Import the workflows](#step-8-import-the-n8n-workflows)
