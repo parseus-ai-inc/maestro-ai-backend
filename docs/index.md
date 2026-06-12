@@ -33,22 +33,7 @@ Maestro is built to break both: you vary the model per agent and tune each promp
 
 From your side, Maestro is a loop where the automation does the heavy lifting and you make every real decision. You set your goals once, it discovers and scores jobs (or you paste one in), you decide what's worth pursuing, it builds and self-checks the application, you refine to taste, and everything is tracked in one place.
 
-```mermaid
-flowchart TD
-    GOALS["You set your goals<br/>roles, preferences, master profile"]:::yours
-    GOALS --> DISC["Auto-discovers jobs<br/>scans boards, scores fit for you"]:::auto
-    GOALS --> PASTE["You paste a job too<br/>any URL or description, your pick"]:::input
-    DISC --> REVIEW["You review &amp; decide<br/>build, dismiss, or skip — your call"]:::yours
-    PASTE --> REVIEW
-    REVIEW --> BUILD["Auto-builds your application<br/>tailored résumé + cover letter"]:::auto
-    REVIEW --> CHECK["Self-checks the quality<br/>critiques, verifies, scores fit"]:::auto
-    BUILD --> REFINE["You refine to taste<br/>polish, re-run, or edit yourself"]:::yours
-    CHECK --> REFINE
-    REFINE --> TRACK["You track every application<br/>status, costs, analytics — one dashboard"]:::yours
-    classDef yours fill:#E6F1FB,stroke:#378ADD,color:#185FA5
-    classDef auto fill:#E1F5EE,stroke:#1D9E75,color:#0F6E56
-    classDef input fill:#FAEEDA,stroke:#BA7517,color:#854F0B
-```
+![How a job seeker experiences Maestro: you set goals, it discovers and scores jobs, you review and decide, it builds and self-checks, you refine, and you track every application.](assets/diagrams/user-journey.svg)
 
 Blue steps are yours; teal steps run automatically; amber is where you hand it a job to work on.
 

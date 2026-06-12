@@ -30,41 +30,13 @@ The honest version — claims about other tools are written the way their own ma
 
 Not every step needs a top-tier model. High-volume, low-stakes work (scoring, ranking) can run on cheap models; low-volume, high-stakes work (building, refining) gets premium ones. You assign each agent its own model, and the dashboard shows exactly what every choice cost.
 
-```mermaid
-flowchart TD
-    TOP["You assign each agent its own model"]:::neutral
-    TOP --> CHEAP["Small / low-cost<br/>discovery scorer · ranker<br/>high volume, low stakes"]:::cheap
-    TOP --> MID["Mid<br/>verifier · critic"]:::mid
-    TOP --> PREM["Premium / high-quality<br/>résumé builder · refiner<br/>low volume, high stakes"]:::prem
-    CHEAP --> ROUTE["Shared routing layer<br/>Anthropic · OpenAI · Gemini"]:::route
-    MID --> ROUTE
-    PREM --> ROUTE
-    ROUTE --> COST["Per-call, per-model cost tracking<br/>dashboard shows what each choice cost"]:::neutral
-    classDef neutral fill:#F1EFE8,stroke:#B4B2A9,color:#5F5E5A
-    classDef cheap fill:#E1F5EE,stroke:#1D9E75,color:#0F6E56
-    classDef mid fill:#FAEEDA,stroke:#BA7517,color:#854F0B
-    classDef prem fill:#FCEBEB,stroke:#E24B4A,color:#A32D2D
-    classDef route fill:#EEEDFE,stroke:#7F77DD,color:#3C3489
-```
+![Per-agent model selection: you assign cheap models to high-volume scoring, mid-tier to verifier and critic, and premium models to building and refining, all through a shared routing layer with per-call cost tracking.](assets/diagrams/model-selection.svg)
 
 ## Two axes of control: which model, and how it behaves
 
 Per-agent control runs along two independent axes. You pick **which model** runs each agent (provider and tier), and **how it behaves** (an editable prompt tuned to your background and voice). Together they configure every agent exactly how you want — and the agents build the case, but never make the apply decision.
 
-```mermaid
-flowchart TD
-    MODEL["Which model runs it<br/>provider + tier, per agent<br/>cheap for scoring, premium for refine"]:::cheap
-    BEHAVE["How it behaves<br/>editable prompt, per agent<br/>tuned to your background &amp; voice"]:::tuned
-    MODEL --> AGENT["Each agent<br/>configured the way you want it"]:::prem
-    BEHAVE --> AGENT
-    AGENT --> WORK["Drafts, verifies, critiques, scores<br/>builds the case — does not decide"]:::route
-    WORK --> YOU["You make the final call to apply"]:::decide
-    classDef cheap fill:#E1F5EE,stroke:#1D9E75,color:#0F6E56
-    classDef tuned fill:#FAEEDA,stroke:#BA7517,color:#854F0B
-    classDef prem fill:#FCEBEB,stroke:#E24B4A,color:#A32D2D
-    classDef route fill:#EEEDFE,stroke:#7F77DD,color:#3C3489
-    classDef decide fill:#E6F1FB,stroke:#378ADD,color:#185FA5
-```
+![Two axes of control: which model runs each agent, and how it behaves via an editable prompt. Each agent is configured the way you want; it drafts, verifies, critiques, and scores, but you make the final call to apply.](assets/diagrams/two-axes-control.svg)
 
 ## The sameness trap
 
@@ -74,31 +46,7 @@ This is no longer just unhelpful; it's actively penalized. Industry reporting in
 
 General tools run one model with one locked prompt, so everyone's output converges on the same shape — which is exactly what gets screened out.
 
-```mermaid
-flowchart TD
-    subgraph general["General tools — one model, one locked prompt"]
-        direction LR
-        G1["Same résumé"]:::same
-        G2["Same résumé"]:::same
-        G3["Same résumé"]:::same
-        G4["Recruiter: skip"]:::reject
-        G1 --- G2 --- G3 --- G4
-    end
-    general --> maestro
-    subgraph maestro["Maestro — your models, your prompts"]
-        direction LR
-        M1["Generic draft"]:::neutral
-        M2["Tuned to you<br/>your voice"]:::tuned
-        M3["Generic draft"]:::neutral
-        M4["Recruiter: read"]:::accept
-        M1 --- M2 --- M3 --- M4
-    end
-    classDef same fill:#F1EFE8,stroke:#B4B2A9,color:#5F5E5A
-    classDef reject fill:#FCEBEB,stroke:#E24B4A,color:#A32D2D
-    classDef neutral fill:#F1EFE8,stroke:#B4B2A9,color:#5F5E5A
-    classDef tuned fill:#FAEEDA,stroke:#BA7517,color:#854F0B
-    classDef accept fill:#E1F5EE,stroke:#1D9E75,color:#0F6E56
-```
+![The sameness trap: general tools with one model and a locked prompt produce near-identical resumes that recruiters skip; Maestro's editable prompts and per-agent model choice produce output tuned to your voice that recruiters read.](assets/diagrams/sameness-trap.svg)
 
 Editable prompts plus per-agent model choice break that convergence — your résumé reads like *you*, not like a tool's default.
 
@@ -121,41 +69,7 @@ There's a second, subtler version of the same problem. If a recruiter screens wi
 
 The real risk with chatbot "memory" isn't that it remembers — it's that you can't see, inspect, or control *what* it remembers. Old drafts, skipped roles, and stray asides blend into an opaque profile that shapes every future output.
 
-```mermaid
-flowchart TD
-    subgraph opaque["Subscription LLM + memory (on by default)"]
-        O0["Your master facts"]:::oneutral
-        O1["Discarded drafts"]:::obad
-        O2["Roles you skipped"]:::obad
-        O3["A salary aside"]:::obad
-        O4["A different pitch"]:::obad
-        O5["Opaque blended profile<br/>you can't see or edit what it kept"]:::oneutral
-        O6["Résumé with leaked context<br/>different each run · not reproducible"]:::obad
-        O0 --> O5
-        O1 --> O5
-        O2 --> O5
-        O3 --> O5
-        O4 --> O5
-        O5 --> O6
-    end
-    subgraph clean["Maestro — explicit, inspectable context"]
-        C0["Master profile (you curate)"]:::cgood
-        C1["This job's JD"]:::cauto
-        C2["Skills you pick"]:::cauto
-        C3["Nothing else carries over"]:::cneutral
-        C4["Exactly what you chose<br/>inspectable · same input, same output"]:::cgood
-        C5["Résumé from chosen material<br/>reproducible · no contamination"]:::cauto
-        C0 --> C3
-        C1 --> C3
-        C2 --> C3
-        C3 --> C4 --> C5
-    end
-    classDef oneutral fill:#F1EFE8,stroke:#B4B2A9,color:#5F5E5A
-    classDef obad fill:#FCEBEB,stroke:#E24B4A,color:#A32D2D
-    classDef cgood fill:#E6F1FB,stroke:#378ADD,color:#185FA5
-    classDef cauto fill:#E1F5EE,stroke:#1D9E75,color:#0F6E56
-    classDef cneutral fill:#F1EFE8,stroke:#B4B2A9,color:#5F5E5A
-```
+![Memory you can't see vs. context you control: a subscription LLM blends discarded drafts, skipped roles, and stray asides into an opaque profile that leaks into every resume; Maestro builds only from your curated master profile and the job at hand, reproducibly and without contamination.](assets/diagrams/memory-control.svg)
 
 > The risk isn't memory itself — it's context you can't see, inspect, or control.
 
