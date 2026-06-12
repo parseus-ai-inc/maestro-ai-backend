@@ -1,0 +1,1544 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="An open-source, AI-powered job-search automation system.">
+      
+      
+      
+        <link rel="canonical" href="https://parseus-ai-inc.github.io/maestro-ai-backend/05-architecture/">
+      
+      
+        <link rel="prev" href="../04-running/">
+      
+      
+        <link rel="next" href="../06-database-reference/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Architecture - Maestro AI</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,300i,400,400i,700,700i%7CJetBrains+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Inter";--md-code-font:"JetBrains Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../stylesheets/parseus.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#5-architecture" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Maestro AI" class="md-header__button md-logo" aria-label="Maestro AI" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Maestro AI
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Architecture
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/parseus-ai-inc/maestro-ai-backend" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    parseus-ai-inc/maestro-ai-backend
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Maestro AI" class="md-nav__button md-logo" aria-label="Maestro AI" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Maestro AI
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/parseus-ai-inc/maestro-ai-backend" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    parseus-ai-inc/maestro-ai-backend
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../why-maestro/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Why Maestro?
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting started
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Getting started
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-installation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Installation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-configuration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Configuration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-running/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Running the system
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#high-level-shape" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        High-level shape
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#entry-workflows-and-webhooks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Entry workflows and webhooks
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-agent-roster" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The agent roster
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pipeline-topology" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pipeline topology
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Pipeline topology">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#application-pipeline" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Application pipeline
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#discovery-pipeline" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Discovery pipeline
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#refinement-pipeline" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Refinement pipeline
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#shared-modules" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Shared modules
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Shared modules">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#call-llm-the-provider-abstraction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Call LLM (the provider abstraction)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#data-loader" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Data Loader
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#recorders" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Recorders
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#run-error-handler" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Run Error Handler
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#keying-scheme" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Keying scheme
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-two-scoring-axes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The two scoring axes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pipeline-state-model-three-orthogonal-axes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pipeline state model (three orthogonal axes)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-scheduler" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The scheduler
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#migration-intent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Migration intent
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#n8n-pitfalls-read-before-editing-workflows" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        n8n pitfalls (read before editing workflows)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#google-drive-docs-pitfalls" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Google Drive / Docs pitfalls
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-database-reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Database reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../11-importing-workflows/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Importing workflows
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Troubleshooting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08-faq-glossary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FAQ & glossary
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Customizing
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Customizing
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../09-prompting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Prompting & customizing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../10-master-dossier/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Master career dossier
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="5-architecture">5. Architecture<a class="headerlink" href="#5-architecture" title="Permanent link">&para;</a></h1>
+<p><a href="../04-running/">← Running the System</a> · <a href="../06-database-reference/">Next: Database Reference →</a></p>
+<hr />
+<p>This page is for developers who want to understand, modify, or contribute to Maestro. It describes the workflow topology, the agent roster, the shared modules, the keying scheme, and the design decisions worth knowing before you change anything.</p>
+<h2 id="high-level-shape">High-level shape<a class="headerlink" href="#high-level-shape" title="Permanent link">&para;</a></h2>
+<p><img alt="High-level system shape: the Maestro dashboard triggers Job Discovery, the Application Orchestrator, and Application Refinement, which all route through a shared Call LLM layer to specialized agents, whose recorders write to the Google Sheets database." src="../assets/diagrams/system-overview.svg" /></p>
+<p>The dashboard frontend code lives in a <strong>separate repository</strong> and is not part of the backend repo. The backend repo holds the n8n workflow exports, the database template, and the scheduler.</p>
+<h2 id="entry-workflows-and-webhooks">Entry workflows and webhooks<a class="headerlink" href="#entry-workflows-and-webhooks" title="Permanent link">&para;</a></h2>
+<p>Three workflows are entry points. Each has both a manual trigger (for testing in n8n) and a webhook. <strong>Every webhook call carries an <code>X-Maestro-Secret</code> header</strong> matching <code>MAESTRO_WEBHOOK_SECRET</code>; a missing/wrong secret is rejected. All three are POSTed by <code>postToN8n()</code> in the dashboard's <code>src/lib/n8n.ts</code> with <code>Content-Type: application/json</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Workflow</th>
+<th>Webhook path</th>
+<th>Fired by</th>
+<th>Request body</th>
+<th>Success response</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Application Orchestrator</strong></td>
+<td><code>/webhook/build-application</code></td>
+<td>dashboard build/submit routes</td>
+<td><code>{ "job_ids": ["job_xxx", ...] }</code> — the entire payload</td>
+<td><code>202 { ok, accepted, run_id, job_count, job_ids }</code></td>
+</tr>
+<tr>
+<td><strong>Job Discovery</strong></td>
+<td><code>/webhook/run-discovery</code></td>
+<td><strong>scheduler worker only</strong></td>
+<td><code>{ "source": "cron" }</code></td>
+<td><code>202</code> with <code>run_id</code> (<code>disc_…</code>) in body</td>
+</tr>
+<tr>
+<td><strong>Application Refinement</strong></td>
+<td><code>/webhook/refine-resume</code></td>
+<td>dashboard <code>/api/refine</code></td>
+<td>refine payload (see below)</td>
+<td><code>202 { ok, accepted, run_id }</code>; dashboard polls <code>resumes</code></td>
+</tr>
+<tr>
+<td><strong>Cover Letter Generation &amp; Refinement</strong></td>
+<td><code>/webhook/generate-cover-letter</code></td>
+<td>dashboard <code>/api/cover-letters</code></td>
+<td>generate/refine payload</td>
+<td><code>202</code> with <code>run_id</code> (<code>cl_…</code>) in body</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>📌 <strong>Discovery is not triggered by the Next.js app in-process.</strong> The dashboard has no internal timer for it — discovery is fired exclusively by the standalone <strong>scheduler</strong> container (a manual "run now" still routes through that path, not an app-side timer). This is intentional: a request/response server has no reliable persistent timer.</p>
+</blockquote>
+<p><strong>Build selection contract:</strong> the Application Orchestrator is told which jobs to build via the <code>{ job_ids: [...] }</code> payload and <strong>nothing else</strong> — n8n filters by that list and ignores every other column. The dashboard's <code>processed_status='queued'</code> marker is purely a local UI/pacing device for <em>building</em> that payload, never the wire selector. Build is fired by <code>fireNextBatch()</code> (<code>src/lib/build-trigger.ts</code>); user-submitted rows fire whole and are exempt from the <code>application_max_jobs_per_run</code> pacing cap.</p>
+<p><strong>Build trigger responses (<code>/api/application/trigger</code>):</strong> <code>503</code> (webhook URL/secret unconfigured) · <code>200 { held: true, queued, processing }</code> (a run is still in flight) · <code>200 { accepted: false, job_count: 0 }</code> (nothing pending) · <code>202 { accepted: true, run_id, job_count, job_ids }</code> (fired).</p>
+<p><strong>Refine payload (<code>/api/refine</code>, a validated pass-through):</strong> common keys <code>mode</code> (<code>'polish'|'refine'</code>), <code>application_run_id</code>, <code>parent_resume_id</code>, <code>parent_resume_markdown</code>, <code>refinement_instructions</code>, <code>run_verifier</code>, <code>job_id</code>, <code>url</code>, <code>company</code>, <code>title</code>, <code>jd_text</code>, <code>parent_version</code>, <code>parent_score</code>. <em>Polish</em> adds <code>critic_output</code> + <code>verifier_output</code> (parsed objects from the original run). <em>Refine</em> adds <code>parent_ran_verifier</code>, plus <code>verifier_output</code> only when <code>parent_ran_verifier === true</code>. Validation returns <code>400</code> on missing required keys or mode/data-gap mismatches, <code>503</code> if the webhook URL is unconfigured, <code>502</code> if upstream accepts but returns no <code>run_id</code>.</p>
+<h2 id="the-agent-roster">The agent roster<a class="headerlink" href="#the-agent-roster" title="Permanent link">&para;</a></h2>
+<p>All agents are n8n sub-workflows invoked via Execute Workflow nodes. They share a uniform contract and route LLM calls through <strong>Call LLM</strong>.</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Agent</th>
+<th>Stage</th>
+<th>Role</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Résumé Builder</td>
+<td>application</td>
+<td>Draft résumé from master_doc + JD</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Cover Letter Builder</td>
+<td>application</td>
+<td>Draft cover letter</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Résumé Verifier</td>
+<td>application</td>
+<td>Anti-hallucination check on résumé</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Cover Letter Verifier</td>
+<td>application</td>
+<td>Anti-hallucination check on cover letter</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Critic</td>
+<td>application</td>
+<td>Recruiter-style critique of the résumé</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Résumé Refiner</td>
+<td>application</td>
+<td>Rewrite résumé to address critique (gated by <code>enable_refinement</code>)</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Résumé Scorer</td>
+<td>application</td>
+<td>0–100 fit score with dimensional breakdown</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Discovery Scorer</td>
+<td>discovery</td>
+<td>Dual-axis fit scoring of discovered jobs</td>
+</tr>
+<tr>
+<td>9</td>
+<td>Résumé Fine-Refiner</td>
+<td>refinement</td>
+<td>Apply user refinement instructions on later passes</td>
+</tr>
+<tr>
+<td>10</td>
+<td>Job Ranker</td>
+<td>discovery</td>
+<td>Cheap first-pass ranking to keep the funnel open</td>
+</tr>
+</tbody>
+</table>
+<p>Agents 5, 6, and 7 are intentionally <strong>decoupled from company/title/url</strong> — they work purely from the JD, the master document, and upstream artifacts. That uniformity lets discovery-sourced and user-submitted jobs flow through the same pipeline.</p>
+<h2 id="pipeline-topology">Pipeline topology<a class="headerlink" href="#pipeline-topology" title="Permanent link">&para;</a></h2>
+<h3 id="application-pipeline">Application pipeline<a class="headerlink" href="#application-pipeline" title="Permanent link">&para;</a></h3>
+<p>The build fans out per job, then runs two branches in parallel — the résumé branch (builder, with a Verifier fact-checking claims and a Critic flagging weaknesses) and the cover-letter branch (gated). Both merge before scoring.</p>
+<p><img alt="Application build pipeline: each job fans out to a Résumé Builder (checked in parallel by a Verifier and a Critic) and a gated Cover Letter branch; the branches merge, a Résumé Scorer rates final fit, and the result is recorded to the database." src="../assets/diagrams/build-pipeline.svg" /></p>
+<p>The exact node-level sequence (with the Data Loader, Merge Init, and per-recorder delegation) is:</p>
+<pre class="mermaid"><code>flowchart TD
+    W["Webhook / Trigger"] --&gt; RF["Root Folder"]
+    RF --&gt; DL["Data Loader + Prompt Loader"]
+    DL --&gt; MI["Merge Init"]
+    MI --&gt; FAN["Fan Out Plans (per job)"]
+    FAN --&gt; A1["Agent 1 — Résumé Builder"]
+    A1 --&gt; A5["Agent 5 — Critic"]
+    A5 --&gt; A6["Agent 6 — Refiner&lt;br/&gt;(gated by enable_refinement)"]
+    A6 --&gt; A3["Agent 3 — Résumé Verifier"]
+    A3 --&gt; A2["Agent 2 — Cover Letter Builder&lt;br/&gt;→ Agent 4 — Verifier&lt;br/&gt;(gated by enable_cover_letter)"]
+    A2 --&gt; A7["Agent 7 — Résumé Scorer"]
+    A7 --&gt; MB["Merge Branches → Log Job Result"]
+    MB --&gt; AR["Application Recorder&lt;br/&gt;→ Resume Recorder → Model Usage Recorder"]</code></pre>
+<h3 id="discovery-pipeline">Discovery pipeline<a class="headerlink" href="#discovery-pipeline" title="Permanent link">&para;</a></h3>
+<pre class="mermaid"><code>flowchart TD
+    W["Webhook / Trigger"] --&gt; RF["Root Folder"]
+    RF --&gt; DL["Data Loader (discovery mode)&lt;br/&gt;+ Prompt Loader"]
+    DL --&gt; MI["Merge Init"]
+    MI --&gt; JF["Job Fetcher"]
+    JF --&gt; JP["Job Post Processing&lt;br/&gt;(hard filter + dedup)"]
+    JP --&gt; A10["Agent 10 — Job Ranker"]
+    A10 --&gt; A8["Agent 8 — Discovery Scorer"]
+    A8 --&gt; LOG["Log Job Result"]
+    LOG --&gt; JDR["Job Discovery Recorder"]
+    JDR --&gt; MUR["Model Usage Recorder"]</code></pre>
+<h3 id="refinement-pipeline">Refinement pipeline<a class="headerlink" href="#refinement-pipeline" title="Permanent link">&para;</a></h3>
+<pre class="mermaid"><code>flowchart TD
+    W["Webhook"] --&gt; SI["Set Inputs&lt;br/&gt;(mode derived: polish vs refine)"]
+    SI --&gt; R{"Routing IF"}
+    R --&gt;|polish| A6["Agent 6 — Refiner&lt;br/&gt;reads ORIGINAL critic + verifier"]
+    R --&gt;|refine| A9["Agent 9 — Fine-Refiner&lt;br/&gt;reads PARENT version's verifier"]
+    A6 --&gt; VG["Verifier Gate (optional)"]
+    A9 --&gt; VG
+    VG --&gt; RR["Resume Recorder"]</code></pre>
+<p>The <strong>mode is derived, not chosen</strong>: if a job has exactly one résumé version, the next refinement is a <em>polish</em> (re-works v1 using the original critique). If it already has refinements, it's a <em>refine</em> (builds on the immediate parent).</p>
+<h2 id="shared-modules">Shared modules<a class="headerlink" href="#shared-modules" title="Permanent link">&para;</a></h2>
+<h3 id="call-llm-the-provider-abstraction">Call LLM (the provider abstraction)<a class="headerlink" href="#call-llm-the-provider-abstraction" title="Permanent link">&para;</a></h3>
+<p>Every agent calls <strong>Call LLM</strong> rather than hitting a provider directly. It normalizes three providers behind one interface:</p>
+<pre class="mermaid"><code>flowchart TD
+    SI["Set Inputs"] --&gt; SW{"Switch on&lt;br/&gt;provider"}
+    SW --&gt;|anthropic| AN["Build Anthropic Request → HTTP"]
+    SW --&gt;|openai| OA["Build OpenAI Request → HTTP"]
+    SW --&gt;|gemini| GE["Build Gemini Request → HTTP"]
+    SW --&gt;|other| ERR["Unsupported Provider Error"]
+    AN --&gt; NM["Normalize / Build Error Response"]
+    OA --&gt; NM
+    GE --&gt; NM</code></pre>
+<p>All three return one standard envelope:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="p">{</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">  </span><span class="nt">&quot;success&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">  </span><span class="nt">&quot;content&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;...&quot;</span><span class="p">,</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">  </span><span class="nt">&quot;input_tokens&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">  </span><span class="nt">&quot;output_tokens&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w">  </span><span class="nt">&quot;cached_input_tokens&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="w">  </span><span class="nt">&quot;cache_write_tokens&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="w">  </span><span class="nt">&quot;model_used&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;...&quot;</span><span class="p">,</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="w">  </span><span class="nt">&quot;provider_used&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;...&quot;</span><span class="p">,</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="w">  </span><span class="nt">&quot;errors&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="p">}</span>
+</code></pre></div>
+<p>Provider quirks handled inside Normalize:</p>
+<ul>
+<li><strong>Anthropic</strong> — returns the model string as passed. Cache via <code>cache_control</code>: cache-read ≈ 10% of input price, cache-write ≈ 125%.</li>
+<li><strong>OpenAI</strong> — <code>prompt_tokens</code> <em>includes</em> the cached portion, so Normalize subtracts it to keep <code>input_tokens</code> non-cached. No separate cache-write fee. Auto-caches prompts ≥1024 tokens. Pricing lookups prefer the config-canonical model name over the dated API variant.</li>
+<li><strong>Gemini</strong> — model is in the URL path; system prompt goes in <code>systemInstruction</code>. <code>promptTokenCount</code> includes cached tokens (subtracted in Normalize). Auth via <code>x-goog-api-key</code>.</li>
+</ul>
+<p>Every provider HTTP node has <code>On Error: Continue (using error output)</code> with retry-on-fail, feeding a provider-specific Build Error Response.</p>
+<h3 id="data-loader">Data Loader<a class="headerlink" href="#data-loader" title="Permanent link">&para;</a></h3>
+<p>Loads config, master_doc, pricing, and watchlist from the Sheet, and <strong>generates the <code>run_id</code></strong>: the caller passes <code>parent_execution_id = {{ $execution.id }}</code>, and Data Loader prefixes it (<code>app_</code> for application, <code>disc_</code> for discovery, <code>refine_</code> for refinement). It throws if <code>parent_execution_id</code> is missing — that's a caller bug, not something to paper over.</p>
+<h3 id="recorders">Recorders<a class="headerlink" href="#recorders" title="Permanent link">&para;</a></h3>
+<p>Five recorder sub-workflows persist results. <strong>All of them take a passed <code>database_id</code></strong> rather than hardcoding a sheet — this lets you point at mock, test, or production databases by swapping one input.</p>
+<table>
+<thead>
+<tr>
+<th>Recorder</th>
+<th>Writes to</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Model Usage Recorder</td>
+<td><code>model_usage</code></td>
+</tr>
+<tr>
+<td>Resume Recorder</td>
+<td><code>resumes</code> + <code>agent_outputs</code></td>
+</tr>
+<tr>
+<td>Application Recorder</td>
+<td>delegates résumé recording to Resume Recorder</td>
+</tr>
+<tr>
+<td>Job Discovery Recorder</td>
+<td><code>jobs</code> (discovery rows)</td>
+</tr>
+<tr>
+<td>Run State Recorder</td>
+<td><code>run_state</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="run-error-handler">Run Error Handler<a class="headerlink" href="#run-error-handler" title="Permanent link">&para;</a></h3>
+<p>A dedicated Error Trigger workflow that captures catastrophic failures into the <code>run_errors</code> tab (with execution URL for debugging). It hardcodes the <code>database_id</code> because the error payload doesn't carry one — and because it must not depend on the very Data Loader that may have failed.</p>
+<h2 id="keying-scheme">Keying scheme<a class="headerlink" href="#keying-scheme" title="Permanent link">&para;</a></h2>
+<p>Three identifiers, each with a distinct job:</p>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Format</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>application_run_id</code></td>
+<td><code>app_&lt;execution.id&gt;</code></td>
+<td><strong>Cross-tab join key.</strong> <code>jobs</code>, <code>resumes</code>, <code>agent_outputs</code> all key on it.</td>
+</tr>
+<tr>
+<td><code>run_id</code></td>
+<td><code>app_</code> / <code>disc_</code> / <code>refine_</code> + <code>execution.id</code></td>
+<td>Per-execution trace (rides along in logs/usage).</td>
+</tr>
+<tr>
+<td><code>resume_id</code></td>
+<td><code>{job_id}_v{version}</code></td>
+<td>Discriminates résumé versions (v1 original, v2+ refinements).</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>📌 Don't rename <code>application_run_id</code> to <code>run_id</code>. They're different things — the first joins tabs, the second traces an execution.</p>
+</blockquote>
+<h2 id="the-two-scoring-axes">The two scoring axes<a class="headerlink" href="#the-two-scoring-axes" title="Permanent link">&para;</a></h2>
+<p>Discovery scoring (Agent 8) produces <strong>two independent scores per job</strong>:</p>
+<ul>
+<li><strong>Target fit</strong> — answers <em>"does this match the role being searched for?"</em> Reads only the <code>target_*</code> config fields.</li>
+<li><strong>Background fit</strong> — answers <em>"does this match the candidate's actual experience?"</em> Reads <code>profile_summary</code>, <code>background_titles</code>, and the master doc.</li>
+</ul>
+<p>The agent's prompt enforces <strong>input isolation</strong>: target sub-scores may consult only the target inputs, background sub-scores only the background inputs. One exception — <code>location_match</code> must be equal across both axes. Config fields are authoritative over softer signals in the profile summary if they conflict.</p>
+<p>This separation exists because, for an over-qualified candidate deliberately targeting a more junior role, collapsing the two would stamp every legitimate target match as "no fit" due to background bleed.</p>
+<h2 id="pipeline-state-model-three-orthogonal-axes">Pipeline state model (three orthogonal axes)<a class="headerlink" href="#pipeline-state-model-three-orthogonal-axes" title="Permanent link">&para;</a></h2>
+<p>Job state is tracked on three independent axes. They are <strong>not</strong> to be consolidated — a job can legitimately be, say, <code>queued</code> <em>and</em> <code>hide</code> at once.</p>
+<table>
+<thead>
+<tr>
+<th>Axis</th>
+<th>Column / tab</th>
+<th>Values</th>
+<th>Owner</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Build lifecycle</td>
+<td><code>processed_status</code> (jobs)</td>
+<td><code>'' \| queued \| processing \| done \| error</code></td>
+<td>UI writes <code>queued</code>/<code>processing</code> for pacing; n8n writes <code>done</code>/<code>error</code> terminals</td>
+</tr>
+<tr>
+<td>Discovery triage</td>
+<td><code>job_status</code> (jobs)</td>
+<td><code>'' \| hide</code></td>
+<td>dashboard dismiss/un-dismiss only</td>
+</tr>
+<tr>
+<td>Run lifecycle</td>
+<td><code>run_state</code> tab</td>
+<td><code>running \| completed \| idle</code></td>
+<td>Run State Recorder</td>
+</tr>
+</tbody>
+</table>
+<p><code>done</code> means a build <strong>succeeded</strong> — it is not a "user-skipped" marker. <code>job_status</code> is deliberately narrow and must never carry queue state.</p>
+<h2 id="the-scheduler">The scheduler<a class="headerlink" href="#the-scheduler" title="Permanent link">&para;</a></h2>
+<p>A standalone Node worker (<code>scripts/discovery-scheduler.ts</code>, run via <code>npm run scheduler</code> → <code>tsx</code>) in its own container (<code>Dockerfile.scheduler</code>, <code>node:20-alpine</code>). It:</p>
+<ul>
+<li>Loads env via <code>dotenv</code> from <code>.env.local</code> then <code>.env</code>; values already set (e.g. from <code>docker-compose</code>) win and are not overwritten.</li>
+<li>Reads <code>job_search_cron</code> + <code>timezone</code> from the <code>config</code> tab via the same <code>readSheet</code> the dashboard uses (no duplicated logic). Requires <code>GOOGLE_SHEETS_CLIENT_EMAIL</code>, <code>GOOGLE_SHEETS_PRIVATE_KEY</code>, <code>GOOGLE_SHEETS_DATABASE_ID</code>.</li>
+<li>Validates the cron expression; an invalid value keeps the previous schedule rather than crashing. A missing <code>job_search_cron</code> means no task is scheduled.</li>
+<li>Re-reads config every <code>CONFIG_REFRESH_MS</code> (default <code>600000</code> = 10 min) and reschedules only if the cron or timezone changed.</li>
+<li>On each tick, checks the run state and skips if a discovery run is already in flight (a read failure logs and fires anyway — n8n dedup catches duplicates). Then POSTs <code>{ source: 'cron' }</code> to <code>${N8N_WEBHOOK_BASE_URL}/run-discovery</code> with the <code>X-Maestro-Secret</code> header.</li>
+<li><strong>Requires <code>MAESTRO_WEBHOOK_SECRET</code>.</strong> If it's unset, the tick logs <em>"webhook secret not configured; skipping tick"</em> and does not fire.</li>
+<li>Exits cleanly on <code>SIGINT</code> / <code>SIGTERM</code>.</li>
+</ul>
+<p><strong>Why external?</strong> n8n's Schedule Trigger config is static — it can't read a cron expression <em>out of</em> the sheet (the read happens after the trigger fires). The worker is also migration-friendly: its only coupling to n8n is the URL from <code>runDiscoveryUrl()</code>; when n8n is eventually retired, only that target changes.</p>
+<h2 id="migration-intent">Migration intent<a class="headerlink" href="#migration-intent" title="Permanent link">&para;</a></h2>
+<p>n8n was chosen as a fast demo substrate. The long-term plan is to migrate the orchestration into the Next.js app. The architecture anticipates this: the scheduler, run-state model, and webhook contracts are app-side and stable; retiring n8n changes only the webhook target URLs.</p>
+<h2 id="n8n-pitfalls-read-before-editing-workflows">n8n pitfalls (read before editing workflows)<a class="headerlink" href="#n8n-pitfalls-read-before-editing-workflows" title="Permanent link">&para;</a></h2>
+<p>Hard-won lessons. Ignore at your peril:</p>
+<ol>
+<li><strong>Literal <code>=</code> prefix bug.</strong> Typed Workflow Inputs crossing Execute Workflow boundaries can get an erroneous leading <code>=</code>. Sub-workflows use a <code>stripEquals</code> helper to clean inputs.</li>
+<li><strong>Typed object fields.</strong> Trigger schema fields like <code>config</code>, <code>critique</code>, <code>verifier</code> <strong>must be typed <code>Object</code>, not <code>String</code></strong> — String typing makes n8n JSON-stringify them on receipt, silently breaking <code>config.model_X</code> lookups.</li>
+<li><strong>Expression syntax differs by node.</strong> <code>={{ }}</code> vs <code>{{ }}</code> behaves differently between HTTP nodes and Sheets nodes; mixing them causes <code>#NAME?</code> formula errors.</li>
+<li><strong>No manual leading <code>=</code></strong> in expression-mode fields.</li>
+<li><strong>Publish sub-workflows.</strong> Saving isn't enough — unpublished sub-workflows aren't callable.</li>
+<li><strong>Refresh schema cache</strong> (⟳ on the Execute Workflow node) after changing a sub-workflow's trigger schema.</li>
+<li><strong>One match column</strong> for Sheet upserts — n8n only handles a single match column cleanly. The <code>run_state</code> tab uses a composite <code>state_key</code>.</li>
+<li><strong><code>max_tokens</code> truncation.</strong> If a JSON parse fails and <code>output_tokens</code> equals the configured max, the response was cut off — raise the cap.</li>
+<li><strong>Parse defensively.</strong> LLMs sometimes append commentary after JSON; strip fences and extract the first <code>{</code> to last <code>}</code>.</li>
+<li><strong>Run Once for Each Item</strong> on multi-company parse nodes (Greenhouse/Ashby), not the default all-items mode.</li>
+</ol>
+<h2 id="google-drive-docs-pitfalls">Google Drive / Docs pitfalls<a class="headerlink" href="#google-drive-docs-pitfalls" title="Permanent link">&para;</a></h2>
+<ul>
+<li><code>@page</code> CSS margins are <strong>ignored</strong> on HTML→Google-Doc import; margins require an Apps Script post-process step.</li>
+<li>HTML→Google-Doc conversion strips formatting — the dashboard's résumé export uses the <code>docx</code> npm library to emit real <code>.docx</code> instead.</li>
+<li>Apps Script needs explicit OAuth scopes in <code>appsscript.json</code>, a <code>testAuth</code> run before deploy, and a <strong>"New version"</strong> selection on redeploy (or it serves cached code).</li>
+</ul>
+<hr />
+<p><a href="../04-running/">← Running the System</a> · <a href="../06-database-reference/">Next: Database Reference →</a></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../04-running/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Running the system">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Running the system
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../06-database-reference/" class="md-footer__link md-footer__link--next" aria-label="Next: Database reference">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Database reference
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2026 Parseus AI
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tracking", "navigation.sections", "navigation.top", "navigation.footer", "search.suggest", "search.highlight", "content.code.copy", "toc.follow", "toc.integrate"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

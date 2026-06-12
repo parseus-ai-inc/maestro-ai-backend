@@ -1,0 +1,1728 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="An open-source, AI-powered job-search automation system.">
+      
+      
+      
+        <link rel="canonical" href="https://parseus-ai-inc.github.io/maestro-ai-backend/02-installation/">
+      
+      
+        <link rel="prev" href="../01-overview/">
+      
+      
+        <link rel="next" href="../03-configuration/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Installation - Maestro AI</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,300i,400,400i,700,700i%7CJetBrains+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Inter";--md-code-font:"JetBrains Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../stylesheets/parseus.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#2-installation-guide" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Maestro AI" class="md-header__button md-logo" aria-label="Maestro AI" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Maestro AI
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Installation
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/parseus-ai-inc/maestro-ai-backend" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    parseus-ai-inc/maestro-ai-backend
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Maestro AI" class="md-nav__button md-logo" aria-label="Maestro AI" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Maestro AI
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/parseus-ai-inc/maestro-ai-backend" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    parseus-ai-inc/maestro-ai-backend
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../why-maestro/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Why Maestro?
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting started
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Getting started
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Installation
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Installation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#what-youll-set-up-in-order" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What you'll set up, in order
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-1-install-prerequisite-software" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 1 — Install prerequisite software
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 1 — Install prerequisite software">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#docker-desktop" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Docker Desktop
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nodejs-version-20" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Node.js (version 20)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#git" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Git
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-2-get-the-maestro-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2 — Get the Maestro code
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-3-set-up-your-google-cloud-project" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 3 — Set up your Google Cloud project
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 3 — Set up your Google Cloud project">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#set-up-oauth-for-drive-uploads" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Set up OAuth for Drive uploads
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-4-create-the-database-spreadsheet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 4 — Create the database spreadsheet
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-5-get-an-ai-provider-api-key" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 5 — Get an AI provider API key
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 5 — Get an AI provider API key">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#anthropic-recommended" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Anthropic (recommended)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#openai-and-google-gemini-optional" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        OpenAI and Google Gemini (optional)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-6-configure-environment-variables" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 6 — Configure environment variables
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 6 — Configure environment variables">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#backend-env" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Backend .env
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dashboard-envlocal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dashboard .env.local
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-7-start-the-backend-n8n" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 7 — Start the backend (n8n)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-8-import-the-n8n-workflows" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 8 — Import the n8n workflows
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-9-connect-n8n-credentials" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 9 — Connect n8n credentials
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 9 — Connect n8n credentials">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#google-service-account-for-sheets-drive" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Google service account (for Sheets &amp; Drive)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#anthropic-openai-gemini-for-the-ai-agents" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Anthropic / OpenAI / Gemini (for the AI agents)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#webhook-secret-protects-the-trigger-webhooks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Webhook secret (protects the trigger webhooks)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#database-id-in-the-run-error-handler" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Database ID in the Run Error Handler
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-10-start-the-maestro-dashboard" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 10 — Start the Maestro dashboard
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-11-start-the-scheduler-optional" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 11 — Start the scheduler (optional)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-12-verify-the-installation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 12 — Verify the installation
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-configuration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Configuration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-running/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Running the system
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-database-reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Database reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../11-importing-workflows/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Importing workflows
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Troubleshooting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08-faq-glossary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FAQ & glossary
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Customizing
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Customizing
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../09-prompting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Prompting & customizing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../10-master-dossier/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Master career dossier
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="2-installation-guide">2. Installation Guide<a class="headerlink" href="#2-installation-guide" title="Permanent link">&para;</a></h1>
+<p><a href="../01-overview/">← Overview</a> · <a href="../03-configuration/">Next: Configuration →</a></p>
+<hr />
+<p>This guide takes you from a fresh computer to a running Maestro AI system. It's written so that <strong>no prior coding experience is required</strong> — every command is copy-paste, and we explain what each one does.</p>
+<blockquote>
+<p>⏱️ <strong>Time:</strong> 45–90 minutes. Most of the time is Google account setup, which is one-time.</p>
+<p>💡 <strong>Tip:</strong> Do the steps in order. Don't skip ahead — later steps assume earlier ones are done.</p>
+</blockquote>
+<h2 id="what-youll-set-up-in-order">What you'll set up, in order<a class="headerlink" href="#what-youll-set-up-in-order" title="Permanent link">&para;</a></h2>
+<ol>
+<li><a href="#step-1-install-prerequisite-software">Install the prerequisite software</a> (Docker, Node.js, Git)</li>
+<li><a href="#step-2-get-the-maestro-code">Get the Maestro code</a> (clone both repositories)</li>
+<li><a href="#step-3-set-up-your-google-cloud-project">Set up your Google account</a> (project, APIs, service account)</li>
+<li><a href="#step-4-create-the-database-spreadsheet">Create your database</a> (copy the Google Sheet)</li>
+<li><a href="#step-5-get-an-ai-provider-api-key">Get your AI provider key</a> (Anthropic, OpenAI, or Gemini)</li>
+<li><a href="#step-6-configure-environment-variables">Configure environment files</a> (passwords and keys)</li>
+<li><a href="#step-7-start-the-backend-n8n">Start the backend</a> (n8n in Docker)</li>
+<li><a href="#step-8-import-the-n8n-workflows">Import the workflows</a></li>
+<li><a href="#step-9-connect-n8n-credentials">Connect n8n to Google and your AI provider</a></li>
+<li><a href="#step-10-start-the-maestro-dashboard">Start the dashboard</a></li>
+<li><a href="#step-11-start-the-scheduler-optional">Start the scheduler</a></li>
+<li><a href="#step-12-verify-the-installation">Verify everything works</a></li>
+</ol>
+<hr />
+<h2 id="step-1-install-prerequisite-software">Step 1 — Install prerequisite software<a class="headerlink" href="#step-1-install-prerequisite-software" title="Permanent link">&para;</a></h2>
+<p>You need three free programs. Install whichever you don't already have.</p>
+<h3 id="docker-desktop">Docker Desktop<a class="headerlink" href="#docker-desktop" title="Permanent link">&para;</a></h3>
+<p>Docker runs the backend in a self-contained "container" so you don't have to install n8n manually.</p>
+<ul>
+<li>Download from <strong>https://www.docker.com/products/docker-desktop/</strong></li>
+<li>Install it, then <strong>launch it</strong> and wait until the whale icon shows "Docker Desktop is running."</li>
+<li><strong>Windows users:</strong> if prompted, accept the WSL 2 installation — Docker needs it.</li>
+</ul>
+<p>Verify it's working. Open a terminal (<strong>Windows:</strong> PowerShell; <strong>macOS/Linux:</strong> Terminal) and run:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>docker<span class="w"> </span>--version
+</code></pre></div>
+<p>You should see something like <code>Docker version 27.x.x</code>.</p>
+<h3 id="nodejs-version-20">Node.js (version 20)<a class="headerlink" href="#nodejs-version-20" title="Permanent link">&para;</a></h3>
+<p>Node runs the dashboard and the scheduler. <strong>Node 20</strong> is the intended version — it's what the scheduler's Docker image is built on (<code>node:20-alpine</code>). There's no hard version check in the code, so a newer LTS will usually work, but 20 is the tested target.</p>
+<ul>
+<li>Download the <strong>Node 20 LTS</strong> version from <strong>https://nodejs.org</strong></li>
+<li>Install with all defaults.</li>
+</ul>
+<p>Verify:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>node<span class="w"> </span>--version
+</code></pre></div>
+<p>You should see <code>v20.x.x</code>.</p>
+<h3 id="git">Git<a class="headerlink" href="#git" title="Permanent link">&para;</a></h3>
+<p>Git downloads ("clones") the code.</p>
+<ul>
+<li><strong>Windows/macOS:</strong> download from <strong>https://git-scm.com/downloads</strong></li>
+<li><strong>Linux:</strong> <code>sudo apt install git</code> (Debian/Ubuntu) or your distro's equivalent.</li>
+</ul>
+<p>Verify:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>git<span class="w"> </span>--version
+</code></pre></div>
+<hr />
+<h2 id="step-2-get-the-maestro-code">Step 2 — Get the Maestro code<a class="headerlink" href="#step-2-get-the-maestro-code" title="Permanent link">&para;</a></h2>
+<p>Pick a folder to keep everything in. We'll use <code>maestro</code> in your home directory as an example.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1"># Create and enter a working folder</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>mkdir<span class="w"> </span>maestro
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="nb">cd</span><span class="w"> </span>maestro
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="c1"># Clone the backend (n8n workflows + scheduler)</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/parseus-ai-inc/maestro-ai-backend.git
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="c1"># Clone the dashboard</span>
+<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/parseus-ai-inc/maestro-ai-frontend.git
+</code></pre></div>
+<p>You now have two folders: <code>maestro-ai-backend</code> and <code>maestro-ai-frontend</code>.</p>
+<hr />
+<h2 id="step-3-set-up-your-google-cloud-project">Step 3 — Set up your Google Cloud project<a class="headerlink" href="#step-3-set-up-your-google-cloud-project" title="Permanent link">&para;</a></h2>
+<p>Maestro stores its database in Google Sheets and its files in Google Drive. To let the software read and write them automatically, you create a <strong>service account</strong> — a kind of robot Google user with its own key.</p>
+<p>This is the fiddliest part. Take it slowly; you only do it once. Full screenshots and detail are in the <a href="../03-configuration/#google-cloud-setup">Configuration guide</a> — the short version:</p>
+<blockquote>
+<p>💡 <strong>Consider a dedicated (burner) Google account.</strong> The service account you create here gets <strong>Editor</strong> access to one Sheet and one Drive folder. That access is scoped to only the items you explicitly share with it — not your whole Drive — so Maestro can't see your personal files. Still, if you'd rather keep job-hunting fully walled off from your personal account, create a free dedicated Google account and do all of the steps below signed into it.</p>
+</blockquote>
+<ol>
+<li>Go to <strong>https://console.cloud.google.com</strong> and sign in with the Google account you want to use for Maestro (a dedicated account is recommended — see the note above).</li>
+<li>Create a new project — name it <code>maestro</code> (top bar → project dropdown → <strong>New Project</strong>).</li>
+<li>Enable three APIs (search each in the top bar and click <strong>Enable</strong>):</li>
+<li><strong>Google Sheets API</strong></li>
+<li><strong>Google Drive API</strong></li>
+<li><strong>Google Docs API</strong></li>
+<li>Create a <strong>service account</strong>: <strong>APIs &amp; Services → Credentials → Create Credentials → Service account</strong>. Name it <code>maestro-pipeline</code>. Skip the optional permission steps.</li>
+<li>Create a <strong>key</strong> for it: click the new service account → <strong>Keys → Add Key → Create new key → JSON</strong>. A <code>.json</code> file downloads. <strong>Keep this file safe — it's a password.</strong></li>
+</ol>
+<div class="admonition example">
+<p class="admonition-title">Creating the JSON key</p>
+<p>On the service account's <strong>Keys</strong> tab, click <strong>Add key → Create new key</strong>, choose <strong>JSON</strong>, and click <strong>Create</strong>. A <code>.json</code> file downloads to your computer.</p>
+</div>
+<ol>
+<li>Open that JSON file in a text editor. You'll need two values from it later:</li>
+<li><code>client_email</code> (looks like <code>maestro-pipeline@yourproject.iam.gserviceaccount.com</code>)</li>
+<li><code>private_key</code> (a long block starting with <code>-----BEGIN PRIVATE KEY-----</code>)</li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">What the JSON file contains</p>
+<p>Two fields from this file go into your config:</p>
+<table>
+<thead>
+<tr>
+<th>JSON field</th>
+<th>Used as</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>client_email</code></td>
+<td><code>GOOGLE_SHEETS_CLIENT_EMAIL</code></td>
+</tr>
+<tr>
+<td><code>private_key</code></td>
+<td><code>GOOGLE_SHEETS_PRIVATE_KEY</code></td>
+</tr>
+</tbody>
+</table>
+<p>The <code>private_key</code> is a long block beginning <code>-----BEGIN PRIVATE KEY-----</code>. Keep the whole thing, including the <code>\n</code> characters.</p>
+</div>
+<blockquote>
+<p>⚠️ <strong>One service account for both halves.</strong> The dashboard and the pipeline <strong>must use the same service account.</strong> If they differ, saving résumés to Drive will fail with a "403" error.</p>
+</blockquote>
+<h3 id="set-up-oauth-for-drive-uploads">Set up OAuth for Drive uploads<a class="headerlink" href="#set-up-oauth-for-drive-uploads" title="Permanent link">&para;</a></h3>
+<p>The service account handles Sheets and reading Drive — but on a regular (consumer) Gmail account it <strong>cannot upload files to Drive</strong>. So saving résumés and cover letters to Drive uses a different mechanism: OAuth, acting as <em>you</em>. This is a one-time setup, and skipping it is the most common reason "Save to Drive" fails.</p>
+<ol>
+<li>
+<p><strong>Configure the OAuth consent screen.</strong> In <strong>APIs &amp; Services → OAuth consent screen</strong>, choose <strong>External</strong>, and fill in an app name and your email. You can leave the optional fields blank.</p>
+</li>
+<li>
+<p><strong>⚠️ Add yourself as a test user.</strong> Still on the consent screen, find the <strong>Test users</strong> section, click <strong>Add users</strong>, and add the Google account you'll use with Maestro.</p>
+<div class="admonition warning">
+<p class="admonition-title">This step is required</p>
+<p>Without adding yourself as a test user, Google blocks the connection with <strong>"Access blocked: this app isn't verified."</strong> If you hit that error later, it's almost always because this step was skipped.</p>
+</div>
+</li>
+<li>
+<p><strong>Create an OAuth client ID.</strong> In <strong>APIs &amp; Services → Credentials → Create Credentials → OAuth client ID</strong>, choose <strong>Web application</strong>. Under <strong>Authorized redirect URIs</strong>, add:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>https://developers.google.com/oauthplayground
+</code></pre></div>
+<p>Save, then copy the <strong>Client ID</strong> and <strong>Client secret</strong> it shows you.</p>
+</li>
+<li>
+<p><strong>Get a refresh token.</strong> Go to the <a href="https://developers.google.com/oauthplayground">OAuth 2.0 Playground</a>:</p>
+<ol>
+<li>Click the <strong>gear icon</strong> (top-right) → check <strong>Use your own OAuth credentials</strong> → paste your Client ID and Client secret.</li>
+<li>In the left panel, find <strong>Drive API v3</strong> and select the scope <code>https://www.googleapis.com/auth/drive</code>.</li>
+<li>Click <strong>Authorize APIs</strong>, sign in with your test-user account, and allow access.</li>
+<li>Click <strong>Exchange authorization code for tokens</strong>, then copy the <strong>Refresh token</strong>.</li>
+</ol>
+</li>
+</ol>
+<p>You now have three OAuth values — Client ID, Client secret, and refresh token — which go into the dashboard's <code>.env.local</code> in <a href="#step-6-configure-environment-variables">Step 6</a>.</p>
+<blockquote>
+<p>💡 <strong>Why a refresh token?</strong> It lets the dashboard keep acting as you on Drive without you logging in each time. Treat it like a password — it's in <code>.env.local</code>, which is never committed.</p>
+</blockquote>
+<hr />
+<h2 id="step-4-create-the-database-spreadsheet">Step 4 — Create the database spreadsheet<a class="headerlink" href="#step-4-create-the-database-spreadsheet" title="Permanent link">&para;</a></h2>
+<p>Maestro ships with a ready-made database template (<code>Database.xlsx</code> in the backend repo) containing all the required tabs and columns.</p>
+<ol>
+<li>Go to <strong>https://sheets.google.com</strong> and create a blank spreadsheet (or import <code>Database.xlsx</code>: <strong>File → Import → Upload</strong>, choose <code>Database.xlsx</code>, <strong>Replace spreadsheet</strong>).</li>
+<li>Name it <code>Maestro Database</code>.</li>
+<li>Look at the URL. It contains the spreadsheet's ID:
+   <div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>https://docs.google.com/spreadsheets/d/THIS_LONG_PART_IS_THE_ID/edit
+</code></pre></div>
+   <strong>Copy that ID</strong> — you'll need it as <code>GOOGLE_SHEETS_DATABASE_ID</code>.</li>
+</ol>
+<div class="admonition tip">
+<p class="admonition-title">Where the ID is in the URL</p>
+<p>In <code>https://docs.google.com/spreadsheets/d/</code><strong><code>SHEET_ID</code></strong><code>/edit</code>, copy only the long <strong><code>SHEET_ID</code></strong> segment between <code>/d/</code> and <code>/edit</code>.</p>
+</div>
+<ol>
+<li><strong>Share the sheet with your service account.</strong> Click <strong>Share</strong> (top-right), paste the service account's <code>client_email</code> from Step 3, give it <strong>Editor</strong> access, and send. (No email actually goes anywhere — it just grants the robot access.)</li>
+</ol>
+<div class="admonition example">
+<p class="admonition-title">The Share dialog</p>
+<p>Open <strong>Share</strong> on your <code>Maestro Database</code> sheet, paste the service account's <code>client_email</code>, set its role to <strong>Editor</strong>, and send. The service account must have Editor access or the pipeline can't write to the sheet.</p>
+</div>
+<p>Then fill in the <code>config</code> tab with your details — your name, target roles, and which AI models to use. The <a href="../03-configuration/#the-config-tab">Configuration guide</a> explains every setting.</p>
+<hr />
+<h2 id="step-5-get-an-ai-provider-api-key">Step 5 — Get an AI provider API key<a class="headerlink" href="#step-5-get-an-ai-provider-api-key" title="Permanent link">&para;</a></h2>
+<p>Maestro needs at least one AI provider. <strong>Anthropic (Claude) is recommended</strong> and is the default in the shipped config.</p>
+<h3 id="anthropic-recommended">Anthropic (recommended)<a class="headerlink" href="#anthropic-recommended" title="Permanent link">&para;</a></h3>
+<ol>
+<li>Go to <strong>https://console.anthropic.com</strong> and sign up.</li>
+<li>Add a small amount of credit (<strong>Billing</strong>). \$5–\$10 is plenty to start.</li>
+<li>Go to <strong>API Keys → Create Key</strong>, name it <code>maestro</code>, and <strong>copy the key</strong> (starts with <code>sk-ant-</code>). You can't see it again, so save it now.</li>
+</ol>
+<h3 id="openai-and-google-gemini-optional">OpenAI and Google Gemini (optional)<a class="headerlink" href="#openai-and-google-gemini-optional" title="Permanent link">&para;</a></h3>
+<p>Maestro also supports these. Get keys from <strong>https://platform.openai.com/api-keys</strong> and <strong>https://aistudio.google.com/apikey</strong> respectively if you want to use them. You can mix providers per agent in the <code>config</code> tab.</p>
+<hr />
+<h2 id="step-6-configure-environment-variables">Step 6 — Configure environment variables<a class="headerlink" href="#step-6-configure-environment-variables" title="Permanent link">&para;</a></h2>
+<p>"Environment variables" are settings — including secrets — that live in a file the software reads at startup. Each repo has an <code>.env.example</code> template; you copy it to <code>.env.local</code> (dashboard) / <code>.env</code> (backend) and fill in your values.</p>
+<blockquote>
+<p>🔒 <strong>Never commit these files to GitHub.</strong> They contain secrets and are already excluded by <code>.gitignore</code>.</p>
+</blockquote>
+<h3 id="backend-env">Backend <code>.env</code><a class="headerlink" href="#backend-env" title="Permanent link">&para;</a></h3>
+<p>In the <code>maestro-ai-backend</code> folder, copy the template:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="c1"># Windows (PowerShell)</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="nb">cd</span><span class="w"> </span>maestro-ai-backend
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>Copy-Item<span class="w"> </span>.env.example<span class="w"> </span>.env
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="c1"># macOS / Linux</span>
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="nb">cd</span><span class="w"> </span>maestro-ai-backend
+<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>cp<span class="w"> </span>.env.example<span class="w"> </span>.env
+</code></pre></div>
+<p>Open <code>maestro-ai-backend/.env</code> in a text editor and fill in:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="c1"># The ID of your Google Sheet from Step 4</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="na">GOOGLE_SHEETS_DATABASE_ID</span><span class="o">=</span><span class="s">your-sheet-id-here</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="c1"># The Google Drive folder ID where résumé folders are created.</span>
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="c1"># Create a folder in Drive, share it with the service account (Editor),</span>
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="c1"># and copy the ID from its URL.</span>
+<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="na">ROOT_FOLDER_ID</span><span class="o">=</span><span class="s">your-drive-folder-id-here</span>
+<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a>
+<a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a><span class="c1"># Lets n8n read these env vars inside its nodes — leave as false</span>
+<a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a><span class="na">N8N_BLOCK_ENV_ACCESS_IN_NODE</span><span class="o">=</span><span class="s">false</span>
+</code></pre></div>
+<h3 id="dashboard-envlocal">Dashboard <code>.env.local</code><a class="headerlink" href="#dashboard-envlocal" title="Permanent link">&para;</a></h3>
+<p>In the <code>maestro-ai-frontend</code> folder:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="c1"># Windows (PowerShell)</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="nb">cd</span><span class="w"> </span>../maestro-ai-frontend
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>Copy-Item<span class="w"> </span>.env.example<span class="w"> </span>.env.local
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="c1"># macOS / Linux</span>
+<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="nb">cd</span><span class="w"> </span>../maestro-ai-frontend
+<a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a>cp<span class="w"> </span>.env.example<span class="w"> </span>.env.local
+</code></pre></div>
+<p>Open <code>maestro-ai-frontend/.env.local</code> and fill in the service-account values from Step 3:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="c1"># From your service-account JSON file (Step 3)</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="na">GOOGLE_SHEETS_CLIENT_EMAIL</span><span class="o">=</span><span class="s">maestro-pipeline@yourproject.iam.gserviceaccount.com</span>
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="c1"># The whole private key. Keep it on ONE line, with \n where the line breaks are.</span>
+<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="c1"># (Copy it from the JSON file — it already has the \n in it.)</span>
+<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="na">GOOGLE_SHEETS_PRIVATE_KEY</span><span class="o">=</span><span class="s">&quot;-----BEGIN PRIVATE KEY-----\nMIIE...\n-----END PRIVATE KEY-----\n&quot;</span>
+<a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a>
+<a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a><span class="c1"># Same sheet ID as the backend</span>
+<a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a><span class="na">GOOGLE_SHEETS_DATABASE_ID</span><span class="o">=</span><span class="s">your-sheet-id-here</span>
+<a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a>
+<a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a><span class="c1"># OAuth credentials for Drive uploads (from Step 3 — the OAuth Playground flow).</span>
+<a id="__codelineno-9-12" name="__codelineno-9-12" href="#__codelineno-9-12"></a><span class="c1"># These let the dashboard save résumés/cover letters to Drive as you.</span>
+<a id="__codelineno-9-13" name="__codelineno-9-13" href="#__codelineno-9-13"></a><span class="na">GOOGLE_OAUTH_CLIENT_ID</span><span class="o">=</span><span class="s">your-client-id.apps.googleusercontent.com</span>
+<a id="__codelineno-9-14" name="__codelineno-9-14" href="#__codelineno-9-14"></a><span class="na">GOOGLE_OAUTH_CLIENT_SECRET</span><span class="o">=</span><span class="s">your-client-secret</span>
+<a id="__codelineno-9-15" name="__codelineno-9-15" href="#__codelineno-9-15"></a><span class="na">GOOGLE_OAUTH_REFRESH_TOKEN</span><span class="o">=</span><span class="s">your-refresh-token</span>
+<a id="__codelineno-9-16" name="__codelineno-9-16" href="#__codelineno-9-16"></a>
+<a id="__codelineno-9-17" name="__codelineno-9-17" href="#__codelineno-9-17"></a><span class="c1"># Where the dashboard/scheduler send &quot;run this&quot; requests to the backend.</span>
+<a id="__codelineno-9-18" name="__codelineno-9-18" href="#__codelineno-9-18"></a><span class="c1"># Must end in /webhook (NOT /webhook-test). Default below works for local Docker.</span>
+<a id="__codelineno-9-19" name="__codelineno-9-19" href="#__codelineno-9-19"></a><span class="na">N8N_WEBHOOK_BASE_URL</span><span class="o">=</span><span class="s">http://localhost:5678/webhook</span>
+<a id="__codelineno-9-20" name="__codelineno-9-20" href="#__codelineno-9-20"></a>
+<a id="__codelineno-9-21" name="__codelineno-9-21" href="#__codelineno-9-21"></a><span class="c1"># A shared secret you invent. Sent as the X-Maestro-Secret header on every</span>
+<a id="__codelineno-9-22" name="__codelineno-9-22" href="#__codelineno-9-22"></a><span class="c1"># webhook call. Use the SAME value here and in n8n&#39;s webhook Header Auth (Step 9).</span>
+<a id="__codelineno-9-23" name="__codelineno-9-23" href="#__codelineno-9-23"></a><span class="c1"># Without it, triggering and the scheduler will not fire.</span>
+<a id="__codelineno-9-24" name="__codelineno-9-24" href="#__codelineno-9-24"></a><span class="na">MAESTRO_WEBHOOK_SECRET</span><span class="o">=</span><span class="s">choose-a-long-random-string</span>
+</code></pre></div>
+<blockquote>
+<p>💡 <strong>About the private key's <code>\n</code>:</strong> the key in your JSON file contains literal <code>\n</code> characters marking line breaks. Paste it exactly as it appears in the JSON, wrapped in double quotes. Don't reformat it. (The software unescapes the <code>\n</code> at runtime.)</p>
+<p>🔑 <strong>Pick your <code>MAESTRO_WEBHOOK_SECRET</code> now and remember it.</strong> You'll enter the exact same value into n8n in <a href="#step-9-connect-n8n-credentials">Step 9</a>. Any long random string works — it's a shared password between the dashboard/scheduler and the pipeline.</p>
+<p>ℹ️ <strong>Don't put a space after the <code>=</code>.</strong> Write <code>KEY=value</code>, not <code>KEY= value</code> — a leading space becomes part of the value.</p>
+</blockquote>
+<hr />
+<h2 id="step-7-start-the-backend-n8n">Step 7 — Start the backend (n8n)<a class="headerlink" href="#step-7-start-the-backend-n8n" title="Permanent link">&para;</a></h2>
+<p>The backend runs in Docker using the <code>docker-compose.yml</code> file in the <code>maestro-ai-backend</code> folder.</p>
+<blockquote>
+<p>⚠️ <strong>Compose project name matters.</strong> Maestro pins its Docker project name to <code>maestro-ai</code> so your data survives across restarts even if you rename folders. <strong>Always include <code>-p maestro-ai</code></strong> in every <code>docker compose</code> command, or add <code>COMPOSE_PROJECT_NAME=maestro-ai</code> to a <code>.env</code> file beside the compose file.</p>
+</blockquote>
+<p>From the <code>maestro-ai-backend</code> folder:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>docker<span class="w"> </span>compose<span class="w"> </span>-p<span class="w"> </span>maestro-ai<span class="w"> </span>up<span class="w"> </span>-d
+</code></pre></div>
+<p>This downloads and starts n8n. The first run takes a few minutes. When it's done, open <strong>http://localhost:5678</strong> in your browser. Create your n8n owner account (local only — these credentials stay on your machine).</p>
+<p>To stop it later:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>docker<span class="w"> </span>compose<span class="w"> </span>-p<span class="w"> </span>maestro-ai<span class="w"> </span>down
+</code></pre></div>
+<p>(Your data is kept in a named Docker volume, so stopping and starting is safe.)</p>
+<hr />
+<h2 id="step-8-import-the-n8n-workflows">Step 8 — Import the n8n workflows<a class="headerlink" href="#step-8-import-the-n8n-workflows" title="Permanent link">&para;</a></h2>
+<p>The backend repo contains all the workflows as <code>.json</code> files. Import them into n8n.</p>
+<p>For <strong>each</strong> <code>.json</code> file in the backend's workflow folder:</p>
+<ol>
+<li>In n8n (http://localhost:5678), click <strong>Workflows</strong> in the left menu.</li>
+<li>Click the <strong>⋯</strong> (or <strong>Add workflow</strong> dropdown) → <strong>Import from File</strong>.</li>
+<li>Select the <code>.json</code> file.</li>
+<li>Click <strong>Save</strong>, then <strong>toggle the workflow to Active / Published</strong> (top-right switch).</li>
+</ol>
+<div class="admonition example">
+<p class="admonition-title">Import menu and the Active toggle</p>
+<ul>
+<li><strong>Import:</strong> in n8n, click <strong>Add workflow → Import from File</strong> and select each <code>.json</code>.</li>
+<li><strong>Activate:</strong> after importing, toggle each workflow to <strong>Active</strong> (top-right). Every workflow must be Active/Published, or sub-workflow calls fail.</li>
+</ul>
+</div>
+<blockquote>
+<p>📌 <strong>Sub-workflows must be Published, not just Saved</strong>, or the workflows that call them will fail.</p>
+</blockquote>
+<p>Import them in any order, but make sure <strong>all</strong> of them end up Published. The key entry-point workflows are:</p>
+<table>
+<thead>
+<tr>
+<th>Workflow</th>
+<th>Triggered by</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Application Orchestrator</strong></td>
+<td>dashboard "Build"</td>
+<td>Builds résumés + cover letters for selected jobs</td>
+</tr>
+<tr>
+<td><strong>Job Discovery</strong></td>
+<td>scheduler / dashboard</td>
+<td>Finds and scores new jobs</td>
+</tr>
+<tr>
+<td><strong>Application Refinement</strong></td>
+<td>dashboard "Refine"</td>
+<td>Re-works a résumé with your instructions</td>
+</tr>
+</tbody>
+</table>
+<p>The rest (Agents 1–10, Call LLM, the recorders, the source connectors) are sub-workflows these three call.</p>
+<blockquote>
+<p>ℹ️ <strong>Note on file naming:</strong> one source connector file is named <code>Abshy_Source</code> — this is a known typo for <strong>Ashby</strong>, a job-board source. It functions correctly; the name is just misspelled.</p>
+</blockquote>
+<hr />
+<h2 id="step-9-connect-n8n-credentials">Step 9 — Connect n8n credentials<a class="headerlink" href="#step-9-connect-n8n-credentials" title="Permanent link">&para;</a></h2>
+<p>n8n needs to know your Google service account and your AI provider key. You add these as <strong>credentials</strong> inside n8n. You'll also enter your database ID into one workflow that can't read it automatically.</p>
+<h3 id="google-service-account-for-sheets-drive">Google service account (for Sheets &amp; Drive)<a class="headerlink" href="#google-service-account-for-sheets-drive" title="Permanent link">&para;</a></h3>
+<ol>
+<li>In n8n: <strong>Credentials → Add Credential → Google Service Account API</strong>.</li>
+<li>Paste the service account's <code>client_email</code> and <code>private_key</code> from your JSON file (Step 3).</li>
+<li>Save. Name it something memorable like <code>Maestro Google SA</code>.</li>
+</ol>
+<p>The Google Sheets and Drive nodes in the imported workflows reference this credential — open one and re-select your credential if it shows as missing.</p>
+<h3 id="anthropic-openai-gemini-for-the-ai-agents">Anthropic / OpenAI / Gemini (for the AI agents)<a class="headerlink" href="#anthropic-openai-gemini-for-the-ai-agents" title="Permanent link">&para;</a></h3>
+<p>The agents call the providers through HTTP nodes inside the <strong>Call LLM</strong> workflow using a <strong>Header Auth</strong> credential.</p>
+<ol>
+<li><strong>Credentials → Add Credential → Header Auth</strong>.</li>
+<li>For Anthropic: header name <code>x-api-key</code>, value = your <code>sk-ant-...</code> key.</li>
+<li>Save and select it in Call LLM's Anthropic HTTP node. (Repeat with the appropriate header for OpenAI/Gemini if you use them — see the <a href="../03-configuration/#ai-provider-credentials">Configuration guide</a>.)</li>
+</ol>
+<div class="admonition example">
+<p class="admonition-title">Header Auth credential — Anthropic</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Name</strong></td>
+<td><code>x-api-key</code> (exactly this header name)</td>
+</tr>
+<tr>
+<td><strong>Value</strong></td>
+<td>your <code>sk-ant-…</code> key</td>
+</tr>
+</tbody>
+</table>
+<p>For other providers: OpenAI uses header <code>Authorization</code> with value <code>Bearer sk-…</code>; Gemini uses <code>x-goog-api-key</code> with your key.</p>
+</div>
+<h3 id="webhook-secret-protects-the-trigger-webhooks">Webhook secret (protects the trigger webhooks)<a class="headerlink" href="#webhook-secret-protects-the-trigger-webhooks" title="Permanent link">&para;</a></h3>
+<p>The four entry workflows (Application Orchestrator, Job Discovery, Application Refinement, Cover Letter Generation &amp; Refinement) are protected by a shared secret so only your dashboard and scheduler can fire them. This must match the <code>MAESTRO_WEBHOOK_SECRET</code> you set in <code>.env.local</code> (<a href="#step-6-configure-environment-variables">Step 6</a>).</p>
+<ol>
+<li><strong>Credentials → Add Credential → Header Auth.</strong></li>
+<li>Header name: <code>X-Maestro-Secret</code></li>
+<li>Value: <strong>the exact same string</strong> you used for <code>MAESTRO_WEBHOOK_SECRET</code>.</li>
+<li>Save, then open each of the four entry workflows' <strong>Webhook</strong> node and select this credential for authentication.</li>
+</ol>
+<div class="admonition example">
+<p class="admonition-title">Webhook-secret Header Auth</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Name</strong></td>
+<td><code>X-Maestro-Secret</code> (exactly this)</td>
+</tr>
+<tr>
+<td><strong>Value</strong></td>
+<td>the same string as <code>MAESTRO_WEBHOOK_SECRET</code> in <code>.env.local</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<blockquote>
+<p>⚠️ If this secret doesn't match on both sides, the dashboard's trigger buttons return <strong>503</strong> and the scheduler silently skips every run. A mismatch here is the most common reason "nothing happens when I click Build."</p>
+</blockquote>
+<h3 id="database-id-in-the-run-error-handler">Database ID in the Run Error Handler<a class="headerlink" href="#database-id-in-the-run-error-handler" title="Permanent link">&para;</a></h3>
+<p>One workflow needs your database ID entered by hand. The <strong>Run Error Handler</strong> records pipeline errors back to the database, but because it runs in an isolated context it can't read the ID the usual way — so it's set directly inside the workflow with a placeholder you must replace.</p>
+<ol>
+<li>In n8n, open the <strong>Run Error Handler</strong> workflow.</li>
+<li>Find the <strong>Error Handler Config</strong> node (a Set node near the start).</li>
+<li>It holds a field <code>database_id</code> with the placeholder value <code>YOUR_GOOGLE_SHEETS_DATABASE_ID</code>.</li>
+<li>Replace that placeholder with your actual database Sheet ID — the same value you used for <code>GOOGLE_SHEETS_DATABASE_ID</code> in <a href="#step-6-configure-environment-variables">Step 6</a>.</li>
+<li>Save the workflow.</li>
+</ol>
+<div class="admonition example">
+<p class="admonition-title">The database_id field — Error Handler Config</p>
+<p>In the <strong>Error Handler Config</strong> (Set) node, replace the <code>database_id</code> placeholder <code>YOUR_GOOGLE_SHEETS_DATABASE_ID</code> with your real database Sheet ID, then <strong>Save</strong>.</p>
+</div>
+<blockquote>
+<p>⚠️ If you skip this, the pipeline still runs, but when a workflow errors, the failure won't be recorded to your database — so the dashboard's failure indicators won't light up and you'll have to debug from n8n's execution log instead.</p>
+</blockquote>
+<hr />
+<h2 id="step-10-start-the-maestro-dashboard">Step 10 — Start the Maestro dashboard<a class="headerlink" href="#step-10-start-the-maestro-dashboard" title="Permanent link">&para;</a></h2>
+<p>From the <code>maestro-ai-frontend</code> folder, install dependencies and start it:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="nb">cd</span><span class="w"> </span>maestro-ai-frontend
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>npm<span class="w"> </span>install
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>npm<span class="w"> </span>run<span class="w"> </span>dev
+</code></pre></div>
+<p>When you see <code>ready</code> in the terminal, open <strong>http://localhost:4400</strong>.</p>
+<blockquote>
+<p>📌 The dashboard runs on <strong>port 4400</strong>, not the usual 3000. This is set in <code>package.json</code>.</p>
+</blockquote>
+<p>If the dashboard loads and shows your (empty) tracking and discovery pages, the connection to Google Sheets is working.</p>
+<hr />
+<h2 id="step-11-start-the-scheduler-optional">Step 11 — Start the scheduler (optional)<a class="headerlink" href="#step-11-start-the-scheduler-optional" title="Permanent link">&para;</a></h2>
+<p>The scheduler fires discovery automatically on a cadence you set in the <code>config</code> tab (<code>job_search_cron</code>). You can skip this and trigger discovery manually from the dashboard instead.</p>
+<p>The scheduler runs as a Docker service defined in the dashboard repo's compose file. From the <code>maestro-ai-frontend</code> folder:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>docker<span class="w"> </span>compose<span class="w"> </span>-p<span class="w"> </span>maestro-ai<span class="w"> </span>up<span class="w"> </span>-d<span class="w"> </span>scheduler
+</code></pre></div>
+<p>It reads the same <code>.env.local</code> you set up in Step 6 and posts to the discovery webhook on schedule.</p>
+<blockquote>
+<p>ℹ️ The scheduler and n8n share the <code>maestro-ai</code> Docker project so they're on the same network. If you put the scheduler on n8n's network, you can set <code>N8N_WEBHOOK_BASE_URL=http://n8n:5678/webhook</code> (using the service name) for a cleaner connection.</p>
+</blockquote>
+<hr />
+<h2 id="step-12-verify-the-installation">Step 12 — Verify the installation<a class="headerlink" href="#step-12-verify-the-installation" title="Permanent link">&para;</a></h2>
+<p>Run this quick checklist:</p>
+<ul>
+<li>[ ] <strong>Docker</strong> says it's running.</li>
+<li>[ ] <strong>n8n</strong> loads at http://localhost:5678 and all workflows are <strong>Published</strong>.</li>
+<li>[ ] <strong>Dashboard</strong> loads at http://localhost:4400.</li>
+<li>[ ] In n8n, open <strong>Job Discovery</strong> and click <strong>Execute Workflow</strong> (manual run). It should complete without red error nodes. Check your Google Sheet's <code>jobs</code> tab — new rows should appear (depending on your watchlist).</li>
+<li>[ ] In the dashboard's <strong>Discovery</strong> page, the new jobs appear with fit scores.</li>
+<li>[ ] Select a job, click <strong>Build</strong>, and confirm the <strong>Application Orchestrator</strong> runs in n8n and a résumé lands in the <code>resumes</code> tab.</li>
+</ul>
+<p>If all six pass, you're done. 🎉</p>
+<p>If something fails, see <strong><a href="../07-troubleshooting/">Troubleshooting</a></strong> — the most common issues are a service account that hasn't been shared with the sheet, an unpublished sub-workflow, or a mistyped private key.</p>
+<hr />
+<p><a href="../01-overview/">← Overview</a> · <a href="../03-configuration/">Next: Configuration →</a></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../01-overview/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Overview">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Overview
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../03-configuration/" class="md-footer__link md-footer__link--next" aria-label="Next: Configuration">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Configuration
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2026 Parseus AI
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tracking", "navigation.sections", "navigation.top", "navigation.footer", "search.suggest", "search.highlight", "content.code.copy", "toc.follow", "toc.integrate"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>
