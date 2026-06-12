@@ -2,7 +2,7 @@
 
 **An open-source, AI-powered job-search automation system.**
 
-*Decode. Decide. Deliver.* — A product of Parseus AI
+A product of [Parseus AI](https://parseus.ai).
 
 ---
 
